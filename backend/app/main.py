@@ -47,7 +47,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Layanan Penyusunan Surat Elektronik Otomatis Terintegrasi AI",
     description="API generate surat formal dengan LLM lokal (Ollama) + PDF + Telegram Bot",
-    version="1.2.0",
+    version="2.0.0-alpha",  # selaras dengan PRD.md & /api/health — satu sumber versi
     lifespan=lifespan,
     # Saat auth aktif, dokumentasi API (/docs, /redoc, /openapi.json) dimatikan —
     # ketiganya tidak melewati include_router sehingga require_auth tidak melindunginya.
@@ -57,9 +57,12 @@ app = FastAPI(
 )
 
 # CORS
+# Origin diambil dari settings.CORS_ALLOW_ORIGINS (env CORS_ALLOW_ORIGINS).
+# Wildcard + credentials SENGAJA tidak dipakai: kombinasi itu salah secara
+# spesifikasi CORS dan membuka CSRF-style attack atas Basic Auth.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

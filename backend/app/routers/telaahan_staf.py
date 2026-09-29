@@ -19,7 +19,6 @@ from ..services.rag_telaahan_staf import generate_telaahan_staf_sections
 from ..services.llm_health import start_llm_request_scope, collect_llm_warnings
 from ..services.pdf_service import create_pdf_telaahan_staf
 from ..services.guardrail import validate_and_sanitize_telaahan_staf
-from ..services.guardrail_kajian import escape_custom_html
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["Telaahan Staf"])
@@ -104,7 +103,8 @@ async def draft_telaahan_staf(request: TelaahanStafInput):
         )
     except Exception as e:
         logger.error(f"Error in draft_telaahan_staf: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Gagal menyusun draf telaahan staf: {str(e)}")
+        logger.error("Gagal menyusun draf telaahan staf: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal menyusun draf telaahan staf. Periksa log server untuk detail.")
 
 
 @router.post("/generate-telaahan-staf", response_model=TelaahanStafOutput)
@@ -164,14 +164,15 @@ async def generate_telaahan_staf(request: TelaahanStafInput):
             nomor_naskah=request.nomor_naskah,
             pasal=pasal_obj,
             konten_gabungan=konten_gabungan,
-            file_path=str(pdf_path),
+            file_path=pdf_path.name,
             download_url=f"/download/{surat_id}",
             llm_degraded=bool(warnings),
             llm_warnings=warnings
         )
     except Exception as e:
         logger.error(f"Error in generate_telaahan_staf: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Gagal membuat telaahan staf: {str(e)}")
+        logger.error("Gagal membuat telaahan staf: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal membuat telaahan staf. Periksa log server untuk detail.")
 
 
 @router.post("/render-telaahan-staf-pdf", response_model=TelaahanStafOutput)
@@ -206,9 +207,9 @@ async def render_telaahan_staf_pdf(request: TelaahanStafRenderRequest):
         # Redaksi hasil editan pengguna (dikirim klien sebagai konten_custom)
         # WAJIB menang atas pasal baku — tanpa ini editan di editor diam-diam
         # dibuang dan PDF dirender dari teks lama (bug: editan hilang senyap).
-        # konten_custom melewati LLM & guardrail lain — escape sebelum masuk
-        # Jinja2 autoescape=False (cegah LFI/SSRF via wkhtmltopdf).
-        konten_custom_clean = escape_custom_html((request.konten_custom or "").strip())
+        # Teks mentah diteruskan apa adanya — Jinja2 autoescape menangani
+        # escaping saat cetak (escape manual = entity ganda tercetak di PDF).
+        konten_custom_clean = (request.konten_custom or "").strip()
 
         template_data = {
             'kop_utama': (request.kop_utama or "PUSAT SIBER PERTAHANAN").strip(),
@@ -249,9 +250,10 @@ async def render_telaahan_staf_pdf(request: TelaahanStafRenderRequest):
             nomor_naskah=request.nomor_naskah,
             pasal=pasal_obj,
             konten_gabungan=konten_gabungan,
-            file_path=str(pdf_path),
+            file_path=pdf_path.name,
             download_url=f"/download/{surat_id}"
         )
     except Exception as e:
         logger.error(f"Error in render_telaahan_staf_pdf: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Gagal render ulang PDF telaahan staf: {str(e)}")
+        logger.error("Gagal render ulang PDF telaahan staf: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal render ulang PDF telaahan staf. Periksa log server untuk detail.")

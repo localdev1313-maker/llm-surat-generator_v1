@@ -44,7 +44,8 @@ async def calculate_lapju(req: LapjuGenerateRequest):
         }
     except Exception as e:
         logger.error(f"Gagal kalkulasi lapju: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Gagal kalkulasi data lapju: {str(e)}")
+        logger.error("Gagal kalkulasi data lapju: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal kalkulasi data lapju. Periksa log server untuk detail.")
 
 @router.post("/draft", response_model=LapjuDraftResponse)
 async def draft_lapju(req: LapjuGenerateRequest):
@@ -67,7 +68,8 @@ async def draft_lapju(req: LapjuGenerateRequest):
         )
     except Exception as e:
         logger.error(f"Gagal menyusun draf lapju: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Gagal menyusun draf lapju: {str(e)}")
+        logger.error("Gagal menyusun draf lapju: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal menyusun draf lapju. Periksa log server untuk detail.")
 
 @router.post("/generate", response_model=LapjuGenerateResponse)
 async def generate_lapju(req: LapjuGenerateRequest):
@@ -95,11 +97,12 @@ async def generate_lapju(req: LapjuGenerateRequest):
             id=lapju_id,
             surat_id=lapju_id,
             nomor_surat=template_data["nomor_surat"],
-            file_path=str(output_path),
+            file_path=output_path.name,
             download_url=f"/download/{lapju_id}",
             preview_pdf_url=f"/preview-pdf/{lapju_id}",
             totals=totals
         )
     except Exception as e:
         logger.error(f"Gagal generate dokumen lapju PDF: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Gagal generate dokumen lapju PDF: {str(e)}")
+        logger.error("Gagal generate dokumen lapju PDF: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal generate dokumen lapju PDF. Periksa log server untuk detail.")

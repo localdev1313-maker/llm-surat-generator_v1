@@ -52,7 +52,7 @@ class TelaahanStafOutput(BaseModel):
     nomor_naskah: Optional[str]
     pasal: TelaahanStafPasal
     konten_gabungan: str
-    file_path: str
+    file_path: str  # hanya nama berkas, bukan path absolut server
     download_url: str
     llm_degraded: bool = False
     llm_warnings: List[str] = Field(default_factory=list)
