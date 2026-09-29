@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import uuid
 from datetime import datetime
 from pathlib import Path
@@ -18,8 +19,8 @@ from ..utils import format_tanggal_indonesia
 from ..services.llm_service import generate_surat_content, generate_isi_nota_dinas
 from ..services.llm_health import start_llm_request_scope, collect_llm_warnings
 from ..services.pdf_service import create_pdf_surat, create_pdf_nota_dinas
-from ..services.guardrail_kajian import escape_custom_html
 
+logger = logging.getLogger(__name__)
 router = APIRouter()
 
 @router.post("/draft-surat", response_model=DraftSuratResponse)
@@ -40,7 +41,8 @@ async def draft_surat(request: SuratRequest):
             llm_warnings=warnings
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Gagal membuat draf surat: {str(e)}")
+        logger.error("Gagal membuat draf surat: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal membuat draf surat. Periksa log server untuk detail.")
 
 @router.post("/draft-nota-dinas", response_model=DraftNotaDinasResponse)
 async def draft_nota_dinas(request: NotaDinasRequest):
@@ -100,7 +102,8 @@ async def draft_nota_dinas(request: NotaDinasRequest):
             llm_warnings=warnings
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Gagal membuat draf nota dinas: {str(e)}")
+        logger.error("Gagal membuat draf nota dinas: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal membuat draf nota dinas. Periksa log server untuk detail.")
 
 @router.post("/generate-surat", response_model=SuratResponse)
 async def generate_surat(request: SuratRequest):
@@ -110,12 +113,17 @@ async def generate_surat(request: SuratRequest):
     try:
         surat_id = str(uuid.uuid4())
 
-        # Jika ada konten_custom (hasil edit user di preview), gunakan langsung
-        warnings = []
+        # Jika ada konten_custom (hasil edit user di preview), gunakan langsung.
+        # Catatan escape: keluaran generate_surat_content() sudah berupa teks aman
+        # HTML (di-escape di sumber, lihat llm_service) dan Jinja2 renderer kini
+        # autoescape — tambahan escape di sini akan men-double-escape karakter
+        # & < > " ' menjadi entity yang tercetak apa adanya di PDF.
         if request.konten_custom and request.konten_custom.strip():
-            # konten_custom melewati LLM & guardrail lain — escape sebelum masuk
-            # Jinja2 autoescape=False (cegah LFI/SSRF via wkhtmltopdf).
-            konten = escape_custom_html(request.konten_custom.strip())
+            # Input mentah pengguna diteruskan APA ADANYA (teks polos) — Jinja2
+            # renderer kini autoescape=True, sehingga escaping otomatis terjadi
+            # saat cetak. Escape manual di sini akan men-double-escape (& < > " '
+            # tampil sebagai entity tercetak di PDF).
+            konten = request.konten_custom.strip()
         else:
             start_llm_request_scope()
             konten = await asyncio.to_thread(generate_surat_content, request)
@@ -132,6 +140,9 @@ async def generate_surat(request: SuratRequest):
             'perihal': (request.perihal or "").strip(),
             'tanggal': tanggal,
             'nomor_surat': nomor_surat,
+            # isi_surat dirender lewat filter `safe` (mendukung penanda <br>):
+            # jalur custom sudah di-escape di atas; jalur LLM sudah di-escape
+            # di sumber (llm_service) — jangan escape lagi agar tidak dobel.
             'isi_surat': konten.replace('\n', '<br>')
         }
 
@@ -142,7 +153,7 @@ async def generate_surat(request: SuratRequest):
         return SuratResponse(
             id=surat_id,
             konten_surat=konten,
-            file_path=str(pdf_path),
+            file_path=pdf_path.name,
             download_url=f"/download/{surat_id}",
             llm_degraded=bool(warnings),
             llm_warnings=warnings
@@ -150,7 +161,8 @@ async def generate_surat(request: SuratRequest):
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Gagal membuat surat: {str(e)}")
+        logger.error("Gagal membuat surat: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal membuat surat. Periksa log server untuk detail.")
 
 @router.post("/generate-nota-dinas", response_model=SuratResponse)
 async def generate_nota_dinas(request: NotaDinasRequest):
@@ -177,9 +189,9 @@ async def generate_nota_dinas(request: NotaDinasRequest):
                     isi_list.append({"teks": item.teks, "sub_poin": item.sub_poin or []})
                 else:
                     isi_list.append({"teks": str(item), "sub_poin": []})
-            # isi_custom_list melewati LLM & guardrail lain — escape sebelum masuk
-            # Jinja2 autoescape=False (cegah LFI/SSRF via wkhtmltopdf).
-            isi_list = escape_custom_html(isi_list)
+            # isi_custom_list (hasil editan editor klien) masuk template render —
+            # Jinja2 autoescape menangani escaping saat cetak; escape manual di
+            # sini hanya menghasilkan entity ganda tercetak di PDF.
         elif request.konten_custom and request.konten_custom.strip():
             # Jika user mengedit seluruh blok teks bebas
             import re
@@ -196,7 +208,7 @@ async def generate_nota_dinas(request: NotaDinasRequest):
                     clean_sub = re.sub(r'^[a-z][\.\)]\s*|^[-*•]\s*', '', sub_line).strip()
                     if clean_sub:
                         subs.append(clean_sub)
-                isi_list.append({"teks": escape_custom_html(main_teks), "sub_poin": [escape_custom_html(s) for s in subs]})
+                isi_list.append({"teks": main_teks, "sub_poin": list(subs)})
         else:
             # Generate via LLM dengan RAG (blocking → worker thread)
             start_llm_request_scope()
@@ -278,7 +290,7 @@ async def generate_nota_dinas(request: NotaDinasRequest):
         return SuratResponse(
             id=surat_id,
             konten_surat=konten_gabungan,
-            file_path=str(pdf_path),
+            file_path=pdf_path.name,
             download_url=f"/download/{surat_id}",
             llm_degraded=bool(warnings),
             llm_warnings=warnings
@@ -287,7 +299,8 @@ async def generate_nota_dinas(request: NotaDinasRequest):
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Gagal membuat nota dinas: {str(e)}")
+        logger.error("Gagal membuat nota dinas: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal membuat nota dinas. Periksa log server untuk detail.")
 
 @router.get("/download/{surat_id}")
 async def download_surat(surat_id: str, inline: bool = False):

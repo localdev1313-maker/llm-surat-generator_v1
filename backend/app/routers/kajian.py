@@ -20,7 +20,7 @@ from ..schemas.kajian import (
 from ..services.kajian_engine import process_kajian_generation
 from ..services.llm_health import start_llm_request_scope, collect_llm_warnings
 from ..services.pdf_service import create_pdf_kajian
-from ..services.guardrail_kajian import clean_military_text, escape_custom_html
+from ..services.guardrail_kajian import clean_military_text
 from ..utils import format_tanggal_indonesia
 
 logger = logging.getLogger(__name__)
@@ -110,9 +110,11 @@ async def draft_kajian(req: KajianGenerateRequest):
             sections = await asyncio.to_thread(process_kajian_generation, req)
             warnings = collect_llm_warnings()
         else:
-            # sections_custom melewati LLM & seluruh guardrail lain — escape HTML
-            # sebelum masuk Jinja2 autoescape=False (cegah LFI/SSRF via wkhtmltopdf).
-            sections = escape_custom_html(req.sections_custom)
+            # sections_custom dipakai klien untuk PRATINJAU TEKS (bukan render
+            # PDF) — simpan teks mentah; escaping terjadi otomatis di renderer
+            # Jinja2 autoescape saat dokumen dicetak. Escape di sini membuat
+            # entity &lt; &#x27; dst. tampil apa adanya di editor klien.
+            sections = req.sections_custom
         nomor = req.nomor_naskah or (_get_auto_nomor_ts(req.kop_utama) if req.kategori == KajianCategory.TELAAHAN_STAF else None)
         combined = _format_combined_text(req.kategori, req.kka_model, req.judul_atau_topik, sections)
 
@@ -130,7 +132,8 @@ async def draft_kajian(req: KajianGenerateRequest):
         )
     except Exception as e:
         logger.error(f"Gagal menyusun draf kajian: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Gagal menyusun draf kajian: {str(e)}")
+        logger.error("Gagal menyusun draf kajian: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal menyusun draf kajian. Periksa log server untuk detail.")
 
 
 @router.post("/generate", response_model=KajianGenerateResponse)
@@ -144,9 +147,10 @@ async def generate_kajian(req: KajianGenerateRequest):
             sections = await asyncio.to_thread(process_kajian_generation, req)
             warnings = collect_llm_warnings()
         else:
-            # sections_custom melewati LLM & seluruh guardrail lain — escape HTML
-            # sebelum masuk Jinja2 autoescape=False (cegah LFI/SSRF via wkhtmltopdf).
-            sections = escape_custom_html(req.sections_custom)
+            # sections_custom masuk template render — Jinja2 autoescape menangani
+            # escaping saat cetak; escape manual di sini hanya menghasilkan
+            # entity ganda (&amp;lt;) tercetak di PDF.
+            sections = req.sections_custom
         nomor = req.nomor_naskah or (_get_auto_nomor_ts(req.kop_utama) if req.kategori == KajianCategory.TELAAHAN_STAF else None)
 
         # Template context
@@ -192,7 +196,7 @@ async def generate_kajian(req: KajianGenerateRequest):
             kka_model=req.kka_model,
             judul_atau_topik=req.judul_atau_topik,
             konten_kajian=combined,
-            file_path=str(output_path),
+            file_path=output_path.name,
             download_url=f"/download/{kajian_id}",
             preview_pdf_url=f"/preview-pdf/{kajian_id}",
             sections=sections,
@@ -201,7 +205,8 @@ async def generate_kajian(req: KajianGenerateRequest):
         )
     except Exception as e:
         logger.error(f"Gagal generate kajian PDF: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Gagal generate kajian PDF: {str(e)}")
+        logger.error("Gagal generate kajian PDF: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal generate kajian PDF. Periksa log server untuk detail.")
 
 
 def _strip_header_teks_gabungan(text: str, kategori: KajianCategory) -> str:
@@ -232,7 +237,9 @@ async def render_kajian_pdf(req: KajianRenderPDFRequest):
 
         # Redaksi hasil editan pengguna menang atas sections baku; jika keduanya
         # kosong, tolak dengan 400 alih-alih merender dokumen resmi tanpa isi.
-        konten_custom_clean = escape_custom_html(_strip_header_teks_gabungan(req.konten_custom or "", req.kategori))
+        # Teks mentah diteruskan apa adanya — Jinja2 autoescape menangani escaping
+        # saat cetak (escape manual = entity ganda tercetak di PDF).
+        konten_custom_clean = _strip_header_teks_gabungan(req.konten_custom or "", req.kategori)
         if not req.sections and not konten_custom_clean:
             raise HTTPException(
                 status_code=400,
@@ -252,7 +259,7 @@ async def render_kajian_pdf(req: KajianRenderPDFRequest):
             "nomor_pasis": req.nomor_pasis,
             "kelompok_pasis": req.kelompok_pasis,
             "jenis_dan_tahun_pendidikan": req.jenis_dan_tahun_pendidikan,
-            "sections": escape_custom_html(req.sections),
+            "sections": req.sections,
             # Editan redaksi pengguna (editor pratinjau) — template merender ini
             # bila terisi; tanpa key ini editan diam-diam dibuang.
             "konten_custom": konten_custom_clean,
@@ -282,7 +289,7 @@ async def render_kajian_pdf(req: KajianRenderPDFRequest):
             kka_model=req.kka_model,
             judul_atau_topik=req.judul_atau_topik,
             konten_kajian=combined,
-            file_path=str(output_path),
+            file_path=output_path.name,
             download_url=f"/download/{kajian_id}",
             preview_pdf_url=f"/preview-pdf/{kajian_id}",
             sections=req.sections
@@ -293,4 +300,5 @@ async def render_kajian_pdf(req: KajianRenderPDFRequest):
         raise
     except Exception as e:
         logger.error(f"Gagal render ulang kajian PDF: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Gagal render ulang kajian PDF: {str(e)}")
+        logger.error("Gagal render ulang kajian PDF: {type(e).__name__}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Gagal render ulang kajian PDF. Periksa log server untuk detail.")

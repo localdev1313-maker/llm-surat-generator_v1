@@ -20,6 +20,8 @@ class SuratRequest(BaseModel):
 class SuratResponse(BaseModel):
     id: str
     konten_surat: str
+    # Hanya NAMA BERKAS (bukan path absolut server) — tidak membocorkan
+    # struktur direktori filesystem ke klien.
     file_path: str
     download_url: str
     llm_degraded: bool = False

@@ -96,7 +96,7 @@ class LapjuGenerateResponse(BaseModel):
     id: str
     surat_id: str
     nomor_surat: str
-    file_path: str
+    file_path: str  # hanya nama berkas, bukan path absolut server
     download_url: str
     preview_pdf_url: str
     totals: LapjuTotalsModel

@@ -1,8 +1,40 @@
+"""
+Render PDF dari template HTML (wkhtmltopdf) sesuai KEP/868/2022.
+
+KEAMANAN TEMPLATE:
+- Jinja2 Environment dipakai dengan autoescape=True. Seluruh nilai dinamis
+  (termasuk hasil LLM dan field input pengguna) di-escape otomatis sebelum
+  masuk HTML yang dicetak wkhtmltopdf — menutup HTML injection / LFI / SSRF
+  via markup yang di-echo model pada SEMUA jalur render (surat, nota dinas,
+  telaahan staf, kajian, lapju).
+- Tidak ada filter `| safe` yang tersisa di template. Ganti baris cukup lewat
+  CSS white-space: pre-wrap (surat_template.html), sehingga teks bebas tidak
+  pernah masuk sebagai HTML mentah.
+- enable-local-file-access DINONAKTIFKAN pada seluruh opsi pdfkit: dengan
+  autoescape aktif tidak ada alasan membiarkan wkhtmltopdf membaca berkas
+  lokal / URL internal.
+"""
 # pyrefly: ignore [missing-import]
 import pdfkit
-from jinja2 import Template
+from jinja2 import Environment, FileSystemLoader, select_autoescape, Markup
 from pathlib import Path
+import re
 from ..config import settings
+
+def _render_template(template_path: Path, template_data: dict) -> str:
+    """Render file template dengan autoescape aktif.
+
+    Semua nilai string di-escape Jinja2; satu-satunya cara menghasilkan HTML
+    mentah adalah membungkus nilai dengan jinja2.Markup secara eksplisit di
+    pemanggil — tidak ada pemanggil seperti itu saat ini (filter `| safe`
+    juga sudah dihapus dari seluruh template).
+    """
+    env = Environment(
+        loader=FileSystemLoader(str(template_path.parent)),
+        autoescape=select_autoescape(default_for_string=True, default=True),
+    )
+    template = env.get_template(template_path.name)
+    return template.render(**template_data)
 
 # Konfigurasi Standar Tata Tulis Militer TNI (KEP/868/2022)
 # CATATAN margin-right: dengan `disable-smart-shrinking`, teks justify merender
@@ -17,7 +49,7 @@ MILITARY_PDF_OPTIONS = {
     'margin-left': '25.4mm',     # 1.0 inci (Left Margin)
     'encoding': 'UTF-8',
     'no-outline': None,
-    'enable-local-file-access': None,
+    # enable-local-file-access SENGAJA TIDAK dipasang (lihat docstring modul).
     'disable-smart-shrinking': None
 }
 
@@ -25,10 +57,7 @@ def generate_pdf_from_template(template_path: Path, template_data: dict, output_
     """
     Render template HTML dengan data dan konversi ke PDF sesuai standar KEP/868/2022.
     """
-    with open(template_path, "r", encoding="utf-8") as f:
-        template_str = f.read()
-    template = Template(template_str)
-    html_content = template.render(**template_data)
+    html_content = _render_template(template_path, template_data)
 
     config = pdfkit.configuration(wkhtmltopdf=settings.WKHTMLTOPDF_PATH)
     pdfkit.from_string(
@@ -111,7 +140,8 @@ LANDSCAPE_PDF_OPTIONS = {
     'margin-left': '15mm',
     'encoding': 'UTF-8',
     'no-outline': None,
-    'enable-local-file-access': None,
+    # enable-local-file-access SENGAJA TIDAK dipasang — sama seperti
+    # MILITARY_PDF_OPTIONS (lampiran tabel hanya berisi teks ter-escape).
     'disable-smart-shrinking': None,
     # Kalibrasi empiris: mesin render menempatkan tabel matriks pada 631pt dari
     # 748.5pt printable — zoom 1.18 memenuhi lebar area cetak tanpa melampaui
@@ -141,8 +171,7 @@ def create_pdf_lapju(template_data: dict, output_path: Path) -> Path:
     try:
         # 1. Render Surat Pengantar (Portrait)
         pengantar_tpl = settings.TEMPLATE_DIR / "lapju_surat_pengantar_template.html"
-        with open(pengantar_tpl, "r", encoding="utf-8") as f:
-            html_pengantar = Template(f.read()).render(**template_data)
+        html_pengantar = _render_template(pengantar_tpl, template_data)
 
         pdfkit.from_string(
             html_pengantar,
@@ -153,8 +182,9 @@ def create_pdf_lapju(template_data: dict, output_path: Path) -> Path:
 
         # 2. Render Lampiran Matriks Tabel (Landscape)
         lampiran_tpl = settings.TEMPLATE_DIR / "lapju_lampiran_tabel_template.html"
-        with open(lampiran_tpl, "r", encoding="utf-8") as f:
-            html_lampiran = Template(f.read()).render(**template_data)
+        # Melalui _render_template (autoescape=True) — bukan Template().render()
+        # lama yang autoescape OFF dan membiarkan markup klien tercetak mentah.
+        html_lampiran = _render_template(lampiran_tpl, template_data)
 
         pdfkit.from_string(
             html_lampiran,

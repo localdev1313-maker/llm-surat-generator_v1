@@ -53,6 +53,11 @@
         .isi-surat {
             text-align: justify;
             margin: 20px 0;
+            /* Ganti baris teks bebas dirender lewat newline asli (white-space),
+               BUKAN lewat {{ isi_surat | safe }} — filter `safe` adalah satu-satunya
+               jalur HTML mentah dan sudah dihapus (autoescape penuh, lihat
+               pdf_service.py). */
+            white-space: pre-wrap;
         }
 
         .ttd-section {
@@ -86,7 +91,7 @@
     <div class="perihal">Perihal: {{ perihal }}</div>
 
     <div class="isi-surat">
-        {{ isi_surat | safe }}
+        {{ isi_surat }}
     </div>
 
     <div class="ttd-section">

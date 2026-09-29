@@ -1,4 +1,5 @@
 import re
+import html as _html
 import logging
 from fastapi import HTTPException
 from ..config import settings
@@ -251,11 +252,16 @@ INSTRUKSI FINAL: Tuliskan isi surat resmi secara lengkap berdasarkan HANYA poin-
             content = _validate_output(content, user_data, extra_context=rag_context)
             # Buang header metadata yang ikut ditulis AI (Kepada Yth./Perihal/Nomor)
             content = _strip_metadata_header(content)
+            # Kontrak keluaran: TEKS MENTAH (bukan entity HTML). Renderer PDF
+            # (pdf_service._render_template) memakai Jinja2 autoescape=True, dan
+            # konsumen JSON (editor klien) melakukan escaping sendiri — escape di
+            # sini akan tampil sebagai '&lt;' di PDF/editor (double-escape).
             return content
     except Exception as e:
         logger.warning(f"Ollama generation warning (fallback will be used): {e}")
 
-    # Fallback jika model LLM offline / timeout
+    # Fallback jika model LLM offline / timeout — kontrak sama dengan jalur LLM:
+    # teks mentah; escaping dilakukan renderer PDF (autoescape) saat dicetak.
     return (
         f"Dengan hormat,\n\n"
         f"Sehubungan dengan perihal {request.perihal}, bersama ini kami sampaikan:\n\n"
@@ -426,4 +432,7 @@ def generate_isi_nota_dinas(request: NotaDinasRequest) -> list:
             "sub_poin": formatted_subs
         })
 
+    # Kontrak keluaran setara generate_surat_content: teks MENTAH — renderer
+    # PDF autoescape, konsumen JSON meng-escape sendiri. (Dulu di-escape di
+    # sini sehingga entity &lt; tercetak apa adanya di PDF.)
     return results

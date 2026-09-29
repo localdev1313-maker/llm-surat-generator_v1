@@ -1,4 +1,5 @@
 import re
+import html as _html
 import logging
 from typing import Dict, Any, Optional
 
@@ -80,7 +81,10 @@ def validate_and_sanitize_telaahan_staf(pasal_dict: Dict[str, str]) -> Dict[str,
         # Pastikan diakhiri titik
         if not cleaned.endswith(('.', '!', '?')):
             cleaned += '.'
-            
-        sanitized[key] = cleaned
+
+        # Kontrak keluaran: TEKS MENTAH (bukan entity HTML). Renderer PDF
+        # (pdf_service._render_template) kini Jinja2 autoescape=True dan editor
+        # klien meng-escape sendiri — escape di sini akan tampil sebagai '&lt;'
+        # tercetak apa adanya di PDF resmi (double-escape).
         
     return sanitized

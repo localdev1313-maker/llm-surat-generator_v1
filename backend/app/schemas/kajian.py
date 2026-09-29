@@ -159,7 +159,7 @@ class KajianGenerateResponse(BaseModel):
     kka_model: Optional[KKAModelType] = None
     judul_atau_topik: str
     konten_kajian: str
-    file_path: str
+    file_path: str  # hanya nama berkas, bukan path absolut server
     download_url: str
     preview_pdf_url: Optional[str] = None
     sections: Optional[Dict[str, Any]] = None
