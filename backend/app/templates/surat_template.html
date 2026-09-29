@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.25;
+            color: #000000;
+            width: 162.5mm; /* lebar konten = printable A4 (kunci layout anti-terpotong) */
+        }
+
+        .kop-surat {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px double #2c3e50;
+        }
+
+        .kop-title {
+            font-size: 17.78pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .kop-address {
+            font-size: 8.89pt /* dikompensasi boost mesin x1.125 */;
+            color: #666;
+        }
+
+        .tanggal-surat {
+            text-align: right;
+            margin: 20px 0;
+        }
+
+        .nomor-surat {
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        .penerima-section {
+            margin-bottom: 20px;
+        }
+
+        .perihal {
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .isi-surat {
+            text-align: justify;
+            margin: 20px 0;
+        }
+
+        .ttd-section {
+            margin-top: 50px;
+            text-align: right;
+        }
+
+        .ttd-nama {
+            font-weight: bold;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="kop-surat">
+        <div class="kop-title">{{ nama_pengirim }}</div>
+        <div class="kop-address">{{ alamat_pengirim }}</div>
+    </div>
+
+    <div class="tanggal-surat">{{ tanggal }}</div>
+
+    <div class="nomor-surat">Nomor: {{ nomor_surat }}</div>
+
+    <div class="penerima-section">
+        Kepada Yth.<br>
+        {{ nama_penerima }}<br>
+        {{ alamat_penerima }}
+    </div>
+
+    <div class="perihal">Perihal: {{ perihal }}</div>
+
+    <div class="isi-surat">
+        {{ isi_surat | safe }}
+    </div>
+
+    <div class="ttd-section">
+        <p>Hormat kami,</p>
+        <div class="ttd-nama">{{ nama_pengirim }}</div>
+    </div>
+</body>
+
+</html>

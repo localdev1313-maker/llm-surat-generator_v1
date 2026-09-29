@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Kertas Karya Acuan - Model Analisis (MoE)</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.5;
+            color: #000;
+            margin: 0;
+            width: 162.5mm; /* lebar konten = printable A4 (kunci layout anti-terpotong) */
+            padding: 0;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        
+        /* COVER STYLING */
+        .cover-container {
+            text-align: center;
+            height: 950px;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .cover-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 9.78pt /* dikompensasi boost mesin x1.125 */;
+            margin-bottom: 40px;
+        }
+        .cover-kop-kiri {
+            text-align: left;
+            text-decoration: underline;
+        }
+        .cover-pasis-kanan {
+            text-align: right;
+        }
+        .cover-logo {
+            width: 100px;
+            height: 100px;
+            margin: 30px auto;
+            border: 2px solid #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8.89pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            text-align: center;
+            padding: 5px;
+        }
+        .cover-title {
+            font-size: 16.0pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 40px auto 20px auto;
+            line-height: 1.3;
+            max-width: 85%;
+        }
+        .cover-oleh {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        .cover-author {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .cover-pangkat {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            border-bottom: 2px solid #000;
+            display: inline-block;
+            padding-bottom: 10px;
+            margin-bottom: 40px;
+        }
+        .cover-kka-label {
+            font-size: 14.22pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 30px;
+            margin-bottom: 5px;
+        }
+        .cover-dikreg {
+            font-size: 12.44pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* CONTENT STYLING */
+        .content-body {
+            text-align: justify;
+        }
+        .section-header {
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        .sub-section {
+            margin-left: 20px;
+            margin-bottom: 8px;
+        }
+        table.moe-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 9.33pt /* dikompensasi boost mesin x1.125 */;
+        }
+        table.moe-table th, table.moe-table td {
+            border: 1px solid #000;
+            padding: 6px 8px;
+            text-align: center;
+        }
+        table.moe-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .signature-block {
+            margin-top: 30px;
+            float: right;
+            width: 250px;
+            text-align: center;
+        }
+        .signature-name {
+            font-weight: bold;
+            margin-top: 60px;
+            text-decoration: underline;
+        }
+        .clear {
+            clear: both;
+        }
+        .daftar-pustaka-item {
+            margin-left: 30px;
+            text-indent: -30px;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HALAMAN SAMPUL (COVER) -->
+    <div class="cover-container">
+        <div class="cover-header">
+            <div class="cover-kop-kiri">
+                MARKAS BESAR ANGKATAN LAUT<br>
+                SEKOLAH STAF DAN KOMANDO
+            </div>
+            <div class="cover-pasis-kanan">
+                NO. PASIS : {{ nomor_pasis or '-' }}<br>
+                KELOMPOK : {{ kelompok_pasis or '-' }}
+            </div>
+        </div>
+
+        <div class="cover-logo">
+            JALESVEVA<br>JAYAMAHE<br>SESKOAL
+        </div>
+
+        <div class="cover-title">
+            {{ sections.topik or judul_atau_topik }}
+        </div>
+
+        <div class="cover-oleh">OLEH</div>
+
+        <div class="cover-author">{{ nama_pejabat_atau_pasis }}</div>
+        <div class="cover-pangkat">{{ pangkat_korps_nrp }}</div>
+
+        <div class="cover-kka-label">KERTAS KARYA ACUAN</div>
+        <div class="cover-dikreg">{{ jenis_dan_tahun_pendidikan or 'PASIS DIKREG SESKOAL' }}</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- HALAMAN ISI NASKAH KKA MODEL ANALISIS -->
+    <div class="content-body">
+        <div style="text-align: left; font-size: 9.78pt /* dikompensasi boost mesin x1.125 */; margin-bottom: 20px;">
+            <u>MARKAS BESAR ANGKATAN LAUT</u><br>
+            <u>SEKOLAH STAF DAN KOMANDO</u>
+        </div>
+
+        {% if konten_custom %}
+        {# Redaksi hasil editan manual pengguna (render ulang) menang atas sections baku #}
+        <div class="sub-section" style="white-space: pre-wrap;">{{ konten_custom }}</div>
+        {% else %}
+        <div class="section-header">1. Topik.</div>
+        <div class="sub-section">{{ sections.topik or judul_atau_topik }}</div>
+
+        <div class="section-header">2. Latar Belakang.</div>
+        <div class="sub-section">{{ sections.latar_belakang }}</div>
+
+        <div class="section-header">3. Analisis.</div>
+        <div class="sub-section">
+            <b>a. Umum.</b><br>
+            {{ sections.analisis_umum }}
+        </div>
+        <div class="sub-section">
+            <b>b. Pembahasan Metode Measurement of Effectiveness (MoE).</b><br>
+            {{ sections.pembahasan_moe }}
+            
+            <!-- TABEL SPESIFIKASI PARAMETER -->
+            <div style="margin-top: 15px; font-weight: bold; font-size: 9.78pt /* dikompensasi boost mesin x1.125 */;">
+                Tabel 1. Perbandingan Parameter Alutsista
+            </div>
+            <table class="moe-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Parameter / Kriteria</th>
+                        <th style="width: 20%;">Opsi 1 ({{ sections.opsi_1 or 'KPC' }})</th>
+                        <th style="width: 20%;">Opsi 2 ({{ sections.opsi_2 or 'MPA' }})</th>
+                        <th style="width: 20%;">Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in sections.tabel_parameter %}
+                    <tr>
+                        <td style="text-align: left;">{{ row.parameter }}</td>
+                        <td>{{ row.opsi1 if row.opsi1 is defined else row.kpc }}</td>
+                        <td>{{ row.opsi2 if row.opsi2 is defined else row.mpa }}</td>
+                        <td>{{ row.ket }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- TABEL BOBOT LEVEL 1 -->
+            <div style="margin-top: 15px; font-weight: bold; font-size: 9.78pt /* dikompensasi boost mesin x1.125 */;">
+                Tabel 2. Penentuan Pembobotan Kriteria (Level Pertama)
+            </div>
+            <table class="moe-table">
+                <thead>
+                    <tr>
+                        <th style="width: 70%;">Kriteria Utama</th>
+                        <th style="width: 30%;">Nilai Bobot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in sections.tabel_bobot_level1 %}
+                    <tr>
+                        <td style="text-align: left;">{{ row.kriteria }}</td>
+                        <td>{{ row.bobot }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div style="margin-top: 10px; white-space: pre-line;">
+                <b>c. Perhitungan Skor Efektivitas:</b><br>
+                {{ sections.perhitungan_moe }}
+            </div>
+        </div>
+
+        <div class="section-header">4. Pengambilan Keputusan.</div>
+        <div class="sub-section">{{ sections.pengambilan_keputusan }}</div>
+
+        <div class="section-header">5. Penutup.</div>
+        <div class="sub-section">
+            <b>a. Kesimpulan:</b><br>
+            {{ sections.kesimpulan }}
+        </div>
+        <div class="sub-section">
+            <b>b. Saran:</b><br>
+            {{ sections.saran }}
+        </div>
+        {% endif %}
+
+        <!-- LAMPIRAN -->
+        <div style="margin-top: 30px;">
+            <b>Lampiran:</b><br>
+            1. Alur Pikir Model Analisis.<br>
+            2. Daftar Pustaka.
+        </div>
+
+        <!-- DAFTAR PUSTAKA -->
+        <div style="margin-top: 20px;">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 10px;">DAFTAR PUSTAKA</div>
+            {% for pustaka in sections.daftar_pustaka %}
+            <div class="daftar-pustaka-item">{{ loop.index }}. {{ pustaka }}</div>
+            {% endfor %}
+        </div>
+
+        <!-- TANDA TANGAN PASIS -->
+        <div class="signature-block">
+            <div>{{ tempat }}, {{ tanggal or '24 Agustus 2026' }}</div>
+            <div>Perwira Siswa,</div>
+            <div class="signature-name">{{ nama_pejabat_atau_pasis }}.</div>
+            <div>{{ pangkat_korps_nrp }}</div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+</body>
+</html>

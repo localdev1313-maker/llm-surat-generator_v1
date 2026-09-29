@@ -1,0 +1,52 @@
+DAFTAR 50 NOTA DINAS DUMMY
+
+002. Nota Dinas Dummy - 002.docx | Permohonan Dukungan Laptop Operasional
+003. Nota Dinas Dummy - 003.docx | Permohonan Penambahan Server Cadangan
+004. Nota Dinas Dummy - 004.docx | Permohonan Penyimpanan NAS
+005. Nota Dinas Dummy - 005.docx | Permohonan Lisensi Antivirus
+006. Nota Dinas Dummy - 006.docx | Permohonan Lisensi SIEM
+007. Nota Dinas Dummy - 007.docx | Permohonan Perangkat Jaringan
+008. Nota Dinas Dummy - 008.docx | Permohonan Firewall Laboratorium
+009. Nota Dinas Dummy - 009.docx | Permohonan UPS Ruang Server
+010. Nota Dinas Dummy - 010.docx | Permohonan Monitor Tambahan
+011. Nota Dinas Dummy - 011.docx | Permohonan Kursi Ergonomis
+012. Nota Dinas Dummy - 012.docx | Permohonan Meja Kerja
+013. Nota Dinas Dummy - 013.docx | Permohonan Perawatan AC Ruang Server
+014. Nota Dinas Dummy - 014.docx | Permohonan Penambahan Access Point
+015. Nota Dinas Dummy - 015.docx | Permohonan Jalur Internet Cadangan
+016. Nota Dinas Dummy - 016.docx | Permohonan Perpanjangan Domain
+017. Nota Dinas Dummy - 017.docx | Permohonan Sertifikat Digital
+018. Nota Dinas Dummy - 018.docx | Permohonan Pelatihan Keamanan Siber
+019. Nota Dinas Dummy - 019.docx | Rencana Simulasi Respons Insiden
+020. Nota Dinas Dummy - 020.docx | Permohonan Audit Aset TI
+021. Nota Dinas Dummy - 021.docx | Pemutakhiran Data Inventaris
+022. Nota Dinas Dummy - 022.docx | Permohonan Pemeliharaan CCTV
+023. Nota Dinas Dummy - 023.docx | Rencana Penataan Ruang Kerja
+024. Nota Dinas Dummy - 024.docx | Permohonan Pengadaan Printer
+025. Nota Dinas Dummy - 025.docx | Permohonan Pemeliharaan Scanner
+026. Nota Dinas Dummy - 026.docx | Permohonan Perjalanan Dinas Pelatihan
+027. Nota Dinas Dummy - 027.docx | Undangan Rapat Koordinasi
+028. Nota Dinas Dummy - 028.docx | Rencana Sosialisasi Kebijakan Keamanan
+029. Nota Dinas Dummy - 029.docx | Pembentukan Tim Proyek Internal
+030. Nota Dinas Dummy - 030.docx | Penugasan Uji Coba Aplikasi
+031. Nota Dinas Dummy - 031.docx | Permohonan Data Aset Unit
+032. Nota Dinas Dummy - 032.docx | Penyampaian Laporan Bulanan
+033. Nota Dinas Dummy - 033.docx | Evaluasi Kinerja Layanan
+034. Nota Dinas Dummy - 034.docx | Penjadwalan Pemeliharaan Sistem
+035. Nota Dinas Dummy - 035.docx | Pemusnahan Media Penyimpanan
+036. Nota Dinas Dummy - 036.docx | Rencana Migrasi Email Internal
+037. Nota Dinas Dummy - 037.docx | Penerapan Autentikasi Multifaktor
+038. Nota Dinas Dummy - 038.docx | Penjadwalan Reset Kredensial
+039. Nota Dinas Dummy - 039.docx | Pembatasan Akses Ruang Server
+040. Nota Dinas Dummy - 040.docx | Rencana Uji Pemulihan Bencana
+041. Nota Dinas Dummy - 041.docx | Penyusunan SOP Penanganan Gangguan
+042. Nota Dinas Dummy - 042.docx | Pembaruan Kontak Darurat
+043. Nota Dinas Dummy - 043.docx | Penunjukan PIC Sistem Internal
+044. Nota Dinas Dummy - 044.docx | Permohonan Dukungan Dokumentasi
+045. Nota Dinas Dummy - 045.docx | Permohonan Alat Tulis Kantor
+046. Nota Dinas Dummy - 046.docx | Permohonan Perbaikan Kendaraan Operasional
+047. Nota Dinas Dummy - 047.docx | Permohonan Dukungan Konsumsi
+048. Nota Dinas Dummy - 048.docx | Permohonan Penggunaan Ruang Rapat
+049. Nota Dinas Dummy - 049.docx | Permohonan Tenaga Magang
+050. Nota Dinas Dummy - 050.docx | Penataan Arsip Dokumen
+051. Nota Dinas Dummy - 051.docx | Permohonan Pembaruan Aplikasi Inventaris

@@ -1,0 +1,336 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Surat Generator API",
+    "description": "API generate surat formal dengan LLM lokal (Ollama) + PDF",
+    "version": "1.1.0"
+  },
+  "paths": {
+    "/generate-surat": {
+      "post": {
+        "summary": "Generate Surat",
+        "description": "Generate surat biasa dan simpan sebagai PDF.",
+        "operationId": "generate_surat_generate_surat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SuratRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuratResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/generate-nota-dinas": {
+      "post": {
+        "summary": "Generate Nota Dinas",
+        "description": "Generate nota dinas dan simpan sebagai PDF.",
+        "operationId": "generate_nota_dinas_generate_nota_dinas_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotaDinasRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuratResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/download/{surat_id}": {
+      "get": {
+        "summary": "Download Surat",
+        "description": "Download file PDF surat berdasarkan ID.",
+        "operationId": "download_surat_download__surat_id__get",
+        "parameters": [
+          {
+            "name": "surat_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Surat Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Read Index",
+        "description": "Sajikan halaman utama (index.html) dari folder static.",
+        "operationId": "read_index__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "NotaDinasRequest": {
+        "properties": {
+          "kop_utama": {
+            "type": "string",
+            "title": "Kop Utama",
+            "default": "PUSAT SIBER PERTAHANAN"
+          },
+          "kop_sub": {
+            "type": "string",
+            "title": "Kop Sub",
+            "default": "SATUAN BAWAH"
+          },
+          "nomor_surat": {
+            "type": "string",
+            "title": "Nomor Surat"
+          },
+          "kepada": {
+            "type": "string",
+            "title": "Kepada"
+          },
+          "dari": {
+            "type": "string",
+            "title": "Dari"
+          },
+          "perihal": {
+            "type": "string",
+            "title": "Perihal"
+          },
+          "dasar": {
+            "type": "string",
+            "title": "Dasar"
+          },
+          "isi_ringkas": {
+            "type": "string",
+            "title": "Isi Ringkas"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nomor_surat",
+          "kepada",
+          "dari",
+          "perihal",
+          "dasar",
+          "isi_ringkas"
+        ],
+        "title": "NotaDinasRequest"
+      },
+      "SuratRequest": {
+        "properties": {
+          "jenis_surat": {
+            "type": "string",
+            "title": "Jenis Surat"
+          },
+          "nama_pengirim": {
+            "type": "string",
+            "title": "Nama Pengirim"
+          },
+          "alamat_pengirim": {
+            "type": "string",
+            "title": "Alamat Pengirim"
+          },
+          "nama_penerima": {
+            "type": "string",
+            "title": "Nama Penerima"
+          },
+          "alamat_penerima": {
+            "type": "string",
+            "title": "Alamat Penerima"
+          },
+          "perihal": {
+            "type": "string",
+            "title": "Perihal"
+          },
+          "isi_ringkas": {
+            "type": "string",
+            "title": "Isi Ringkas"
+          },
+          "template_style": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Style",
+            "default": "formal"
+          },
+          "bahasa": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bahasa",
+            "default": "id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "jenis_surat",
+          "nama_pengirim",
+          "alamat_pengirim",
+          "nama_penerima",
+          "alamat_penerima",
+          "perihal",
+          "isi_ringkas"
+        ],
+        "title": "SuratRequest"
+      },
+      "SuratResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "konten_surat": {
+            "type": "string",
+            "title": "Konten Surat"
+          },
+          "file_path": {
+            "type": "string",
+            "title": "File Path"
+          },
+          "download_url": {
+            "type": "string",
+            "title": "Download Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "konten_surat",
+          "file_path",
+          "download_url"
+        ],
+        "title": "SuratResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

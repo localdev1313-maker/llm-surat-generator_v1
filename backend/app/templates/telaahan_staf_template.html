@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Telaahan Staf</title>
+    <style>
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.25;
+            color: #000000;
+            margin: 0;
+            width: 162.5mm; /* lebar konten = printable A4 (kunci layout anti-terpotong) */
+            padding: 0;
+            background: #ffffff;
+        }
+
+        /* ── Kop Surat ── */
+        .kop-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .kop-container {
+            display: inline-block;
+        }
+
+        .kop-utama {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: normal;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+        }
+
+        .kop-sub {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: normal;
+            letter-spacing: 0.2px;
+            padding-left: 42px;
+            white-space: nowrap;
+        }
+
+        .kop-line {
+            border-bottom: 1.5px solid #000000;
+            margin-top: 2px;
+            width: 100%;
+            min-width: 68mm;
+        }
+
+        /* ── Judul & Nomor Naskah ── */
+        .judul-section {
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 22px;
+        }
+
+        .judul-baris-1 {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .judul-baris-2 {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .nomor-text {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            margin-top: 4px;
+            font-weight: normal;
+        }
+
+        /* ── Kelompok Isi (6 Pasal) ── */
+        .content-section {
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
+
+        .pasal-block {
+            margin-bottom: 14px;
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.3;
+        }
+
+        .pasal-title {
+            font-weight: bold;
+            margin-right: 12px;
+            display: inline;
+        }
+
+        .pasal-text {
+            display: inline;
+        }
+
+        /* ── Kelompok Penutup (Lampiran di Kiri, Tanda Tangan di Kanan) ── */
+        .bottom-section {
+            margin-top: 30px;
+            page-break-inside: avoid;
+        }
+
+        .bottom-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .bottom-table td {
+            vertical-align: top;
+            padding: 0;
+        }
+
+        .lampiran-wrapper {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.25;
+            text-align: left;
+            padding-right: 15px;
+        }
+
+        .lampiran-title {
+            font-weight: normal;
+            margin-bottom: 3px;
+        }
+
+        .lampiran-list {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .lampiran-item {
+            margin-bottom: 2px;
+        }
+
+        .ttd-container {
+            width: 75mm;
+            text-align: center;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            float: right;
+        }
+
+        .ttd-tanggal {
+            margin-bottom: 2px;
+        }
+
+        .ttd-jabatan {
+            margin-bottom: 0;
+        }
+
+        .ttd-space {
+            height: 55px;
+        }
+
+        .ttd-nama {
+            font-weight: bold;
+        }
+
+        .ttd-pangkat {
+            font-weight: normal;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            margin-top: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Kop Instansi -->
+    <div class="kop-wrapper">
+        <div class="kop-container">
+            <div class="kop-utama">{{ kop_utama }}</div>
+            {% if kop_satuan_bawah %}
+            <div class="kop-sub">{{ kop_satuan_bawah }}</div>
+            {% endif %}
+            <div class="kop-line"></div>
+        </div>
+    </div>
+
+    <!-- Judul & Nomor Naskah -->
+    <div class="judul-section">
+        <div class="judul-baris-1">TELAAHAN STAF TENTANG</div>
+        <div class="judul-baris-2">{{ judul }}</div>
+        {% if nomor_naskah %}
+        <div class="nomor-text">{{ nomor_naskah }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Kelompok Isi (6 Pasal Baku Pemecahan Masalah) -->
+    <div class="content-section">
+        {% if konten_custom %}
+        {# Redaksi hasil editan manual pengguna (render ulang) menang atas pasal baku #}
+        <span class="pasal-text" style="white-space: pre-wrap;">{{ konten_custom }}</span>
+        {% else %}
+        <!-- 1. Persoalan -->
+        <div class="pasal-block">
+            <span class="pasal-title">Persoalan.</span>
+            <span class="pasal-text">{{ pasal.persoalan }}</span>
+        </div>
+
+        <!-- 2. Praanggapan -->
+        <div class="pasal-block">
+            <span class="pasal-title">Praanggapan.</span>
+            <span class="pasal-text">{{ pasal.praanggapan }}</span>
+        </div>
+
+        <!-- 3. Fakta/Data yang Memengaruhi -->
+        <div class="pasal-block">
+            <span class="pasal-title">Fakta/Data yang Memengaruhi.</span>
+            <span class="pasal-text">{{ pasal.fakta }}</span>
+        </div>
+
+        <!-- 4. Analisis -->
+        <div class="pasal-block">
+            <span class="pasal-title">Analisis.</span>
+            <span class="pasal-text">{{ pasal.analisis }}</span>
+        </div>
+
+        <!-- 5. Kesimpulan -->
+        <div class="pasal-block">
+            <span class="pasal-title">Kesimpulan.</span>
+            <span class="pasal-text">{{ pasal.kesimpulan }}</span>
+        </div>
+
+        <!-- 6. Saran -->
+        <div class="pasal-block">
+            <span class="pasal-title">Saran.</span>
+            <span class="pasal-text">{{ pasal.saran }}</span>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Kelompok Penutup -->
+    <div class="bottom-section">
+        <table class="bottom-table">
+            <tr>
+                <!-- Sisi Kiri: Lampiran (Sejajar tajuk tanda tangan) -->
+                <td style="width: 45%;">
+                    {% if lampiran_list and lampiran_list|length > 0 %}
+                    <div class="lampiran-wrapper">
+                        <div class="lampiran-title">Lampiran:</div>
+                        <ol class="lampiran-list">
+                            {% for lamp in lampiran_list %}
+                            <li class="lampiran-item">{{ lamp }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    {% endif %}
+                </td>
+
+                <!-- Sisi Kanan: Tanda Tangan -->
+                <td style="width: 55%; text-align: right;">
+                    <div class="ttd-container">
+                        <div class="ttd-tanggal">{{ tanggal_ttd }}</div>
+                        <div class="ttd-jabatan">{{ (jabatan_pejabat or "Perwira Staf") + "," }}</div>
+                        <div class="ttd-space"></div>
+                        <div class="ttd-nama">{{ nama_pejabat if (nama_pejabat and nama_pejabat.endswith('.')) else (nama_pejabat + '.') }}</div>
+                        {% if pangkat_pejabat %}
+                        <div class="ttd-pangkat">{{ pangkat_pejabat }}</div>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

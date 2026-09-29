@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nota Dinas</title>
+    <style>
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.25;
+            color: #000000;
+            margin: 0;
+            width: 162.5mm; /* lebar konten = printable A4 (kunci layout anti-terpotong) */
+            padding: 0;
+            background: #ffffff;
+        }
+
+        /* ── Kop Surat ── */
+        .kop-wrapper {
+            margin-bottom: 18px;
+        }
+
+        .kop-container {
+            display: inline-block;
+        }
+
+        .kop-utama {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: normal;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+        }
+
+        .kop-sub {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: normal;
+            letter-spacing: 0.2px;
+            padding-left: 42px;
+            white-space: nowrap;
+        }
+
+        .kop-line {
+            border-bottom: 1.5px solid #000000;
+            margin-top: 2px;
+            width: 100%;
+            min-width: 68mm;
+        }
+
+        /* ── Judul dan Nomor ── */
+        .judul-section {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 18px;
+        }
+
+        .judul-text {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: normal;
+            letter-spacing: 0.5px;
+        }
+
+        .nomor-text {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            margin-top: 2px;
+        }
+
+        /* ── Metadata ── */
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+        }
+
+        .meta-table td {
+            padding: 1.5px 0;
+            vertical-align: top;
+        }
+
+        .meta-label {
+            width: 24mm;
+            white-space: nowrap;
+        }
+
+        .meta-colon {
+            width: 3mm;
+            text-align: left;
+        }
+
+        .meta-val {
+            text-align: justify;
+        }
+
+        /* ── Konten Isi ── */
+        .content-section {
+            margin-bottom: 20px;
+        }
+
+        .item-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 8px;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+        }
+
+        .item-table td {
+            vertical-align: top;
+            padding: 0;
+        }
+
+        .num-col {
+            width: 6.5mm;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+        }
+
+        .text-col {
+            text-align: justify;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.25;
+        }
+
+        .subitem-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 3px;
+        }
+
+        .subitem-table td {
+            vertical-align: top;
+            padding: 1.5px 0;
+        }
+
+        .subnum-col {
+            width: 6.5mm;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+        }
+
+        .subtext-col {
+            text-align: justify;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.25;
+        }
+
+        /* ── Bagian Bawah: Tanda Tangan ── */
+        .bottom-section {
+            margin-top: 25px;
+            page-break-inside: avoid;
+            text-align: right;
+        }
+
+        .ttd-container {
+            display: inline-block;
+            width: 75mm;
+            text-align: center;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+        }
+
+        .ttd-tanggal {
+            margin-bottom: 2px;
+        }
+
+        .ttd-jabatan {
+            margin-bottom: 0;
+        }
+
+        .ttd-space {
+            height: 52px;
+        }
+
+        .ttd-nama {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Kop Instansi -->
+    <div class="kop-wrapper">
+        <div class="kop-container">
+            <div class="kop-utama">{{ kop_utama }}</div>
+            <div class="kop-sub">{{ kop_sub }}</div>
+            <div class="kop-line"></div>
+        </div>
+    </div>
+
+    <!-- Judul & Nomor -->
+    <div class="judul-section">
+        <div class="judul-text">NOTA DINAS</div>
+        <div class="nomor-text">Nomor {{ nomor_surat }}</div>
+    </div>
+
+    <!-- Metadata Surat -->
+    <table class="meta-table">
+        <tr>
+            <td class="meta-label">Kepada Yth</td>
+            <td class="meta-colon">:</td>
+            <td class="meta-val">{{ kepada }}</td>
+        </tr>
+        <tr>
+            <td class="meta-label">Dari</td>
+            <td class="meta-colon">:</td>
+            <td class="meta-val">{{ dari }}</td>
+        </tr>
+        <tr>
+            <td class="meta-label">Perihal</td>
+            <td class="meta-colon">:</td>
+            <td class="meta-val">{{ perihal }}</td>
+        </tr>
+    </table>
+
+    <!-- Bagian Isi -->
+    <div class="content-section">
+        <!-- Poin 1: Dasar -->
+        <table class="item-table">
+            <tr>
+                <td class="num-col">1.</td>
+                <td class="text-col">
+                    <div>Dasar:</div>
+                    <table class="subitem-table">
+                        {% for d in dasar_list %}
+                        <tr>
+                            <td class="subnum-col">{{ ('abcdefghijklmnopqrstuvwxyz')[loop.index0] if loop.index0 < 26 else loop.index }}.</td>
+                            <td class="subtext-col">{{ d }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Poin 2, 3, 4 ...: Isi Paragraf & Sub-Poin -->
+        {% if isi_list %}
+            {% for p in isi_list %}
+            <table class="item-table">
+                <tr>
+                    <td class="num-col">{{ 2 + loop.index0 }}.</td>
+                    <td class="text-col">
+                        <div>{{ p['teks'] if (p is mapping and 'teks' in p) else (p.teks if p.teks is defined else p) }}</div>
+                        {% if (p is mapping and p.get('sub_poin')) or (p.sub_poin is defined and p.sub_poin) %}
+                        <table class="subitem-table">
+                            {% for sub in (p['sub_poin'] if p is mapping else p.sub_poin) %}
+                            <tr>
+                                <td class="subnum-col">{{ ('abcdefghijklmnopqrstuvwxyz')[loop.index0] if loop.index0 < 26 else loop.index }}.</td>
+                                <td class="subtext-col">{{ sub }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+            {% endfor %}
+            <!-- Penutup -->
+            <table class="item-table">
+                <tr>
+                    <td class="num-col">{{ 2 + isi_list|length }}.</td>
+                    <td class="text-col">{{ kalimat_penutup or "Demikian disampaikan mohon menjadi perhatian." }}</td>
+                </tr>
+            </table>
+        {% elif isi_paragraf %}
+            <table class="item-table">
+                <tr>
+                    <td class="num-col">2.</td>
+                    <td class="text-col">{{ isi_paragraf }}</td>
+                </tr>
+            </table>
+            <table class="item-table">
+                <tr>
+                    <td class="num-col">3.</td>
+                    <td class="text-col">{{ kalimat_penutup or "Demikian disampaikan mohon menjadi perhatian." }}</td>
+                </tr>
+            </table>
+        {% endif %}
+    </div>
+
+    <!-- Bagian Bawah: Tanda Tangan & Tembusan -->
+    <div class="bottom-section">
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="vertical-align: top; text-align: left; width: 45%;">
+                    {% if tembusan_list %}
+                    <div class="tembusan-wrapper" style="font-size: 10.67pt /* dikompensasi boost mesin x1.125 */; line-height: 1.25;">
+                        <div style="margin-bottom: 2px;">Tembusan:</div>
+                        <ol style="margin: 0; padding-left: 18px;">
+                            {% for t in tembusan_list %}
+                            <li>{{ t }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    {% endif %}
+                </td>
+                <td style="vertical-align: top; text-align: right; width: 55%;">
+                    <div class="ttd-container">
+                        <div class="ttd-tanggal">{{ tanggal_ttd }}</div>
+                        <div class="ttd-jabatan">{{ (jabatan_pejabat or "Kadiv") + "," }}</div>
+                        <div class="ttd-space"></div>
+                        <div class="ttd-nama">{{ nama_pejabat if (nama_pejabat and nama_pejabat.endswith('.')) else (nama_pejabat + '.') }}</div>
+                        {% if pangkat_pejabat %}
+                        <div class="ttd-pangkat" style="font-weight: normal; font-size: 10.67pt /* dikompensasi boost mesin x1.125 */; margin-top: 1px;">{{ pangkat_pejabat }}</div>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

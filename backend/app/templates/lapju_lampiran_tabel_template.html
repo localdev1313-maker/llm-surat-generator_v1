@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Lampiran Tabel Matriks Laporan Kemajuan Belanja Modal</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 7.11pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.25;
+            color: #000000;
+            background: #ffffff;
+            margin: 0;
+            width: 177mm; /* lebar konten = printable A4 (kunci layout anti-terpotong) */
+            padding: 0;
+        }
+
+        /* ── KOP LAMPIRAN POJOK KANAN ATAS ── */
+        .kop-lampiran-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 12px;
+        }
+
+        .kop-lampiran {
+            float: right;
+            text-align: left;
+            font-size: 7.56pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.3;
+            border-bottom: 1px solid #000000;
+            padding-bottom: 3px;
+            margin-bottom: 14px;
+        }
+
+        .kop-lampiran table {
+            border-collapse: collapse;
+        }
+
+        .kop-lampiran td {
+            padding: 0 2px;
+            vertical-align: top;
+        }
+
+        .clearfix {
+            clear: both;
+        }
+
+        /* ── JUDUL TABEL LAPJU ── */
+        .judul-container {
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .judul-line1 {
+            font-size: 9.33pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .judul-line2 {
+            font-size: 8.89pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* ── TABEL MATRIKS 13 KOLOM ── */
+        .matriks-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 6.67pt /* dikompensasi boost mesin x1.125 */;
+            margin-bottom: 15px;
+        }
+
+        .matriks-table th, .matriks-table td {
+            border: 1px solid #000000;
+            padding: 4px 3px;
+            vertical-align: middle;
+        }
+
+        .matriks-table th {
+            background-color: #f2f2f2;
+            text-align: center;
+            font-weight: bold;
+            font-size: 6.22pt /* dikompensasi boost mesin x1.125 */;
+            text-transform: uppercase;
+        }
+
+        .col-num-row th {
+            background-color: #ffffff;
+            font-weight: normal;
+            font-size: 5.78pt /* dikompensasi boost mesin x1.125 */;
+            padding: 1px 2px;
+        }
+
+        /* Alignment & Width Helpers */
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+        .nowrap { white-space: nowrap; }
+
+        .row-total td {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+
+        .bullet-list {
+            margin: 0;
+            padding-left: 10px;
+            text-align: left;
+        }
+
+        .bullet-list li {
+            margin-bottom: 2px;
+        }
+
+        /* ── BLOK TANDA TANGAN LAMPIRAN ── */
+        .ttd-lampiran-container {
+            float: right;
+            width: 320px;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 7.56pt /* dikompensasi boost mesin x1.125 */;
+            page-break-inside: avoid;
+        }
+
+        .ttd-jabatan {
+            font-size: 8.0pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.2;
+        }
+
+        .ttd-mewakili {
+            font-size: 8.0pt /* dikompensasi boost mesin x1.125 */;
+            font-style: italic;
+            margin-top: 1px;
+            margin-bottom: 4px;
+        }
+
+        .ttd-spacer {
+            height: 50px;
+        }
+
+        .ttd-nama {
+            font-size: 8.0pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .ttd-pangkat {
+            font-size: 7.56pt /* dikompensasi boost mesin x1.125 */;
+            margin-top: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- KOP LAMPIRAN POJOK KANAN ATAS -->
+    <div class="kop-lampiran">
+        <table>
+            <tr>
+                <td colspan="3">Lampiran Surat {{ jabatan_penandatangan }}</td>
+            </tr>
+            <tr>
+                <td>Nomor</td>
+                <td>:</td>
+                <td>{{ nomor_surat }}</td>
+            </tr>
+            <tr>
+                <td>Tanggal</td>
+                <td>:</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ bulan }} {{ tahun }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+
+    <!-- JUDUL TABEL LAPJU -->
+    <div class="judul-container">
+        <div class="judul-line1">LAPORAN KEMAJUAN PELAKSANAAN KEGIATAN BELANJA MODAL {{ kop_satker }}</div>
+        <div class="judul-line2">PERIODE BULAN {{ bulan_upper }} TA. {{ tahun }}</div>
+    </div>
+
+    <!-- TABEL MATRIKS 13 KOLOM BAKU -->
+    <table class="matriks-table">
+        <thead>
+            <tr>
+                <th rowspan="2" style="width: 20px;">NO</th>
+                <th colspan="2">DIPA</th>
+                <th rowspan="2" style="width: 150px;">PROGRAM/KEGIATAN/KRO/RO/<br>KOMPONEN/AKUN/ITEM</th>
+                <th rowspan="2" style="width: 75px;">PAGU ANGGARAN<br>(Rp)</th>
+                <th colspan="5">KONTRAK</th>
+                <th colspan="2">REALISASI ANGGARAN (Rp)</th>
+                <th colspan="2">KEMAJUAN (%)</th>
+                <th rowspan="2" style="width: 140px;">KETERANGAN<br>(ADMIN / FISIK)</th>
+            </tr>
+            <tr>
+                <!-- DIPA Sub -->
+                <th style="width: 65px;">NOMOR</th>
+                <th style="width: 50px;">TANGGAL</th>
+                <!-- KONTRAK Sub -->
+                <th style="width: 6.5%;">NILAI KONTRAK<br>(Rp)</th>
+                <th style="width: 5%;">NOMOR</th>
+                <th style="width: 50px;">TANGGAL</th>
+                <th style="width: 50px;">TDS</th>
+                <th style="width: 70px;">PENYEDIA</th>
+                <!-- REALISASI Sub -->
+                <th style="width: 70px;">TERSERAP</th>
+                <th style="width: 70px;">SISA</th>
+                <!-- KEMAJUAN Sub -->
+                <th style="width: 30px;">FISIK</th>
+                <th style="width: 30px;">ADM</th>
+            </tr>
+            <!-- Baris Nomor Kolom Bantu (1) s/d (14) -->
+            <tr class="col-num-row">
+                <th>(1)</th>
+                <th>(2)</th>
+                <th>(3)</th>
+                <th>(4)</th>
+                <th>(5)</th>
+                <th>(6)</th>
+                <th>(7)</th>
+                <th>(8)</th>
+                <th>(9)</th>
+                <th>(10)</th>
+                <th>(11)</th>
+                <th>(12)</th>
+                <th>(13)</th>
+                <th>(14)</th>
+                <th>(15)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td class="text-center">{{ item.no_urut }}</td>
+                <td class="text-center">{{ item.nomor_dipa }}</td>
+                <td class="text-center">{{ item.tanggal_dipa }}</td>
+                <td class="text-left"><strong>{{ item.nama_kegiatan }}</strong></td>
+                <td class="text-right nowrap">{{ item.pagu_anggaran_formatted }}</td>
+                <td class="text-right nowrap">{{ item.nilai_kontrak_formatted }}</td>
+                <td class="text-center">{{ item.nomor_kontrak }}</td>
+                <td class="text-center">{{ item.tanggal_kontrak }}</td>
+                <td class="text-center">{{ item.tds }}</td>
+                <td class="text-left">{{ item.penyedia }}</td>
+                <td class="text-right nowrap">{{ item.anggaran_terserap_formatted }}</td>
+                <td class="text-right nowrap">{{ item.sisa_anggaran_formatted }}</td>
+                <td class="text-center font-bold">{{ item.persentase_fisik }}%</td>
+                <td class="text-center font-bold">{{ item.persentase_admin }}%</td>
+                <td class="text-left">
+                    {% if item.keterangan_admin %}
+                        <div style="font-weight: bold; text-decoration: underline; margin-bottom: 2px;">Admin:</div>
+                        <ul class="bullet-list">
+                            {% for c in item.keterangan_admin %}
+                                <li>{{ c }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% if item.keterangan_fisik %}
+                        <div style="font-weight: bold; text-decoration: underline; margin-top: 4px; margin-bottom: 2px;">Fisik:</div>
+                        <ul class="bullet-list">
+                            {% for c in item.keterangan_fisik %}
+                                <li>{{ c }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% if not item.keterangan_admin and not item.keterangan_fisik %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+
+            <!-- BARIS REKAPITULASI TOTAL -->
+            <tr class="row-total">
+                <td colspan="4" class="text-center font-bold">JUMLAH / TOTAL</td>
+                <td class="text-right nowrap">{{ totals.total_pagu_formatted }}</td>
+                <td class="text-right nowrap">{{ totals.total_nilai_kontrak_formatted }}</td>
+                <td colspan="4" class="text-center">-</td>
+                <td class="text-right nowrap">{{ totals.total_terserap_formatted }}</td>
+                <td class="text-right nowrap">{{ totals.total_sisa_formatted }}</td>
+                <td class="text-center font-bold">{{ totals.rata_rata_fisik }}%</td>
+                <td class="text-center font-bold">{{ totals.rata_rata_admin }}%</td>
+                <td class="text-center">-</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- BLOK TANDA TANGAN PENGESAHAN LAMPIRAN -->
+    <div class="ttd-lampiran-container">
+        <div class="ttd-jabatan">{{ jabatan_penandatangan }}{% if not is_mewakili %},{% endif %}</div>
+        {% if is_mewakili %}
+            <div class="ttd-mewakili">mewakili,</div>
+        {% endif %}
+        <div class="ttd-spacer"></div>
+        <div class="ttd-nama">{{ nama_penandatangan }}</div>
+        <div class="ttd-pangkat">{{ pangkat_korps_nrp }}</div>
+    </div>
+    <div class="clearfix"></div>
+
+</body>
+</html>

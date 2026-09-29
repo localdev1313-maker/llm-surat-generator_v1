@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Surat Pengantar Laporan Kemajuan (LAPJU)</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.35;
+            color: #000000;
+            background: #ffffff;
+            margin: 0;
+            width: 162.5mm; /* lebar konten = printable A4 (kunci layout anti-terpotong) */
+            padding: 0;
+        }
+
+        /* ── KOP SURAT MILITER ── */
+        .kop-container {
+            display: inline-block;
+            text-align: center;
+            border-bottom: 1.5px solid #000000;
+            padding-bottom: 3px;
+            margin-bottom: 18px;
+        }
+
+        .kop-line1 {
+            font-size: 9.78pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .kop-line2 {
+            font-size: 9.78pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── HEADER TABLE: METADATA & TANGGAL ── */
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 18px;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+        }
+
+        .meta-table td {
+            vertical-align: top;
+            padding: 1px 0;
+        }
+
+        .meta-left {
+            width: 58%;
+        }
+
+        .meta-right {
+            width: 42%;
+            text-align: right;
+            padding-right: 5px;
+            vertical-align: top;
+        }
+
+        /* Blok tujuan berada DI kolom kanan, mulai sejajar baris tanggal */
+        .tujuan-block {
+            margin-top: 10px;
+            text-align: left;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.4;
+        }
+
+        .meta-sub-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .meta-sub-table td {
+            padding: 1px 0;
+            vertical-align: top;
+        }
+
+        .label-col {
+            width: 95px;
+        }
+
+        .colon-col {
+            width: 15px;
+            text-align: center;
+        }
+
+        /* ── KEPADA YTH ── */
+        .tujuan-container {
+            margin-top: 14px;
+            margin-bottom: 22px;
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+        }
+
+        .tujuan-title {
+            margin-bottom: 2px;
+        }
+
+        .tujuan-kota {
+            margin-left: 28px;
+            margin-top: 2px;
+        }
+
+        /* ── ISI PASAL ── */
+        .isi-container {
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.45;
+            margin-bottom: 24px;
+        }
+
+        .pasal-item {
+            margin-bottom: 12px;
+            text-indent: -24px;
+            padding-left: 24px;
+        }
+
+        /* ── BLOK TANDA TANGAN ── */
+        .ttd-outer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            page-break-inside: avoid;
+        }
+
+        .ttd-outer-table td {
+            vertical-align: top;
+        }
+
+        .ttd-left-col {
+            width: 52%;
+        }
+
+        .ttd-right-col {
+            width: 48%;
+            text-align: center;
+        }
+
+        .ttd-jabatan {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+
+        .ttd-mewakili {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-style: italic;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .ttd-spacer {
+            height: 65px;
+        }
+
+        .ttd-nama {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            font-weight: bold;
+            text-decoration: underline;
+            line-height: 1.2;
+        }
+
+        .ttd-pangkat {
+            font-size: 10.67pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.2;
+            margin-top: 2px;
+        }
+
+        /* ── TEMBUSAN & PARAF ── */
+        .footer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 8.89pt /* dikompensasi boost mesin x1.125 */;
+            page-break-inside: avoid;
+        }
+
+        .tembusan-container {
+            font-size: 9.33pt /* dikompensasi boost mesin x1.125 */;
+            line-height: 1.35;
+        }
+
+        .tembusan-title {
+            font-size: 9.78pt /* dikompensasi boost mesin x1.125 */;
+            text-decoration: underline;
+            margin-bottom: 4px;
+        }
+
+        .tembusan-list {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .tembusan-list li {
+            margin-bottom: 2px;
+        }
+
+        /* ── TABEL PARAF INTERNAL ── */
+        .paraf-table {
+            border-collapse: collapse;
+            border: 1px solid #000000;
+            font-size: 8.0pt /* dikompensasi boost mesin x1.125 */;
+            margin-top: 15px;
+            width: 170px;
+        }
+
+        .paraf-table th, .paraf-table td {
+            border: 1px solid #000000;
+            padding: 3px 6px;
+            text-align: center;
+        }
+
+        .paraf-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        .paraf-box {
+            height: 28px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- KOP SATKER -->
+    <div class="kop-container">
+        <div class="kop-line1">{{ kop_utama }}</div>
+        <div class="kop-line2">{{ kop_satker }}</div>
+    </div>
+
+    <!-- METADATA & TANGGAL -->
+    <table class="meta-table">
+        <tr>
+            <td class="meta-left">
+                <table class="meta-sub-table">
+                    <tr>
+                        <td class="label-col">Nomor</td>
+                        <td class="colon-col">:</td>
+                        <td>{{ nomor_surat }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Klasifikasi</td>
+                        <td class="colon-col">:</td>
+                        <td>{{ klasifikasi }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Lampiran</td>
+                        <td class="colon-col">:</td>
+                        <td>{{ lampiran_keterangan }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Perihal</td>
+                        <td class="colon-col">:</td>
+                        <td><strong>{{ perihal }}</strong></td>
+                    </tr>
+                </table>
+            </td>
+            <td class="meta-right">
+                <div>{{ tempat }}, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ bulan }} {{ tahun }}</div>
+                <div class="tujuan-block">
+                    <div class="tujuan-title">Kepada Yth.</div>
+                    <div><strong>{{ kepada_yth }}</strong></div>
+                    <div class="tujuan-kota">di</div>
+                    <div class="tujuan-kota"><strong>{{ kota_tujuan }}</strong></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- ISI PASAL -->
+    <div class="isi-container">
+        {% if konten_custom %}
+            <div class="pasal-item" style="white-space: pre-wrap; text-align: left;">{{ konten_custom }}</div>
+        {% else %}
+            <div class="pasal-item">
+                1.&nbsp;&nbsp;&nbsp;&nbsp;Berdasarkan {{ dasar_rujukan }} tentang Laporan Kemajuan Belanja Modal Pengadaan Barang/Jasa, bersama ini dikirimkan Laporan Kemajuan Belanja Modal {{ kop_satker }} periode bulan {{ bulan }} TA {{ tahun }} sebagaimana tabel terlampir.
+            </div>
+            <div class="pasal-item">
+                2.&nbsp;&nbsp;&nbsp;&nbsp;Demikian disampaikan mohon menjadi periksa.
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- BLOK TANDA TANGAN & TEMBUSAN -->
+    <table class="ttd-outer-table">
+        <tr>
+            <!-- SISI KIRI: TEMBUSAN & PARAF -->
+            <td class="ttd-left-col">
+                <div class="tembusan-container">
+                    <div class="tembusan-title">Tembusan:</div>
+                    <ol class="tembusan-list">
+                        {% for t in tembusan %}
+                            <li>{{ t }}</li>
+                        {% endfor %}
+                    </ol>
+                </div>
+
+                {% if daftar_paraf %}
+                <table class="paraf-table">
+                    <tr>
+                        <th>Pejabat</th>
+                        <th>Paraf</th>
+                    </tr>
+                    {% for p in daftar_paraf %}
+                    <tr>
+                        <td>{{ p.jabatan }}</td>
+                        <td class="paraf-box">{{ p.paraf }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+            </td>
+
+            <!-- SISI KANAN: TAJUK TANDA TANGAN -->
+            <td class="ttd-right-col">
+                <div class="ttd-jabatan">{{ jabatan_penandatangan }}{% if not is_mewakili %},{% endif %}</div>
+                {% if is_mewakili %}
+                    <div class="ttd-mewakili">mewakili,</div>
+                {% endif %}
+                <div class="ttd-spacer"></div>
+                <div class="ttd-nama">{{ nama_penandatangan }}</div>
+                <div class="ttd-pangkat">{{ pangkat_korps_nrp }}</div>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

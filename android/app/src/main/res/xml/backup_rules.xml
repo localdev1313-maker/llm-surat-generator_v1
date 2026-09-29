@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <exclude domain="database" path="." />
+    <!-- app_settings.xml: kredensial server + passphrase DB — rahasia. -->
+    <exclude domain="sharedpref" path="app_settings.xml" />
+</full-backup-content>

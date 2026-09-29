@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Layanan Surat Elektronik AI</string>
+    <string name="title_nota_dinas">Nota Dinas Baku</string>
+    <string name="title_surat_umum">Surat Umum</string>
+    <string name="biometric_title">Autentikasi Layanan Surat AI</string>
+    <string name="biometric_subtitle">Gunakan sidik jari atau wajah untuk membuka aplikasi</string>
+</resources>

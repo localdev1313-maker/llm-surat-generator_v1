@@ -1,0 +1,3098 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSEB AI — Tata Naskah Dinas &amp; Administrasi Militer</title>
+    <meta name="description" content="Sistem Surat Elektronik Berbasis AI — Platform Tata Naskah Dinas Mandiri, Berdaulat, dan Terstandarisasi KEP/868/2022 TNI">
+    
+    <!-- Google Fonts: Plus Jakarta Sans, Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* ══════════════════════════════════════════════════════════════
+           DESIGN SYSTEM — SAAS COMMAND PLATFORM (DARK NAVY / PALANTIR)
+           ══════════════════════════════════════════════════════════════ */
+        :root {
+            --bg-app:        #060a12;
+            --bg-sidebar:    #0a0f1d;
+            --bg-header:     #0c1324;
+            --bg-surface:    #10192e;
+            --bg-card:       #131e36;
+            --bg-card-hover: #182644;
+            --bg-input:      #0b1222;
+            --bg-input-focus:#0f182d;
+            
+            --accent:        #3b82f6;
+            --accent-hover:  #60a5fa;
+            --accent-glow:   rgba(59, 130, 246, 0.18);
+            --accent-subtle: rgba(59, 130, 246, 0.08);
+            --accent-border: rgba(59, 130, 246, 0.35);
+
+            --success:       #10b981;
+            --success-glow:  rgba(16, 185, 129, 0.2);
+            --warning:       #f59e0b;
+            --warning-subtle:rgba(245, 158, 11, 0.1);
+            --danger:        #ef4444;
+            --info:          #0ea5e9;
+            --info-subtle:   rgba(14, 165, 233, 0.1);
+
+            --text-primary:  #f1f5f9;
+            --text-secondary:#94a3b8;
+            --text-muted:    #64748b;
+            --text-accent:   #93c5fd;
+
+            --border-app:    #1e293b;
+            --border-subtle: #162238;
+            --border-focus:  #3b82f6;
+
+            --font-display:  'Plus Jakarta Sans', -apple-system, sans-serif;
+            --font-body:     'Inter', -apple-system, sans-serif;
+            --font-mono:     'JetBrains Mono', monospace;
+
+            --radius-xs:     6px;
+            --radius-sm:     8px;
+            --radius-md:     12px;
+            --radius-lg:     16px;
+            
+            --sidebar-w:     280px;
+            --header-h:      60px;
+            --ease:          cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: var(--font-body);
+            background: var(--bg-app);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-app); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* ══════ SAAS APP LAYOUT ══════ */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        /* ══════ LEFT SAAS SIDEBAR ══════ */
+        .sidebar {
+            width: var(--sidebar-w);
+            min-width: var(--sidebar-w);
+            height: 100vh;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-app);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 30;
+            user-select: none;
+            transition: transform 300ms var(--ease), width 300ms var(--ease);
+        }
+
+        .sidebar-brand {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), #4f46e5);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 11px;
+            color: #fff;
+            letter-spacing: 1.2px;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+            flex-shrink: 0;
+        }
+
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .brand-name {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-primary);
+            letter-spacing: -0.2px;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .brand-tag {
+            font-size: 9px;
+            padding: 2px 6px;
+            background: var(--accent-subtle);
+            border: 1px solid var(--accent-border);
+            color: var(--text-accent);
+            border-radius: 4px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+
+        .brand-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        /* Sidebar Scrollable Body */
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-group-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 10px 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 180ms var(--ease);
+            border: 1px solid transparent;
+            font-size: 13px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            border-color: var(--border-subtle);
+        }
+
+        .nav-item.active {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            font-weight: 600;
+            border-color: var(--accent-border);
+            box-shadow: 0 0 16px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20%;
+            bottom: 20%;
+            width: 3px;
+            background: var(--accent);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .nav-item-icon {
+            font-size: 18px;
+            width: 22px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-item-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .nav-item-title {
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-item-subtitle {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-item.active .nav-item-subtitle {
+            color: var(--text-accent);
+        }
+
+        .nav-badge {
+            font-size: 9px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 100px;
+            background: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid var(--border-app);
+        }
+
+        .nav-item.active .nav-badge {
+            background: var(--accent-subtle);
+            color: var(--text-accent);
+            border-color: var(--accent-border);
+        }
+
+        /* Tool Items inside Sidebar */
+        .sidebar-tool-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 500;
+            background: none;
+            border: 1px solid transparent;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            transition: all 160ms var(--ease);
+        }
+
+        .sidebar-tool-btn:hover {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            border-color: var(--border-subtle);
+        }
+
+        .sidebar-tool-btn i {
+            color: var(--text-muted);
+            transition: color 160ms;
+        }
+        .sidebar-tool-btn:hover i {
+            color: var(--accent);
+        }
+
+        /* System Telemetry Box in Sidebar */
+        .telemetry-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .telemetry-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+
+        .telemetry-label {
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .telemetry-val {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success-glow);
+            display: inline-block;
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            padding: 14px 16px;
+            border-top: 1px solid var(--border-subtle);
+            background: var(--bg-app);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .satker-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .satker-avatar {
+            width: 28px;
+            height: 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-app);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .satker-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .satker-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .satker-role {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        /* ══════ MAIN WORKSPACE ══════ */
+        .main-workspace {
+            flex: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--bg-app);
+            position: relative;
+        }
+
+        /* Top Header */
+        .top-header {
+            height: var(--header-h);
+            min-height: var(--header-h);
+            background: var(--bg-header);
+            border-bottom: 1px solid var(--border-app);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 20;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .breadcrumb-item {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .breadcrumb-sep {
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        .breadcrumb-current {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-family: var(--font-display);
+        }
+
+        .header-center {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* View Mode Segmented Switch */
+        .view-switcher {
+            display: flex;
+            align-items: center;
+            background: var(--bg-app);
+            border: 1px solid var(--border-app);
+            padding: 3px;
+            border-radius: var(--radius-sm);
+        }
+
+        .view-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 160ms var(--ease);
+        }
+
+        .view-btn.active {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Standard Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--font-body);
+            font-size: 12.5px;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 180ms var(--ease);
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .btn:active { transform: scale(0.97); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #4f46e5);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+        }
+        .btn-primary:hover {
+            filter: brightness(1.12);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            border-color: var(--border-app);
+            color: var(--text-primary);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--text-muted);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+        .btn-ghost:hover {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+        }
+
+        .btn-icon {
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            border: 1px solid var(--border-app);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 160ms var(--ease);
+        }
+        .btn-icon:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+        }
+
+        /* ══════ SPLIT WORKSPACE BODY ══════ */
+        .workspace-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            height: calc(100vh - var(--header-h));
+            position: relative;
+        }
+
+        /* Left Form Editor Column */
+        .editor-pane {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 28px 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: all 250ms var(--ease);
+        }
+
+        /* Focus mode centers the form nicely */
+        .workspace-body.mode-focus .editor-pane {
+            max-width: 900px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /* Split mode divides 55% / 45% */
+        .workspace-body.mode-split .editor-pane {
+            flex: 0 0 54%;
+            max-width: 54%;
+            border-right: 1px solid var(--border-app);
+        }
+
+        /* Right Live Canvas Column */
+        .canvas-pane {
+            flex: 0 0 46%;
+            max-width: 46%;
+            background: #090e1a;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            transition: all 250ms var(--ease);
+        }
+
+        .workspace-body.mode-focus .canvas-pane {
+            display: none;
+        }
+
+        .canvas-toolbar {
+            height: 44px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-app);
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            user-select: none;
+        }
+
+        .canvas-toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .canvas-toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .canvas-viewport {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: auto;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: radial-gradient(#162238 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+
+        .paper-scaler {
+            transform-origin: top center;
+            transition: transform 180ms var(--ease);
+        }
+
+        /* ══════ SAAS FORM SECTIONS (CARDS) ══════ */
+        .form-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-app);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            transition: border-color 200ms;
+        }
+
+        .form-card:hover {
+            border-color: rgba(148, 163, 184, 0.2);
+        }
+
+        .form-card-header {
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: background 150ms;
+        }
+
+        .form-card-header:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .form-card-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: var(--radius-xs);
+            background: var(--accent-subtle);
+            border: 1px solid var(--accent-border);
+            color: var(--accent);
+            font-family: var(--font-display);
+            font-size: 11px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-card-title {
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.1px;
+        }
+
+        .form-card-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-card-chevron {
+            color: var(--text-muted);
+            transition: transform 250ms var(--ease);
+        }
+
+        .form-card.open .form-card-chevron {
+            transform: rotate(180deg);
+        }
+
+        .form-card-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 350ms var(--ease), padding 350ms var(--ease);
+            padding: 0 18px;
+        }
+
+        .form-card.open .form-card-body {
+            max-height: 3000px;
+            padding: 18px;
+        }
+
+        .form-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* Form Fields */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .input-hint {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: none;
+            font-weight: 400;
+        }
+
+        .input-text, .input-select, .input-textarea {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border-app);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            font-family: var(--font-body);
+            font-size: 13.5px;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 180ms var(--ease);
+        }
+
+        .input-text:focus, .input-select:focus, .input-textarea:focus {
+            background: var(--bg-input-focus);
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .input-text.mono, .input-textarea.mono {
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+        }
+
+        .input-text.uppercase { text-transform: uppercase; }
+
+        .input-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        .input-textarea {
+            resize: vertical;
+            min-height: 70px;
+            line-height: 1.55;
+        }
+
+        .input-readonly {
+            background: #090e1a;
+            color: var(--warning);
+            font-weight: 600;
+            cursor: not-allowed;
+        }
+
+        /* Layout Grid Helpers */
+        .row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .span-2 { grid-column: span 2; }
+
+        @media (max-width: 900px) {
+            .row-2, .row-3, .row-4 { grid-template-columns: 1fr; }
+            .span-2 { grid-column: span 1; }
+        }
+
+        /* LAPJU Strip & Cards */
+        .kpi-board {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-app);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+
+        .kpi-cell {
+            text-align: center;
+        }
+
+        .kpi-title {
+            font-size: 9.5px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+
+        .kpi-figure {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .kpi-figure.success { color: var(--success); }
+        .kpi-figure.warning { color: var(--warning); }
+
+        .lapju-entry {
+            background: var(--bg-card);
+            border: 1px solid var(--border-app);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .lapju-entry-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .lapju-entry-num {
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .btn-trash {
+            background: none;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 11.5px;
+            opacity: 0.8;
+            transition: opacity 150ms;
+        }
+        .btn-trash:hover { opacity: 1; }
+
+        /* Zero-AI Banner */
+        .verbatim-banner {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--info-subtle);
+            border: 1px solid rgba(14, 165, 233, 0.25);
+            border-radius: var(--radius-sm);
+            font-size: 12.5px;
+            color: #7dd3fc;
+            line-height: 1.45;
+        }
+
+        .verbatim-banner p {
+            color: var(--text-secondary);
+            font-size: 11.5px;
+            margin-top: 3px;
+        }
+
+        /* Poin Item (Nota Dinas) */
+        .poin-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .poin-box-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .poin-box-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* ══════ FLOATING EDITOR ACTION BAR ══════ */
+        .floating-actions {
+            position: sticky;
+            bottom: 16px;
+            z-index: 25;
+            background: rgba(16, 25, 46, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--border-app);
+            border-radius: var(--radius-md);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+        }
+
+        .floating-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 11.5px;
+            color: var(--text-muted);
+        }
+
+        .floating-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ══════ MILITARY PAPER CANVAS A4/F4 ══════ */
+        .paper-sheet {
+            width: 210mm;
+            min-height: 297mm;
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            font-family: Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+            padding: 40px 45px;
+            border-radius: 2px;
+            user-select: text;
+        }
+
+        .paper-sheet-landscape {
+            width: 297mm;
+            min-height: 210mm;
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            font-family: Arial, sans-serif;
+            font-size: 8.5pt;
+            line-height: 1.3;
+            padding: 25px 30px;
+            border-radius: 2px;
+            user-select: text;
+        }
+
+        .military-line {
+            border-bottom: 1.5px solid #000;
+            margin-top: 4px;
+            margin-bottom: 12px;
+        }
+
+        .military-table th {
+            background: #f1f5f9;
+            border: 1px solid #000;
+            padding: 4px 6px;
+            font-size: 7.5pt;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .military-table td {
+            border: 1px solid #000;
+            padding: 4px 6px;
+            font-size: 7.5pt;
+            vertical-align: top;
+        }
+
+        /* ══════ MODAL OVERLAYS ══════ */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-backdrop.active { display: flex; }
+
+        .modal-window {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-app);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 800px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-head {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-app);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .modal-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 18px 20px;
+        }
+
+        .modal-foot {
+            padding: 14px 20px;
+            border-top: 1px solid var(--border-app);
+            background: var(--bg-card);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* Preview Full Modal (Popup version) */
+        .preview-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 65;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 20px;
+            align-items: center;
+        }
+
+        .preview-modal-backdrop.active { display: flex; }
+
+        .preview-modal-bar {
+            position: sticky;
+            top: 0;
+            z-index: 66;
+            background: rgba(12, 19, 36, 0.95);
+            border: 1px solid var(--border-app);
+            border-radius: var(--radius-md);
+            padding: 10px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* ══════ SNACKBAR TOAST ══════ */
+        .snackbar-box {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 70;
+            background: var(--bg-card);
+            border: 1px solid var(--border-app);
+            backdrop-filter: blur(16px);
+            padding: 12px 18px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 300ms var(--ease);
+        }
+
+        .snackbar-box.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .snackbar-icon { color: var(--success); flex-shrink: 0; }
+        .snackbar-icon.error { color: var(--danger); }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .spinning { animation: spin 1s linear infinite; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- ══════════════════════════════════════════════
+             LEFT SAAS SIDEBAR (PRO-DEFENSE SUITE)
+             ══════════════════════════════════════════════ -->
+        <aside class="sidebar" id="appSidebar">
+            <div>
+                <!-- Brand Header -->
+                <div class="sidebar-brand">
+                    <div class="brand-logo">SSEB</div>
+                    <div class="brand-info">
+                        <div class="brand-name">
+                            SSEB AI
+                            <span class="brand-tag">v4.0</span>
+                        </div>
+                        <div class="brand-desc">Tata Naskah Dinas TNI AL</div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Body Navigation -->
+                <div class="sidebar-content">
+
+                    <!-- Group 1: Modul Dokumen -->
+                    <div class="nav-group">
+                        <div class="nav-group-title">Modul Naskah Dinas</div>
+                        
+                        <div class="nav-item active" data-type="nota_dinas" onclick="switchDocTab('nota_dinas')">
+                            <span class="nav-item-icon">📋</span>
+                            <div class="nav-item-body">
+                                <div class="nav-item-title">Nota Dinas</div>
+                                <div class="nav-item-subtitle">Disposisi &amp; Korespondensi</div>
+                            </div>
+                            <span class="nav-badge">KEP/868</span>
+                        </div>
+
+                        <div class="nav-item" data-type="telaahan_staf" onclick="switchDocTab('telaahan_staf')">
+                            <span class="nav-item-icon">📊</span>
+                            <div class="nav-item-body">
+                                <div class="nav-item-title">Telaahan Staf</div>
+                                <div class="nav-item-subtitle">6 Pasal Baku Kajian</div>
+                            </div>
+                            <span class="nav-badge">Contoh 26</span>
+                        </div>
+
+                        <div class="nav-item" data-type="kka_seskoal" onclick="switchDocTab('kka_seskoal')">
+                            <span class="nav-item-icon">🎓</span>
+                            <div class="nav-item-body">
+                                <div class="nav-item-title">KKA Seskoal</div>
+                                <div class="nav-item-subtitle">Kertas Karya Acuan Pasis</div>
+                            </div>
+                            <span class="nav-badge">Perdan '20</span>
+                        </div>
+
+                        <div class="nav-item" data-type="lapju" onclick="switchDocTab('lapju')">
+                            <span class="nav-item-icon">💰</span>
+                            <div class="nav-item-body">
+                                <div class="nav-item-title">LAPJU Belanja Modal</div>
+                                <div class="nav-item-subtitle">Data Riil Tanpa AI</div>
+                            </div>
+                            <span class="nav-badge" style="color:var(--success);border-color:rgba(16,185,129,0.3)">100% Riil</span>
+                        </div>
+                    </div>
+
+                    <!-- Group 2: Quick Tools -->
+                    <div class="nav-group">
+                        <div class="nav-group-title">Alat &amp; Templat Cepat</div>
+                        
+                        <button type="button" class="sidebar-tool-btn" onclick="loadSampleScenario()">
+                            <i data-lucide="sparkles" style="width:15px;height:15px"></i>
+                            <span>Isi Skenario Contoh Cepat</span>
+                        </button>
+
+                        <button type="button" class="sidebar-tool-btn" onclick="saveDraftLocal()">
+                            <i data-lucide="save" style="width:15px;height:15px"></i>
+                            <span>Simpan Draf ke Browser</span>
+                        </button>
+
+                        <button type="button" class="sidebar-tool-btn" onclick="loadDraftLocal()">
+                            <i data-lucide="folder-open" style="width:15px;height:15px"></i>
+                            <span>Muat Draf Tersimpan</span>
+                        </button>
+
+                        <button type="button" class="sidebar-tool-btn" onclick="clearFormCurrent()">
+                            <i data-lucide="rotate-ccw" style="width:15px;height:15px"></i>
+                            <span>Bersihkan Form</span>
+                        </button>
+                    </div>
+
+                    <!-- Group 3: System & AI Engine Telemetry -->
+                    <div class="nav-group">
+                        <div class="nav-group-title">Status Sistem &amp; AI</div>
+                        <div class="telemetry-card">
+                            <div class="telemetry-row">
+                                <span class="telemetry-label">
+                                    <span class="status-dot"></span>
+                                    <span>AI Reasoning</span>
+                                </span>
+                                <span class="telemetry-val">DeepSeek / Qwen</span>
+                            </div>
+                            <div class="telemetry-row">
+                                <span class="telemetry-label">
+                                    <i data-lucide="database" style="width:12px;height:12px"></i>
+                                    <span>Basis Data RAG</span>
+                                </span>
+                                <span class="telemetry-val" id="ragText">RAG Siap (154 Dok)</span>
+                            </div>
+                            <div class="telemetry-row">
+                                <span class="telemetry-label">
+                                    <i data-lucide="shield-check" style="width:12px;height:12px"></i>
+                                    <span>Audit Kepatuhan</span>
+                                </span>
+                                <span class="telemetry-val" style="color:var(--success)">100% Valid</span>
+                            </div>
+                            <button type="button" onclick="syncRag()" class="btn btn-secondary" style="font-size:11px;padding:6px 10px;margin-top:2px">
+                                <i data-lucide="refresh-cw" style="width:12px;height:12px"></i>
+                                <span>Sinkronisasi RAG Doktrin</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="satker-badge">
+                    <div class="satker-avatar">⚓</div>
+                    <div class="satker-details">
+                        <span class="satker-name" id="sidebarSatkerName">PUSAT SIBER TNI AL</span>
+                        <span class="satker-role">Mabes TNI AL &bull; Standar Baku</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ══════════════════════════════════════════════
+             MAIN WORKSPACE AREA
+             ══════════════════════════════════════════════ -->
+        <main class="main-workspace">
+
+            <!-- Top Header Bar -->
+            <header class="top-header">
+                <div class="header-left">
+                    <div class="breadcrumb">
+                        <span class="breadcrumb-item">SSEB AI</span>
+                        <span class="breadcrumb-sep">/</span>
+                        <span class="breadcrumb-item">Dokumen Militer</span>
+                        <span class="breadcrumb-sep">/</span>
+                        <span class="breadcrumb-current" id="breadcrumbDocName">Nota Dinas</span>
+                    </div>
+                </div>
+
+                <div class="header-center">
+                    <!-- Mode Switcher: Split vs Focus -->
+                    <div class="view-switcher">
+                        <button type="button" class="view-btn active" id="btnModeSplit" onclick="setViewMode('split')">
+                            <i data-lucide="columns-2" style="width:14px;height:14px"></i>
+                            <span>Split Pratinjau</span>
+                        </button>
+                        <button type="button" class="view-btn" id="btnModeFocus" onclick="setViewMode('focus')">
+                            <i data-lucide="layout" style="width:14px;height:14px"></i>
+                            <span>Editor Fokus</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <button type="button" onclick="openEditModal()" class="btn btn-secondary">
+                        <i data-lucide="edit-3" style="width:14px;height:14px"></i>
+                        <span>Edit Draf</span>
+                    </button>
+                    <button type="button" onclick="openPopupPreview()" class="btn btn-secondary">
+                        <i data-lucide="maximize-2" style="width:14px;height:14px"></i>
+                        <span>Layar Penuh</span>
+                    </button>
+                    <button type="button" onclick="handleDownloadPdfDirect()" class="btn btn-secondary">
+                        <i data-lucide="download" style="width:14px;height:14px"></i>
+                        <span>Unduh PDF</span>
+                    </button>
+                    <button type="button" id="btnGenerateTop" onclick="handleGenerateAction()" class="btn btn-primary">
+                        <i data-lucide="sparkles" style="width:14px;height:14px"></i>
+                        <span id="btnGenerateTopText">Susun Naskah AI</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Workspace Body: Split View by Default -->
+            <div class="workspace-body mode-split" id="workspaceContainer">
+
+                <!-- ── LEFT PANE: FORM EDITOR ── -->
+                <div class="editor-pane">
+
+                    <!-- ▸ SECTION 1: Identitas Satker & Pejabat (SHARED) -->
+                    <div class="form-card open">
+                        <div class="form-card-header" onclick="toggleFormCard(this)">
+                            <div class="form-card-title-group">
+                                <span class="step-circle">1</span>
+                                <span class="form-card-title">Identitas Satker &amp; Penandatangan</span>
+                            </div>
+                            <div class="form-card-actions">
+                                <div style="display:flex;align-items:center;gap:6px" onclick="event.stopPropagation()">
+                                    <label for="jenisTtd" style="font-size:11px;color:var(--text-muted);font-weight:600">TTD:</label>
+                                    <select id="jenisTtd" onchange="updatePaperPreview()" class="input-select" style="width:auto;padding:4px 26px 4px 8px;font-size:11.5px">
+                                        <option value="LANGSUNG">Langsung (Definitif)</option>
+                                        <option value="MEWAKILI">Mewakili (mewakili,)</option>
+                                    </select>
+                                </div>
+                                <i data-lucide="chevron-down" class="form-card-chevron" style="width:16px;height:16px"></i>
+                            </div>
+                        </div>
+                        <div class="form-card-body">
+                            <div class="form-stack">
+                                <div class="row-2">
+                                    <div class="input-group">
+                                        <label class="input-label">Kop Utama Satuan</label>
+                                        <input type="text" id="kopUtama" oninput="updatePaperPreview()" class="input-text mono uppercase" value="PUSAT SIBER PERTAHANAN">
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">Kop Satker Pelaksana</label>
+                                        <input type="text" id="kopSub" oninput="updatePaperPreview()" class="input-text mono uppercase" value="SATUAN PENINDAK SIBER">
+                                    </div>
+                                </div>
+                                <div class="row-3">
+                                    <div class="input-group">
+                                        <label class="input-label">Jabatan Penandatangan</label>
+                                        <input type="text" id="ttdJabatan" oninput="updatePaperPreview()" class="input-text" value="Komandan Satuan Penindak">
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">Nama Pejabat</label>
+                                        <input type="text" id="ttdNama" oninput="updatePaperPreview()" class="input-text" style="font-weight:600" value="Budi Santoso, S.E., M.M.">
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">Pangkat / Korps / NRP</label>
+                                        <input type="text" id="ttdPangkat" oninput="updatePaperPreview()" class="input-text mono" value="Kolonel Laut (E) NRP 12345/P">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ════ FORM: NOTA DINAS ════ -->
+                    <form id="formNotaDinas" class="doc-form form-stack" style="gap:16px">
+                        <!-- Section 2: Metadata Nota Dinas -->
+                        <div class="form-card open">
+                            <div class="form-card-header" onclick="toggleFormCard(this)">
+                                <div class="form-card-title-group">
+                                    <span class="step-circle">2</span>
+                                    <span class="form-card-title">Metadata Nota Dinas</span>
+                                </div>
+                                <div class="form-card-actions">
+                                    <button type="button" onclick="event.stopPropagation();autoNomorND()" class="btn btn-ghost" style="font-size:11px;padding:4px 8px">
+                                        <i data-lucide="wand-2" style="width:12px;height:12px"></i>
+                                        <span>Auto Nomor</span>
+                                    </button>
+                                    <i data-lucide="chevron-down" class="form-card-chevron" style="width:16px;height:16px"></i>
+                                </div>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-stack">
+                                    <div class="row-3">
+                                        <div class="input-group">
+                                            <label class="input-label">Nomor Surat</label>
+                                            <input type="text" id="nd_nomor" oninput="updatePaperPreview()" class="input-text mono" value="B/ND-01/IV/2025/Unit">
+                                        </div>
+                                        <div class="input-group">
+                                            <label class="input-label">Kepada Yth.</label>
+                                            <input type="text" id="nd_kepada" oninput="updatePaperPreview()" class="input-text" value="Kepala Pusat Siber Pertahanan">
+                                        </div>
+                                        <div class="input-group">
+                                            <label class="input-label">Dari</label>
+                                            <input type="text" id="nd_dari" oninput="updatePaperPreview()" class="input-text" value="Kadiv Operasi Siber">
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">Perihal Nota Dinas</label>
+                                        <input type="text" id="nd_perihal" oninput="updatePaperPreview()" class="input-text" value="Laporan Kesiapsiagaan Tim Tanggap Insiden Siber Maritim">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Dasar Hukum -->
+                        <div class="form-card open">
+                            <div class="form-card-header" onclick="toggleFormCard(this)">
+                                <div class="form-card-title-group">
+                                    <span class="step-circle">3</span>
+                                    <span class="form-card-title">Dasar Hukum &amp; Rujukan</span>
+                                </div>
+                                <i data-lucide="chevron-down" class="form-card-chevron" style="width:16px;height:16px"></i>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="input-group">
+                                    <label class="input-label">Rujukan Surat <span class="input-hint">1 baris per butir rujukan</span></label>
+                                    <textarea id="nd_dasar" rows="3" oninput="updatePaperPreview()" class="input-textarea">Keputusan Panglima TNI Nomor KEP/868/IX/2022 tentang Petunjuk Tata Tulis Militer
+Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 4: Poin Substansi & Penutup -->
+                        <div class="form-card open">
+                            <div class="form-card-header" onclick="toggleFormCard(this)">
+                                <div class="form-card-title-group">
+                                    <span class="step-circle">4</span>
+                                    <span class="form-card-title">Poin Substansi &amp; Penutup</span>
+                                </div>
+                                <div class="form-card-actions">
+                                    <select id="nd_penutup" onchange="updatePaperPreview()" onclick="event.stopPropagation()" class="input-select" style="width:auto;padding:4px 26px 4px 8px;font-size:11.5px">
+                                        <option value="perhatian">Penutup: Mohon perhatian (Sejajar/Bawahan)</option>
+                                        <option value="periksa">Penutup: Mohon periksa (Atasan)</option>
+                                    </select>
+                                    <i data-lucide="chevron-down" class="form-card-chevron" style="width:16px;height:16px"></i>
+                                </div>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-stack">
+                                    <div id="ndPoinList" style="display:flex;flex-direction:column;gap:8px">
+                                        <div class="poin-box">
+                                            <div class="poin-box-header">
+                                                <span class="poin-box-title">Poin 2 (Paragraf Pembuka/Inti)</span>
+                                            </div>
+                                            <textarea class="nd-poin-input input-textarea" rows="2" oninput="updatePaperPreview()">Sehubungan dasar tersebut di atas, dilaporkan bahwa kesiapsiagaan operasional pemantauan siber wilayah pertahanan maritim berada dalam status siaga penuh selama 24/7.</textarea>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="addNdPoin()" class="btn btn-ghost" style="align-self:flex-start;font-size:12px;padding:4px 8px">
+                                        <i data-lucide="plus" style="width:14px;height:14px"></i> Tambah Poin Isi
+                                    </button>
+                                    <div class="input-group">
+                                        <label class="input-label">Tembusan <span class="input-hint">Opsional &bull; 1 per baris</span></label>
+                                        <textarea id="nd_tembusan" rows="2" oninput="updatePaperPreview()" class="input-textarea" placeholder="1. Kasal&#10;2. Wakasal">1. Kasal&#10;2. Wakasal</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- ════ FORM: TELAAHAN STAF ════ -->
+                    <form id="formTelaahanStaf" class="doc-form form-stack hidden" style="gap:16px">
+                        <div class="form-card open">
+                            <div class="form-card-header" onclick="toggleFormCard(this)">
+                                <div class="form-card-title-group">
+                                    <span class="step-circle">2</span>
+                                    <span class="form-card-title">Metadata Telaahan Staf</span>
+                                </div>
+                                <i data-lucide="chevron-down" class="form-card-chevron" style="width:16px;height:16px"></i>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-stack">
+                                    <div class="row-2">
+                                        <div class="input-group">
+                                            <label class="input-label">Nomor Naskah</label>
+                                            <input type="text" id="ts_nomor" oninput="updatePaperPreview()" class="input-text mono" value="Nomor TS/01/IV/2025">
+                                        </div>
+                                        <div class="input-group">
+                                            <label class="input-label">Tempat Pembuatan</label>
+                                            <input type="text" id="ts_tempat" oninput="updatePaperPreview()" class="input-text" value="Jakarta">
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">Judul Telaahan Staf</label>
+                                        <input type="text" id="ts_judul" oninput="updatePaperPreview()" class="input-text uppercase" style="font-weight:700" value="Penguatan Arsitektur Keamanan Siber Terdistribusi pada Sistem Komando dan Kendali">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-card open">
+                            <div class="form-card-header" onclick="toggleFormCard(this)">
+                                <div class="form-card-title-group">
+                                    <span class="step-circle">3</span>
+                                    <span class="form-card-title">Struktur 6 Pasal Baku (KEP/868 Contoh 26)</span>
+                                </div>
+                                <i data-lucide="chevron-down" class="form-card-chevron" style="width:16px;height:16px"></i>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-stack">
+                                    <div class="input-group">
+                                        <label class="input-label">1. Persoalan</label>
+                                        <textarea id="ts_persoalan" rows="2" oninput="updatePaperPreview()" class="input-textarea">Peningkatan intensitas ancaman serangan siber tingkat lanjut (APT) pada sistem kendali operasi yang membutuhkan penguatan pertahanan proaktif.</textarea>
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">2. Praanggapan</label>
+                                        <textarea id="ts_praanggapan" rows="2" oninput="updatePaperPreview()" class="input-textarea">Apabila tidak dilakukan modernisasi sistem deteksi dini dan respons insiden, maka risiko kebocoran data taktis pada jaringan komando dapat meningkat secara signifikan.</textarea>
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">3. Fakta / Data yang Memengaruhi</label>
+                                        <textarea id="ts_fakta" rows="2" oninput="updatePaperPreview()" class="input-textarea">Tercatat rata-rata 350 anomali trafik per hari serta utilitas perangkat firewall eksisting telah mencapai 88% dari total kapasitas operasional.</textarea>
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">4. Analisis</label>
+                                        <textarea id="ts_analisis" rows="2" oninput="updatePaperPreview()" class="input-textarea">Implementasi Next-Generation SIEM dan otomasi SOC 24/7 memberikan kemampuan mitigasi waktu-nyata dengan efektivitas mencapai 95% dibandingkan metode konvensional.</textarea>
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">5. Kesimpulan</label>
+                                        <textarea id="ts_kesimpulan" rows="2" oninput="updatePaperPreview()" class="input-textarea">Peremajaan arsitektur keamanan terdistribusi merupakan alternatif cara bertindak terbaik yang paling feasible dan efektif untuk mengamankan komunikasi komando.</textarea>
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">6. Saran</label>
+                                        <textarea id="ts_saran" rows="2" oninput="updatePaperPreview()" class="input-textarea">Disarankan kepada Pimpinan untuk menyetujui rencana peremajaan sistem SIEM dan peningkatan kapasitas laboratorium pemantauan siber TA 2025.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- ════ FORM: KKA SESKOAL ════ -->
+                    <form id="formKkaSeskoal" class="doc-form form-stack hidden" style="gap:16px">
+                        <div class="form-card open">
+                            <div class="form-card-header" onclick="toggleFormCard(this)">
+                                <div class="form-card-title-group">
+                                    <span class="step-circle">2</span>
+                                    <span class="form-card-title">Model KKA &amp; Identitas Pasis</span>
+                                </div>
+                                <div class="form-card-actions">
+                                    <select id="kkaModelType" onchange="switchKkaFields();updatePaperPreview()" onclick="event.stopPropagation()" class="input-select" style="width:auto;padding:4px 26px 4px 8px;font-size:11.5px;font-weight:600">
+                                        <option value="STUDI_KASUS">Model A: Studi Kasus (OMSP)</option>
+                                        <option value="ANALISIS_MOE">Model B: Analisis MoE (Alutsista)</option>
+                                        <option value="PEMECAHAN_MASALAH">Model C: Pemecahan Masalah (SOM)</option>
+                                    </select>
+                                    <i data-lucide="chevron-down" class="form-card-chevron" style="width:16px;height:16px"></i>
+                                </div>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-stack">
+                                    <div class="row-3">
+                                        <div class="input-group">
+                                            <label class="input-label">No. Pasis</label>
+                                            <input type="text" id="kka_no_pasis" oninput="updatePaperPreview()" class="input-text mono" value="Pasis No. 042">
+                                        </div>
+                                        <div class="input-group">
+                                            <label class="input-label">Kelompok / Sindikat</label>
+                                            <input type="text" id="kka_kelompok" oninput="updatePaperPreview()" class="input-text" value="Kelompok III / Sindikat Bravo">
+                                        </div>
+                                        <div class="input-group">
+                                            <label class="input-label">Dikreg / Angkatan</label>
+                                            <input type="text" id="kka_dikreg" oninput="updatePaperPreview()" class="input-text" value="Dikreg Seskoal Ke-64 TA 2026">
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">Judul KKA</label>
+                                        <input type="text" id="kka_judul" oninput="updatePaperPreview()" class="input-text uppercase" style="font-weight:700" value="Strategi Penanggulangan Serangan Siber Maritim Guna Menjaga Kedaulatan Wilayah Laut Yurisdiksi Nasional">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-card open">
+                            <div class="form-card-header" onclick="toggleFormCard(this)">
+                                <div class="form-card-title-group">
+                                    <span class="step-circle">3</span>
+                                    <span class="form-card-title">Detail Variabel Sub-Model KKA</span>
+                                </div>
+                                <i data-lucide="chevron-down" class="form-card-chevron" style="width:16px;height:16px"></i>
+                            </div>
+                            <div class="form-card-body">
+                                <div id="kkaFieldsContainer" class="form-stack">
+                                    <!-- Populated dynamically by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- ════ FORM: LAPJU BELANJA MODAL ════ -->
+                    <form id="formLapju" class="doc-form form-stack hidden" style="gap:16px">
+                        <!-- Zero-AI Banner -->
+                        <div class="verbatim-banner">
+                            <i data-lucide="shield-check" style="width:18px;height:18px;color:var(--info)"></i>
+                            <div>
+                                <strong style="font-weight:700">Mode Data Riil Terverifikasi (Zero-AI):</strong>
+                                <p>Seluruh angka DIPA, nilai kontrak, serapan, dan progres fisik dicetak verbatim tanpa penambahan atau rekayasa AI guna menjamin kepatuhan audit BPK/Itjenal.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-card open">
+                            <div class="form-card-header" onclick="toggleFormCard(this)">
+                                <div class="form-card-title-group">
+                                    <span class="step-circle">2</span>
+                                    <span class="form-card-title">Metadata Laporan Kemajuan</span>
+                                </div>
+                                <div class="form-card-actions">
+                                    <button type="button" onclick="event.stopPropagation();autoNomorLapju()" class="btn btn-ghost" style="font-size:11px;padding:4px 8px">
+                                        <i data-lucide="wand-2" style="width:12px;height:12px"></i>
+                                        <span>Auto Nomor</span>
+                                    </button>
+                                    <i data-lucide="chevron-down" class="form-card-chevron" style="width:16px;height:16px"></i>
+                                </div>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-stack">
+                                    <div class="row-4">
+                                        <div class="input-group">
+                                            <label class="input-label">Bulan Pelaporan</label>
+                                            <select id="lapju_bulan" onchange="autoNomorLapju();updatePaperPreview()" class="input-select">
+                                                <option value="Januari">Januari</option>
+                                                <option value="Februari">Februari</option>
+                                                <option value="Maret">Maret</option>
+                                                <option value="April" selected>April</option>
+                                                <option value="Mei">Mei</option>
+                                                <option value="Juni">Juni</option>
+                                                <option value="Juli">Juli</option>
+                                                <option value="Agustus">Agustus</option>
+                                                <option value="September">September</option>
+                                                <option value="Oktober">Oktober</option>
+                                                <option value="November">November</option>
+                                                <option value="Desember">Desember</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group">
+                                            <label class="input-label">Tahun Anggaran</label>
+                                            <input type="number" id="lapju_tahun" oninput="autoNomorLapju();updatePaperPreview()" class="input-text mono" value="2025">
+                                        </div>
+                                        <div class="input-group span-2">
+                                            <label class="input-label">Nomor Surat Pengantar</label>
+                                            <input type="text" id="lapju_nomor_surat" oninput="updatePaperPreview()" class="input-text mono" value="B/   /IV/2025">
+                                        </div>
+                                    </div>
+                                    <div class="row-2">
+                                        <div class="input-group">
+                                            <label class="input-label">Kepada Yth.</label>
+                                            <input type="text" id="lapju_kepada" oninput="updatePaperPreview()" class="input-text" value="Asisten Logistik Kasal">
+                                        </div>
+                                        <div class="input-group">
+                                            <label class="input-label">Kota Tujuan</label>
+                                            <input type="text" id="lapju_kota" oninput="updatePaperPreview()" class="input-text" value="Jakarta">
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <label class="input-label">Dasar Rujukan</label>
+                                        <input type="text" id="lapju_dasar" oninput="updatePaperPreview()" class="input-text" value="Surat Perintah Kasal Nomor Sprin/123/I/2025 tanggal 10 Januari 2025 tentang Pelaksanaan Belanja Modal">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-card open">
+                            <div class="form-card-header" onclick="toggleFormCard(this)">
+                                <div class="form-card-title-group">
+                                    <span class="step-circle">3</span>
+                                    <span class="form-card-title">Daftar Paket Kegiatan Belanja Modal</span>
+                                </div>
+                                <div class="form-card-actions">
+                                    <button type="button" onclick="event.stopPropagation();addLapjuItem()" class="btn btn-secondary" style="font-size:11px;padding:4px 10px">
+                                        <i data-lucide="plus" style="width:12px;height:12px"></i>
+                                        <span>Tambah Paket</span>
+                                    </button>
+                                    <i data-lucide="chevron-down" class="form-card-chevron" style="width:16px;height:16px"></i>
+                                </div>
+                            </div>
+                            <div class="form-card-body">
+                                <div class="form-stack">
+                                    <!-- KPI Board -->
+                                    <div class="kpi-board">
+                                        <div class="kpi-cell"><div class="kpi-title">Total Pagu</div><div class="kpi-figure" id="rekapPagu">Rp 0</div></div>
+                                        <div class="kpi-cell"><div class="kpi-title">Total Kontrak</div><div class="kpi-figure" id="rekapKontrak">Rp 0</div></div>
+                                        <div class="kpi-cell"><div class="kpi-title">Terserap</div><div class="kpi-figure success" id="rekapSerap">Rp 0</div></div>
+                                        <div class="kpi-cell"><div class="kpi-title">Sisa</div><div class="kpi-figure warning" id="rekapSisa">Rp 0</div></div>
+                                        <div class="kpi-cell"><div class="kpi-title">% Fisik</div><div class="kpi-figure" id="rekapFisik">0%</div></div>
+                                        <div class="kpi-cell"><div class="kpi-title">% Admin</div><div class="kpi-figure" id="rekapAdmin">0%</div></div>
+                                    </div>
+                                    <div id="lapjuItemsList" style="display:flex;flex-direction:column;gap:12px">
+                                        <!-- Populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Floating Action Bar inside Form -->
+                    <div class="floating-actions">
+                        <div class="floating-left">
+                            <span class="status-dot"></span>
+                            <span id="floatingDocStatus">Draf Nota Dinas Siap Disusun</span>
+                        </div>
+                        <div class="floating-right">
+                            <button type="button" onclick="openEditModal()" class="btn btn-secondary" style="font-size:12px;padding:7px 12px">
+                                <i data-lucide="edit-3" style="width:14px;height:14px"></i>
+                                <span>Edit Draf</span>
+                            </button>
+                            <button type="button" onclick="copyDraftText()" class="btn-icon" title="Salin Teks ke Clipboard">
+                                <i data-lucide="copy" style="width:15px;height:15px"></i>
+                            </button>
+                            <button type="button" id="btnGenerate" onclick="handleGenerateAction()" class="btn btn-primary" style="font-size:13px;padding:8px 18px">
+                                <i data-lucide="sparkles" style="width:16px;height:16px"></i>
+                                <span id="btnGenerateText">Susun Naskah AI</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div><!-- /editor-pane -->
+
+                <!-- ── RIGHT PANE: LIVE SPLIT CANVAS ── -->
+                <div class="canvas-pane">
+                    <div class="canvas-toolbar">
+                        <div class="canvas-toolbar-left">
+                            <span class="status-dot"></span>
+                            <span>Pratinjau Kertas Nyata (Real-time Canvas)</span>
+                            <span id="canvasDocBadge" style="margin-left:8px;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;display:inline-block;background:rgba(255,255,255,0.05);color:var(--text-muted);border:1px solid var(--border-app)">📝 Draf Awal</span>
+                        </div>
+                        <div class="canvas-toolbar-right">
+                            <button type="button" onclick="zoomCanvas(-0.1)" class="btn-icon" style="width:28px;height:28px" title="Perkecil">
+                                <i data-lucide="minus" style="width:12px;height:12px"></i>
+                            </button>
+                            <span id="zoomLevelText" style="font-family:var(--font-mono);font-size:11px;width:38px;text-align:center">100%</span>
+                            <button type="button" onclick="zoomCanvas(0.1)" class="btn-icon" style="width:28px;height:28px" title="Perbesar">
+                                <i data-lucide="plus" style="width:12px;height:12px"></i>
+                            </button>
+                            <button type="button" onclick="resetZoomCanvas()" class="btn btn-ghost" style="font-size:11px;padding:4px 8px">Fit</button>
+                        </div>
+                    </div>
+
+                    <div class="canvas-viewport">
+                        <div class="paper-scaler" id="paperScaler">
+                            <div id="paperPreview" class="paper-sheet">
+                                <!-- Military Standard Document Rendered Realtime -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /workspace-body -->
+        </main>
+    </div>
+
+    <!-- ══════ FULLSCREEN PREVIEW MODAL ══════ -->
+    <div id="previewModal" class="preview-modal-backdrop" onclick="if(event.target===this)closePopupPreview()">
+        <div class="preview-modal-bar">
+            <div style="display:flex;align-items:center;gap:10px">
+                <span class="brand-logo" style="width:28px;height:28px;font-size:10px">A4</span>
+                <div>
+                    <div style="font-size:13px;font-weight:700;color:var(--text-primary)" id="modalPreviewTitle">Pratinjau Dokumen Militer Penuh</div>
+                    <div style="font-size:11px;color:var(--text-muted)">Standar Format Baku KEP/868/IX/2022 Mabes TNI</div>
+                </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+                <button type="button" onclick="handleDownloadPdfDirect()" class="btn btn-primary" style="font-size:12px;padding:6px 12px">
+                    <i data-lucide="download" style="width:14px;height:14px"></i>
+                    <span>Unduh PDF</span>
+                </button>
+                <button type="button" onclick="closePopupPreview()" class="btn-icon" style="border:none;width:32px;height:32px">
+                    <i data-lucide="x" style="width:16px;height:16px"></i>
+                </button>
+            </div>
+        </div>
+        <div id="modalPaperHolder" style="margin-bottom:40px">
+            <!-- Mirrored content here -->
+        </div>
+    </div>
+
+    <!-- ══════ EDIT MODAL ══════ -->
+    <div id="editModal" class="modal-backdrop" onclick="if(event.target===this)closeEditModal()">
+        <div class="modal-window">
+            <div class="modal-head">
+                <div>
+                    <div class="modal-title">✏️ Editor Redaksi Teks Naskah</div>
+                    <div id="modalEditSubtitle" style="font-size:12px;color:var(--text-muted);margin-top:2px">Edit naskah isi hasil AI di bawah ini sebelum dicetak ke PDF.</div>
+                </div>
+                <button type="button" onclick="closeEditModal()" class="btn-icon" style="border:none;width:30px;height:30px">
+                    <i data-lucide="x" style="width:16px;height:16px"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <textarea id="modalTextarea" rows="18" class="input-textarea mono" style="min-height:380px;font-size:13px;line-height:1.7" placeholder="Ketik atau edit narasi naskah di sini..."></textarea>
+            </div>
+            <div class="modal-foot">
+                <button type="button" onclick="closeEditModal()" class="btn btn-ghost">Batal</button>
+                <button type="button" onclick="applyModalEdit()" class="btn btn-primary">
+                    <i data-lucide="check" style="width:14px;height:14px"></i>
+                    <span>Simpan &amp; Terapkan ke Pertinjau</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════ TOAST NOTIFICATION ══════ -->
+    <div id="toast" class="snackbar-box">
+        <i id="toastIcon" data-lucide="check-circle" class="snackbar-icon" style="width:16px;height:16px"></i>
+        <span id="toastMsg">Operasi berhasil dijalankan</span>
+    </div>
+
+    <!-- ════════════════════════════════════════════════
+         JAVASCRIPT LOGIC & API CLIENT
+         ════════════════════════════════════════════════ -->
+    <script>
+        const API_BASE = "";
+        let currentDocType = "nota_dinas";
+        let lapjuCount = 0;
+        let lastDownloadUrl = null;
+        let customEditedText = null;
+        let currentAiIsiList = null;
+        let currentAiNotaDinasText = null;
+        let currentZoom = 0.95;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            loadRagStatus();
+            initLapjuDefaults();
+            switchKkaFields();
+            updatePaperPreview();
+            applyZoom();
+
+            // Keyboard shortcut: Ctrl + Enter to Generate
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    e.preventDefault();
+                    handleGenerateAction();
+                }
+            });
+        });
+
+        // ── View Mode Switcher (Split vs Focus) ──
+        function setViewMode(mode) {
+            const container = document.getElementById('workspaceContainer');
+            const btnSplit = document.getElementById('btnModeSplit');
+            const btnFocus = document.getElementById('btnModeFocus');
+
+            if (mode === 'focus') {
+                container.classList.remove('mode-split');
+                container.classList.add('mode-focus');
+                btnFocus.classList.add('active');
+                btnSplit.classList.remove('active');
+            } else {
+                container.classList.remove('mode-focus');
+                container.classList.add('mode-split');
+                btnSplit.classList.add('active');
+                btnFocus.classList.remove('active');
+                updatePaperPreview();
+            }
+        }
+
+        // ── Canvas Zoom Controls ──
+        function zoomCanvas(delta) {
+            currentZoom = Math.min(1.4, Math.max(0.5, currentZoom + delta));
+            applyZoom();
+        }
+
+        function resetZoomCanvas() {
+            currentZoom = 0.95;
+            applyZoom();
+        }
+
+        function applyZoom() {
+            const scaler = document.getElementById('paperScaler');
+            if (scaler) {
+                scaler.style.transform = `scale(${currentZoom})`;
+            }
+            const zText = document.getElementById('zoomLevelText');
+            if (zText) {
+                zText.textContent = `${Math.round(currentZoom * 100)}%`;
+            }
+        }
+
+        // ── Accordion Card Toggle ──
+        function toggleFormCard(header) {
+            const card = header.closest('.form-card');
+            card.classList.toggle('open');
+        }
+
+        // ── Fullscreen Popup Preview ──
+        function openPopupPreview() {
+            updatePaperPreview();
+            const holder = document.getElementById('modalPaperHolder');
+            const source = document.getElementById('paperPreview');
+            holder.innerHTML = source.outerHTML;
+            document.getElementById('previewModal').classList.add('active');
+        }
+
+        function closePopupPreview() {
+            document.getElementById('previewModal').classList.remove('active');
+        }
+
+        // ── Tab Switcher ──
+        function switchDocTab(type) {
+            currentDocType = type;
+            
+            // Update sidebar active states
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.dataset.type === type) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Update Breadcrumb & Titles
+            const nameMap = {
+                'nota_dinas': 'Nota Dinas',
+                'telaahan_staf': 'Telaahan Staf',
+                'kka_seskoal': 'KKA Seskoal',
+                'lapju': 'LAPJU Belanja Modal'
+            };
+            const docName = nameMap[type] || 'Dokumen';
+            document.getElementById('breadcrumbDocName').textContent = docName;
+            document.getElementById('floatingDocStatus').textContent = `Draf ${docName} Siap Disusun`;
+
+            // Hide all forms, show active
+            document.getElementById('formNotaDinas').classList.add('hidden');
+            document.getElementById('formTelaahanStaf').classList.add('hidden');
+            document.getElementById('formKkaSeskoal').classList.add('hidden');
+            document.getElementById('formLapju').classList.add('hidden');
+
+            if (type === 'nota_dinas') document.getElementById('formNotaDinas').classList.remove('hidden');
+            else if (type === 'telaahan_staf') document.getElementById('formTelaahanStaf').classList.remove('hidden');
+            else if (type === 'kka_seskoal') document.getElementById('formKkaSeskoal').classList.remove('hidden');
+            else if (type === 'lapju') document.getElementById('formLapju').classList.remove('hidden');
+
+            // Button label
+            const btnBottomText = document.getElementById('btnGenerateText');
+            const btnTopText = document.getElementById('btnGenerateTopText');
+            if (type === 'lapju') {
+                btnBottomText.textContent = 'Cetak LAPJU (Data Riil)';
+                btnTopText.textContent = 'Cetak LAPJU';
+            } else {
+                btnBottomText.textContent = 'Susun Naskah AI';
+                btnTopText.textContent = 'Susun Naskah AI';
+            }
+
+            customEditedText = null;
+            updatePaperPreview();
+            lucide.createIcons();
+        }
+
+        // ── Auto Numbering ──
+        function autoNomorND() {
+            const d = new Date();
+            const r = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"][d.getMonth()];
+            document.getElementById('nd_nomor').value = `B/ND-01/${r}/${d.getFullYear()}/Unit`;
+            updatePaperPreview();
+            showToast("Nomor Nota Dinas diperbarui otomatis");
+        }
+
+        function autoNomorLapju() {
+            const b = document.getElementById('lapju_bulan').value;
+            const t = document.getElementById('lapju_tahun').value || '2025';
+            const m = {
+                'Januari': 'I', 'Februari': 'II', 'Maret': 'III', 'April': 'IV',
+                'Mei': 'V', 'Juni': 'VI', 'Juli': 'VII', 'Agustus': 'VIII',
+                'September': 'IX', 'Oktober': 'X', 'November': 'XI', 'Desember': 'XII'
+            };
+            document.getElementById('lapju_nomor_surat').value = `B/   /${m[b] || 'IV'}/${t}`;
+            updatePaperPreview();
+        }
+
+        // ── Nota Dinas Dynamic Points ──
+        let ndPoinIndex = 2;
+        function addNdPoin() {
+            ndPoinIndex++;
+            const c = document.getElementById('ndPoinList');
+            const i = document.createElement('div');
+            i.className = "poin-box";
+            i.innerHTML = `
+                <div class="poin-box-header">
+                    <span class="poin-box-title">Poin ${ndPoinIndex}</span>
+                    <button type="button" onclick="this.closest('.poin-box').remove();updatePaperPreview()" class="btn-trash">Hapus</button>
+                </div>
+                <textarea class="nd-poin-input input-textarea" rows="2" oninput="updatePaperPreview()" placeholder="Uraian butir lanjutan..."></textarea>
+            `;
+            c.appendChild(i);
+            updatePaperPreview();
+        }
+
+        // ── KKA Sub-model Fields ──
+        function switchKkaFields() {
+            const s = document.getElementById('kkaModelType').value;
+            const c = document.getElementById('kkaFieldsContainer');
+
+            if (s === 'STUDI_KASUS') {
+                c.innerHTML = `
+                    <div class="input-group">
+                        <label class="input-label">Latar Belakang Studi Kasus</label>
+                        <textarea id="kka_a_latar" rows="2" oninput="updatePaperPreview()" class="input-textarea">Kondisi strategis keamanan laut pada perairan yurisdiksi nasional menuntut kesiapan respon cepat satuan operasi.</textarea>
+                    </div>
+                    <div class="row-3">
+                        <div class="input-group">
+                            <label class="input-label">Pra-Kejadian</label>
+                            <textarea id="kka_a_pra" rows="2" oninput="updatePaperPreview()" class="input-textarea">Deteksi awal anomali pergerakan kapal asing tanpa AIS aktif di ZEEI.</textarea>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Saat Kejadian</label>
+                            <textarea id="kka_a_kejadian" rows="2" oninput="updatePaperPreview()" class="input-textarea">Pengerahan KRI patroli dan manuver intercept penghentian kapal target.</textarea>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Pasca Kejadian</label>
+                            <textarea id="kka_a_pasca" rows="2" oninput="updatePaperPreview()" class="input-textarea">Pengawalan menuju pangkalan utama dan serah terima penyidikan hukum laut.</textarea>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Saran Pasis</label>
+                        <textarea id="kka_a_saran" rows="2" oninput="updatePaperPreview()" class="input-textarea">Penguatan integrasi sensor radar pantai terpadu dan interoperabilitas satgas laut.</textarea>
+                    </div>
+                `;
+            } else if (s === 'ANALISIS_MOE') {
+                c.innerHTML = `
+                    <div class="row-2">
+                        <div class="input-group">
+                            <label class="input-label">Opsi Alutsista 1</label>
+                            <input type="text" id="kka_b_opsi1" oninput="updatePaperPreview()" class="input-text" value="Kapal Cepat Rudal 60M (KCR-60)">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Opsi Alutsista 2</label>
+                            <input type="text" id="kka_b_opsi2" oninput="updatePaperPreview()" class="input-text" value="Pesawat Patroli Maritim CN-235 MPA">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Fakta &amp; Latar Belakang</label>
+                        <textarea id="kka_b_latar" rows="2" oninput="updatePaperPreview()" class="input-textarea">Kebutuhan surveilans laut dan penindakan cepat di choke points alur laut kepulauan Indonesia (ALKI).</textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Saran Rekomendasi MoE</label>
+                        <textarea id="kka_b_saran" rows="2" oninput="updatePaperPreview()" class="input-textarea">Disarankan memprioritaskan opsi alutsista dengan perolehan skor efektivitas tertinggi berbasis simulasi MoE.</textarea>
+                    </div>
+                `;
+            } else {
+                c.innerHTML = `
+                    <div class="input-group">
+                        <label class="input-label">Pokok Masalah (Gap Analysis)</label>
+                        <textarea id="kka_c_pokok" rows="2" oninput="updatePaperPreview()" class="input-textarea">Belum optimalnya integrasi pusat komando siber maritim antarsatker operasi.</textarea>
+                    </div>
+                    <div class="row-3">
+                        <div class="input-group">
+                            <label class="input-label">Persoalan 1 (Subyek)</label>
+                            <input type="text" id="kka_c_p1" oninput="updatePaperPreview()" class="input-text" value="Keterbatasan kuantitas dan kompetensi SDM personel siber">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Persoalan 2 (Obyek)</label>
+                            <input type="text" id="kka_c_p2" oninput="updatePaperPreview()" class="input-text" value="Infrastruktur server dan sensor pemantau belum merata">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Persoalan 3 (Metoda)</label>
+                            <input type="text" id="kka_c_p3" oninput="updatePaperPreview()" class="input-text" value="SOP koordinasi tanggap insiden lintas pangkalan masih manual">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Saran Kebijakan</label>
+                        <textarea id="kka_c_saran" rows="2" oninput="updatePaperPreview()" class="input-textarea">Pemberlakuan doktrin pertahanan siber terpadu dan pembentukan satgas siber per pangkalan utama.</textarea>
+                    </div>
+                `;
+            }
+        }
+
+        // ── LAPJU Dynamic Items ──
+        function initLapjuDefaults() {
+            addLapjuItem({
+                nama: 'Pengadaan Multi-Role Tactical Server Unit Satker',
+                pagu: 2500000000, kontrak: 2450000000, serap: 735000000,
+                fisik: 40, admin: 30, penyedia: 'PT Alkomindo Jaya'
+            });
+            addLapjuItem({
+                nama: 'Modernisasi Modul Sensor Radar Maritim Terpadu',
+                pagu: 3800000000, kontrak: 3750000000, serap: 1125000000,
+                fisik: 35, admin: 30, penyedia: 'PT Maritim Elektro Nusantara'
+            });
+            autoNomorLapju();
+        }
+
+        function addLapjuItem(d = null) {
+            lapjuCount++;
+            const c = document.getElementById('lapjuItemsList');
+            const e = document.createElement('div');
+            e.className = "lapju-entry";
+            
+            const data = d || {
+                nama: `Pengadaan Paket Sarpras #${lapjuCount}`,
+                pagu: 1000000000, kontrak: 950000000, serap: 285000000,
+                fisik: 30, admin: 30, penyedia: 'PT Pertahanan Jaya'
+            };
+
+            e.innerHTML = `
+                <div class="lapju-entry-header">
+                    <span class="lapju-entry-num">Paket Kegiatan #${lapjuCount}</span>
+                    <button type="button" onclick="this.closest('.lapju-entry').remove();recalcLapju();updatePaperPreview()" class="btn-trash">Hapus</button>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Uraian Kegiatan</label>
+                    <input type="text" class="lapju-nama input-text" value="${data.nama}" oninput="updatePaperPreview()">
+                </div>
+                <div class="row-4">
+                    <div class="input-group">
+                        <label class="input-label">Pagu (Rp)</label>
+                        <input type="number" class="lapju-pagu input-text mono" value="${data.pagu}" oninput="recalcLapju();updatePaperPreview()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Kontrak (Rp)</label>
+                        <input type="number" class="lapju-kontrak input-text mono" value="${data.kontrak}" oninput="recalcLapju();updatePaperPreview()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Terserap (Rp)</label>
+                        <input type="number" class="lapju-serap input-text mono" style="color:var(--success)" value="${data.serap}" oninput="recalcLapju();updatePaperPreview()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Sisa (Auto)</label>
+                        <input type="text" class="lapju-sisa input-text mono input-readonly" readonly>
+                    </div>
+                </div>
+                <div class="row-3">
+                    <div class="input-group">
+                        <label class="input-label">% Fisik</label>
+                        <input type="number" class="lapju-fisik input-text mono" value="${data.fisik}" oninput="recalcLapju();updatePaperPreview()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">% Admin</label>
+                        <input type="number" class="lapju-admin input-text mono" value="${data.admin}" oninput="recalcLapju();updatePaperPreview()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Penyedia</label>
+                        <input type="text" class="lapju-penyedia input-text" value="${data.penyedia}" oninput="updatePaperPreview()">
+                    </div>
+                </div>
+            `;
+            c.appendChild(e);
+            recalcLapju();
+            updatePaperPreview();
+        }
+
+        function formatRupiah(n) {
+            if (isNaN(n) || n === null) return "0";
+            return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function recalcLapju() {
+            const cards = document.querySelectorAll('.lapju-entry');
+            let tP = 0, tK = 0, tS = 0, tSi = 0, sF = 0, sA = 0;
+            
+            cards.forEach(c => {
+                const p = parseFloat(c.querySelector('.lapju-pagu').value) || 0;
+                const k = parseFloat(c.querySelector('.lapju-kontrak').value) || 0;
+                const s = parseFloat(c.querySelector('.lapju-serap').value) || 0;
+                const f = parseFloat(c.querySelector('.lapju-fisik').value) || 0;
+                const a = parseFloat(c.querySelector('.lapju-admin').value) || 0;
+                const si = Math.max(0, p - s);
+
+                c.querySelector('.lapju-sisa').value = 'Rp ' + formatRupiah(si);
+                tP += p; tK += k; tS += s; tSi += si; sF += f; sA += a;
+            });
+
+            const n = cards.length || 1;
+            document.getElementById('rekapPagu').textContent = 'Rp ' + formatRupiah(tP);
+            document.getElementById('rekapKontrak').textContent = 'Rp ' + formatRupiah(tK);
+            document.getElementById('rekapSerap').textContent = 'Rp ' + formatRupiah(tS);
+            document.getElementById('rekapSisa').textContent = 'Rp ' + formatRupiah(tSi);
+            document.getElementById('rekapFisik').textContent = (sF / n).toFixed(1) + '%';
+            document.getElementById('rekapAdmin').textContent = (sA / n).toFixed(1) + '%';
+        }
+
+        // ── Real-Time Military Paper Rendering ──
+        function updatePaperPreview() {
+            const paper = document.getElementById('paperPreview');
+            if (!paper) return;
+
+            const kopUtama = (document.getElementById('kopUtama')?.value || '').toUpperCase();
+            const kopSub = (document.getElementById('kopSub')?.value || '').toUpperCase();
+            const jenisTtd = document.getElementById('jenisTtd')?.value || 'LANGSUNG';
+            const ttdJabatan = document.getElementById('ttdJabatan')?.value || '';
+            const ttdNama = document.getElementById('ttdNama')?.value || '';
+            const ttdPangkat = document.getElementById('ttdPangkat')?.value || '';
+
+            // Update sidebar satker label
+            const sidebarSatker = document.getElementById('sidebarSatkerName');
+            if (sidebarSatker && kopUtama) {
+                sidebarSatker.textContent = kopUtama;
+            }
+
+            const sigBlock = jenisTtd === 'MEWAKILI'
+                ? `<div style="margin-top:24px;text-align:center;float:right;width:280px">
+                    <div>${ttdJabatan}</div>
+                    <div style="font-size:10pt;margin-top:2px">mewakili,</div>
+                    <div style="height:60px"></div>
+                    <div style="font-weight:bold;text-decoration:underline">${ttdNama}</div>
+                    <div style="font-size:10pt">${ttdPangkat}</div>
+                   </div><div style="clear:both"></div>`
+                : `<div style="margin-top:24px;text-align:center;float:right;width:280px">
+                    <div>${ttdJabatan},</div>
+                    <div style="height:70px"></div>
+                    <div style="font-weight:bold;text-decoration:underline">${ttdNama}</div>
+                    <div style="font-size:10pt">${ttdPangkat}</div>
+                   </div><div style="clear:both"></div>`;
+
+            if (currentDocType === 'nota_dinas') {
+                paper.className = "paper-sheet";
+                const nomor = document.getElementById('nd_nomor')?.value || '-';
+                const kepada = document.getElementById('nd_kepada')?.value || '-';
+                const dari = document.getElementById('nd_dari')?.value || '-';
+                const perihal = document.getElementById('nd_perihal')?.value || '-';
+                const dasarLines = (document.getElementById('nd_dasar')?.value || '').split('\n').filter(l => l.trim().length > 0);
+                const dasarHtml = dasarLines.length > 1
+                    ? dasarLines.map((l, i) => `<div style="padding-left:18px;text-indent:-18px">${String.fromCharCode(97 + i)}. ${l}</div>`).join('')
+                    : (dasarLines[0] || '-');
+
+                let pointsHtml = '';
+                let totalPoints = 1;
+
+                if (customEditedText && customEditedText.trim()) {
+                    // Render user custom edited paragraphs from Edit Draf
+                    const customParas = customEditedText.trim().split('\n\n').filter(p => p.trim());
+                    totalPoints = customParas.length;
+                    pointsHtml = customParas.map((para, idx) => {
+                        const lines = para.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                        const cleanFirst = (lines[0] || '').replace(/^\d+[\.\)]\s*/, '').trim();
+                        let subHtml = '';
+                        if (lines.length > 1) {
+                            subHtml = '<div style="padding-left:18px;margin-top:4px">' +
+                                lines.slice(1).map(l => `<div>${l}</div>`).join('') +
+                                '</div>';
+                        }
+                        return `<div style="margin-bottom:10px;text-align:justify"><span style="font-weight:bold">${idx + 2}.</span> ${cleanFirst}${subHtml}</div>`;
+                    }).join('');
+                } else if (currentAiIsiList && currentAiIsiList.length > 0) {
+                    // Render full AI generated paragraphs with formal military language & sub-points
+                    totalPoints = currentAiIsiList.length;
+                    pointsHtml = currentAiIsiList.map((item, idx) => {
+                        const teks = typeof item === 'object' ? item.teks : item;
+                        const cleanTeks = (teks || '').replace(/^\d+[\.\)]\s*/, '').trim();
+                        let subHtml = '';
+                        if (typeof item === 'object' && item.sub_poin && item.sub_poin.length > 0) {
+                            subHtml = '<div style="padding-left:18px;margin-top:4px">' +
+                                item.sub_poin.map((s, j) => `<div>${String.fromCharCode(97 + j)}. ${s}</div>`).join('') +
+                                '</div>';
+                        }
+                        return `<div style="margin-bottom:10px;text-align:justify"><span style="font-weight:bold">${idx + 2}.</span> ${cleanTeks}${subHtml}</div>`;
+                    }).join('');
+                } else {
+                    const poinInputs = document.querySelectorAll('.nd-poin-input');
+                    totalPoints = poinInputs.length;
+                    poinInputs.forEach((p, idx) => {
+                        pointsHtml += `<div style="margin-bottom:10px;text-align:justify"><span style="font-weight:bold">${idx + 2}.</span> ${p.value}</div>`;
+                    });
+                }
+
+                const penutupVal = document.getElementById('nd_penutup')?.value;
+                const penutupText = penutupVal === 'periksa' ? "Demikian disampaikan mohon menjadi periksa." : "Demikian disampaikan mohon menjadi perhatian.";
+                const tembusanVal = document.getElementById('nd_tembusan')?.value || '';
+
+                paper.innerHTML = `
+                    <div style="max-width:320px;text-align:left">
+                        <div style="font-weight:bold;font-size:10pt">${kopUtama}</div>
+                        <div style="font-weight:bold;font-size:10pt">${kopSub}</div>
+                        <div class="military-line" style="width:280px"></div>
+                    </div>
+                    <div style="text-align:center;margin-top:14px;margin-bottom:16px">
+                        <span style="font-weight:bold;font-size:14pt;letter-spacing:1px">NOTA DINAS</span><br>
+                        <span style="font-size:10pt;font-family:monospace">Nomor: ${nomor}</span>
+                    </div>
+                    <table style="width:100%;font-size:11pt;margin-bottom:14px;border-collapse:collapse">
+                        <tr><td style="width:80px;padding:2px 0">Kepada</td><td style="width:15px">:</td><td>${kepada}</td></tr>
+                        <tr><td style="padding:2px 0">Dari</td><td>:</td><td>${dari}</td></tr>
+                        <tr><td style="padding:2px 0">Perihal</td><td>:</td><td style="font-weight:bold">${perihal}</td></tr>
+                    </table>
+                    <div class="military-line" style="width:100%;margin-bottom:16px"></div>
+                    <div style="text-align:justify;margin-bottom:10px">
+                        <span style="font-weight:bold">1. Dasar:</span>
+                        <div style="margin-top:4px">${dasarHtml}</div>
+                    </div>
+                    ${pointsHtml}
+                    <div style="text-align:justify;margin-bottom:16px">
+                        <span style="font-weight:bold">${totalPoints + 2}.</span> ${penutupText}
+                    </div>
+                    ${sigBlock}
+                    ${tembusanVal ? `<div style="font-size:9.5pt;margin-top:20px"><strong>Tembusan:</strong><br>${tembusanVal.replace(/\n/g, '<br>')}</div>` : ''}
+                `;
+            } else if (currentDocType === 'telaahan_staf') {
+                paper.className = "paper-sheet";
+                const nomor = document.getElementById('ts_nomor')?.value || '-';
+                const judul = (document.getElementById('ts_judul')?.value || '').toUpperCase();
+                const persoalan = document.getElementById('ts_persoalan')?.value || '';
+                const praanggapan = document.getElementById('ts_praanggapan')?.value || '';
+                const fakta = document.getElementById('ts_fakta')?.value || '';
+                const analisis = document.getElementById('ts_analisis')?.value || '';
+                const kesimpulan = document.getElementById('ts_kesimpulan')?.value || '';
+                const saran = document.getElementById('ts_saran')?.value || '';
+
+                paper.innerHTML = `
+                    <div style="max-width:320px;text-align:left">
+                        <div style="font-weight:bold;font-size:10pt">${kopUtama}</div>
+                        <div style="font-weight:bold;font-size:10pt">${kopSub}</div>
+                        <div class="military-line" style="width:280px"></div>
+                    </div>
+                    <div style="text-align:center;margin-top:14px;margin-bottom:16px">
+                        <span style="font-weight:bold;font-size:13pt">TELAAHAN STAF</span><br>
+                        <span style="font-size:10pt;font-family:monospace">${nomor}</span><br>
+                        <span style="font-weight:bold;font-size:11pt;margin-top:4px;display:inline-block">TENTANG</span><br>
+                        <span style="font-weight:bold;font-size:11pt;text-transform:uppercase">${judul}</span>
+                    </div>
+                    <div class="military-line" style="width:100%;margin-bottom:16px"></div>
+                    <div style="text-align:justify;margin-bottom:10px"><span style="font-weight:bold">1. Persoalan.</span> ${persoalan}</div>
+                    <div style="text-align:justify;margin-bottom:10px"><span style="font-weight:bold">2. Praanggapan.</span> ${praanggapan}</div>
+                    <div style="text-align:justify;margin-bottom:10px"><span style="font-weight:bold">3. Fakta/Data yang Memengaruhi.</span> ${fakta}</div>
+                    <div style="text-align:justify;margin-bottom:10px"><span style="font-weight:bold">4. Analisis.</span> ${analisis}</div>
+                    <div style="text-align:justify;margin-bottom:10px"><span style="font-weight:bold">5. Kesimpulan.</span> ${kesimpulan}</div>
+                    <div style="text-align:justify;margin-bottom:14px"><span style="font-weight:bold">6. Saran.</span> ${saran}</div>
+                    ${sigBlock}
+                `;
+            } else if (currentDocType === 'kka_seskoal') {
+                paper.className = "paper-sheet";
+                const sub = document.getElementById('kkaModelType')?.value || 'STUDI_KASUS';
+                const judul = (document.getElementById('kka_judul')?.value || '').toUpperCase();
+                const noPasis = document.getElementById('kka_no_pasis')?.value || '';
+                const kelompok = document.getElementById('kka_kelompok')?.value || '';
+                const dikreg = document.getElementById('kka_dikreg')?.value || '';
+
+                let kkaContentHtml = '';
+                if (sub === 'STUDI_KASUS') {
+                    const latar = document.getElementById('kka_a_latar')?.value || 'Kajian studi kasus guna meningkatkan pemahaman doktrin dan kesiapsiagaan operasi.';
+                    const pra = document.getElementById('kka_a_pra')?.value || 'Deteksi awal anomali pergerakan.';
+                    const kej = document.getElementById('kka_a_kejadian')?.value || 'Pengerahan unsur dan tindakan taktis segera.';
+                    const pasca = document.getElementById('kka_a_pasca')?.value || 'Konsolidasi dan evaluasi pasca kejadian.';
+                    const saran = document.getElementById('kka_a_saran')?.value || 'Penguatan integrasi sensor radar dan interoperabilitas satgas laut.';
+                    
+                    const analisis = currentKkaAiSections?.analisis_kejadian || 'Penerapan prinsip kesatuan komando dan keterpaduan antar instansi yang efektif dalam memitigasi dampak di lapangan.';
+                    const hPos = currentKkaAiSections?.hal_positif || 'Kecepatan mobilisasi unsur SAR dan koordinasi taktis terpadu.';
+                    const hNeg = currentKkaAiSections?.hal_negatif || 'Tantangan distribusi jaring komunikasi taktis pada fase awal.';
+                    const mEdu = currentKkaAiSections?.manfaat_edukatif || 'Pelajaran berharga bagi latihan kesiapsiagaan operasi prajurit.';
+                    const mInsp = currentKkaAiSections?.manfaat_inspiratif || 'Menginspirasi modernisasi rancang bangun posko kendali darurat terpadu.';
+                    const mInst = currentKkaAiSections?.manfaat_instruktif || 'Landasan penerbitan SOP pengerahan unsur dalam OMSP.';
+                    const kesimpulan = currentKkaAiSections?.kesimpulan || 'Kesiapan doktrin, interoperabilitas, dan soliditas prajurit merupakan kunci keberhasilan penugasan OMSP.';
+
+                    kkaContentHtml = `
+                        <div style="font-size: 10pt; text-align: justify; line-height: 1.45;">
+                            <div style="margin-bottom: 8px;"><strong>1. Latar Belakang:</strong> ${latar}</div>
+                            <div style="margin-bottom: 8px;"><strong>2. Kronologis Kejadian:</strong>
+                                <div style="padding-left: 14px; margin-top: 3px;">
+                                    <div>a. <em>Pra-Kejadian:</em> ${pra}</div>
+                                    <div>b. <em>Saat Kejadian:</em> ${kej}</div>
+                                    <div>c. <em>Pasca-Kejadian:</em> ${pasca}</div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 8px;"><strong>3. Analisis Kejadian (Asas OMSP):</strong> ${analisis}</div>
+                            <div style="margin-bottom: 8px;"><strong>4. Evaluasi Penanganan:</strong>
+                                <div style="padding-left: 14px; margin-top: 3px;">
+                                    <div>a. <em>Hal Positif:</em> ${hPos}</div>
+                                    <div>b. <em>Hal Negatif:</em> ${hNeg}</div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 8px;"><strong>5. Manfaat Studi Kasus:</strong>
+                                <div style="padding-left: 14px; margin-top: 3px;">
+                                    <div>a. <em>Edukatif:</em> ${mEdu}</div>
+                                    <div>b. <em>Inspiratif:</em> ${mInsp}</div>
+                                    <div>c. <em>Instruktif:</em> ${mInst}</div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 8px;"><strong>6. Penutup:</strong>
+                                <div style="padding-left: 14px; margin-top: 3px;">
+                                    <div>a. <em>Kesimpulan:</em> ${kesimpulan}</div>
+                                    <div>b. <em>Saran:</em> ${saran}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (sub === 'ANALISIS_MOE') {
+                    const opsi1 = document.getElementById('kka_b_opsi1')?.value || 'Opsi 1';
+                    const opsi2 = document.getElementById('kka_b_opsi2')?.value || 'Opsi 2';
+                    const latar = document.getElementById('kka_b_latar')?.value || 'Kebutuhan surveilans dan penindakan cepat.';
+                    const saran = document.getElementById('kka_b_saran')?.value || 'Prioritas alutsista terpilih dengan efektivitas tertinggi.';
+                    const moePembahasan = currentKkaAiSections?.pembahasan_moe || `Analisis multi-kriteria antara ${opsi1} dan ${opsi2} berpedoman pada kriteria Kemampuan (0.4), Kehandalan (0.4), dan Harga (0.2).`;
+                    const moePerhitungan = currentKkaAiSections?.perhitungan_moe || `1. ${opsi1}: Skor Total = 0.648\n2. ${opsi2}: Skor Total = 0.668`;
+                    const moeKeputusan = currentKkaAiSections?.pengambilan_keputusan || `Prioritas pilihan pengadaan alutsista terpilih adalah ${opsi2} dengan nilai efektivitas 0.668.`;
+                    const moeKesimpulan = currentKkaAiSections?.kesimpulan || `Pengadaan ${opsi2} memberikan nilai efektivitas tertinggi dalam mendukung tugas operasional.`;
+
+                    kkaContentHtml = `
+                        <div style="font-size: 10pt; text-align: justify; line-height: 1.45;">
+                            <div style="margin-bottom: 8px;"><strong>1. Latar Belakang:</strong> ${latar}</div>
+                            <div style="margin-bottom: 8px;"><strong>2. Analisis MoE:</strong>
+                                <div style="padding-left: 14px; margin-top: 3px;">
+                                    <div>a. <em>Pembahasan Kriteria:</em> ${moePembahasan}</div>
+                                    <div style="margin-top: 4px;">b. <em>Perhitungan Skor:</em><pre style="font-family: monospace; font-size: 9pt; background: #f8fafc; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; margin-top: 2px;">${moePerhitungan}</pre></div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 8px;"><strong>3. Pengambilan Keputusan:</strong> ${moeKeputusan}</div>
+                            <div style="margin-bottom: 8px;"><strong>4. Penutup:</strong>
+                                <div style="padding-left: 14px; margin-top: 3px;">
+                                    <div>a. <em>Kesimpulan:</em> ${moeKesimpulan}</div>
+                                    <div>b. <em>Saran:</em> ${saran}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const pokok = document.getElementById('kka_c_pokok')?.value || 'Kesenjangan integrasi operasional.';
+                    const p1 = document.getElementById('kka_c_p1')?.value || 'SDM pengawak';
+                    const p2 = document.getElementById('kka_c_p2')?.value || 'Sarana prasarana';
+                    const p3 = document.getElementById('kka_c_p3')?.value || 'Metoda dan SOP';
+                    const saran = document.getElementById('kka_c_saran')?.value || 'Pemberlakuan doktrin dan SOP terpadu.';
+                    const pemecahanUmum = currentKkaAiSections?.pemecahan_umum || 'Pendekatan kesisteman terpadu berbasis Subyek, Obyek, dan Metoda (SOM).';
+                    const kesimpulan = currentKkaAiSections?.kesimpulan || 'Harmonisasi peran Subyek, ketepatan sasaran Obyek, dan Metoda SOM secara terukur.';
+
+                    kkaContentHtml = `
+                        <div style="font-size: 10pt; text-align: justify; line-height: 1.45;">
+                            <div style="margin-bottom: 8px;"><strong>1. Pokok Masalah:</strong> ${pokok}</div>
+                            <div style="margin-bottom: 8px;"><strong>2. Identifikasi Permasalahan:</strong>
+                                <div style="padding-left: 14px; margin-top: 3px;">
+                                    <div>a. <em>Persoalan 1 (Subyek):</em> ${p1}</div>
+                                    <div>b. <em>Persoalan 2 (Obyek):</em> ${p2}</div>
+                                    <div>c. <em>Persoalan 3 (Metoda):</em> ${p3}</div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 8px;"><strong>3. Pemecahan Masalah (SOM):</strong> ${pemecahanUmum}</div>
+                            <div style="margin-bottom: 8px;"><strong>4. Penutup:</strong>
+                                <div style="padding-left: 14px; margin-top: 3px;">
+                                    <div>a. <em>Kesimpulan:</em> ${kesimpulan}</div>
+                                    <div>b. <em>Saran:</em> ${saran}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                paper.innerHTML = `
+                    <div style="text-align:center;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:16px">
+                        <div style="font-weight:bold;font-size:11pt">SEKOLAH STAF DAN KOMANDO ANGKATAN LAUT</div>
+                        <div style="font-weight:bold;font-size:12pt;margin-top:2px">KERTAS KARYA ACUAN (${sub.replace('_', ' ')})</div>
+                        <div style="font-size:9pt;font-family:monospace;color:#4b5563">${dikreg} &bull; ${noPasis} &bull; ${kelompok}</div>
+                    </div>
+                    <div style="text-align:center;margin-bottom:14px">
+                        <span style="font-weight:bold;font-size:11pt;text-transform:uppercase">${judul}</span>
+                    </div>
+                    ${kkaContentHtml}
+                    ${sigBlock}
+                `;
+            } else if (currentDocType === 'lapju') {
+                paper.className = "paper-sheet-landscape";
+                const bulan = document.getElementById('lapju_bulan')?.value || 'April';
+                const tahun = document.getElementById('lapju_tahun')?.value || '2025';
+                const nomor = document.getElementById('lapju_nomor_surat')?.value || 'B/   /IV/2025';
+
+                const cards = document.querySelectorAll('.lapju-entry');
+                let rowsHtml = '';
+                cards.forEach((c, idx) => {
+                    const nama = c.querySelector('.lapju-nama')?.value || '-';
+                    const pagu = parseFloat(c.querySelector('.lapju-pagu')?.value) || 0;
+                    const kontrak = parseFloat(c.querySelector('.lapju-kontrak')?.value) || 0;
+                    const serap = parseFloat(c.querySelector('.lapju-serap')?.value) || 0;
+                    const sisa = Math.max(0, pagu - serap);
+                    const fisik = c.querySelector('.lapju-fisik')?.value || '0';
+                    const admin = c.querySelector('.lapju-admin')?.value || '0';
+                    const penyedia = c.querySelector('.lapju-penyedia')?.value || '-';
+
+                    rowsHtml += `
+                        <tr>
+                            <td style="text-align:center">${idx + 1}</td>
+                            <td>SP DIPA-012/2025</td>
+                            <td>28-11-2024</td>
+                            <td>${nama}</td>
+                            <td style="text-align:right;font-family:monospace">${formatRupiah(pagu)}</td>
+                            <td style="text-align:right;font-family:monospace">${formatRupiah(kontrak)}</td>
+                            <td>KTR/0${idx+1}/2025</td>
+                            <td>15-02-2025</td>
+                            <td>30-06-2025</td>
+                            <td>${penyedia}</td>
+                            <td style="text-align:right;font-family:monospace">${formatRupiah(serap)}</td>
+                            <td style="text-align:right;font-family:monospace">${formatRupiah(sisa)}</td>
+                            <td style="text-align:center;font-family:monospace">${fisik}%</td>
+                            <td style="text-align:center;font-family:monospace">${admin}%</td>
+                            <td>BAP Terbit</td>
+                        </tr>
+                    `;
+                });
+
+                paper.innerHTML = `
+                    <div style="display:flex;justify-content:space-between;font-size:8pt;margin-bottom:8px">
+                        <div><strong>${kopUtama}</strong><br>${kopSub}</div>
+                        <div style="text-align:right">Lampiran Surat Pengantar<br>Nomor: ${nomor}</div>
+                    </div>
+                    <div style="text-align:center;margin-bottom:12px">
+                        <span style="font-weight:bold;font-size:11pt">LAPORAN KEMAJUAN PELAKSANAAN KEGIATAN BELANJA MODAL</span><br>
+                        <span style="font-size:9pt;font-family:monospace">PERIODE BULAN ${bulan.toUpperCase()} TA. ${tahun}</span>
+                    </div>
+                    <table class="military-table" style="width:100%;border-collapse:collapse;margin-bottom:14px">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">NO</th><th colspan="2">DIPA</th><th rowspan="2">URAIAN KEGIATAN</th><th rowspan="2">PAGU (RP)</th>
+                                <th colspan="5">KONTRAK</th><th colspan="2">REALISASI</th><th colspan="2">KEMAJUAN</th><th rowspan="2">KET</th>
+                            </tr>
+                            <tr>
+                                <th>NOMOR</th><th>TGL</th><th>NILAI (RP)</th><th>NOMOR</th><th>TGL</th><th>TDS</th><th>PENYEDIA</th>
+                                <th>TERSERAP</th><th>SISA</th><th>FISIK</th><th>ADMIN</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHtml}</tbody>
+                    </table>
+                    ${sigBlock}
+                `;
+            }
+
+            // Update badge status di toolbar canvas
+            const badge = document.getElementById('canvasDocBadge');
+            if (badge) {
+                if (customEditedText && customEditedText.trim()) {
+                    badge.style.display = 'inline-block';
+                    badge.style.background = 'rgba(16, 185, 129, 0.15)';
+                    badge.style.color = '#34d399';
+                    badge.style.border = '1px solid rgba(16, 185, 129, 0.3)';
+                    badge.textContent = '✏️ Naskah Telah Diedit';
+                } else if ((currentAiIsiList && currentAiIsiList.length > 0) || currentKkaAiSections) {
+                    badge.style.display = 'inline-block';
+                    badge.style.background = 'rgba(59, 130, 246, 0.15)';
+                    badge.style.color = '#60a5fa';
+                    badge.style.border = '1px solid rgba(59, 130, 246, 0.3)';
+                    badge.textContent = '✨ Hasil Susun Naskah AI';
+                } else {
+                    badge.style.display = 'inline-block';
+                    badge.style.background = 'rgba(255, 255, 255, 0.05)';
+                    badge.style.color = 'var(--text-muted)';
+                    badge.style.border = '1px solid var(--border-app)';
+                    badge.textContent = '📝 Draf Awal';
+                }
+            }
+        }
+
+        // ── Unified Generate API Action ──
+
+        async function handleGenerateAction() {
+            const btn = document.getElementById('btnGenerate');
+            const btnTop = document.getElementById('btnGenerateTop');
+            const origBottom = btn.innerHTML;
+            const origTop = btnTop.innerHTML;
+
+            const loadingText = currentDocType === 'lapju' ? 'Mengompilasi LAPJU...' : 'Menyusun Naskah AI...';
+            btn.innerHTML = `<i data-lucide="loader-2" style="width:16px;height:16px" class="spinning"></i> <span>${loadingText}</span>`;
+            btnTop.innerHTML = `<i data-lucide="loader-2" style="width:14px;height:14px" class="spinning"></i> <span>Proses AI...</span>`;
+            btn.disabled = true;
+            btnTop.disabled = true;
+            lucide.createIcons();
+
+            try {
+                if (currentDocType === 'nota_dinas') await generateNotaDinas();
+                else if (currentDocType === 'telaahan_staf') await generateTelaahanStaf();
+                else if (currentDocType === 'kka_seskoal') await generateKkaSeskoal();
+                else if (currentDocType === 'lapju') await generateLapju();
+
+                const successMsg = currentDocType === 'lapju'
+                    ? "Dokumen LAPJU Belanja Modal (Data Riil) berhasil dikompilasi ke PDF!"
+                    : "✨ Naskah militer berhasil disusun AI! Tinjau di panel Pertinjau atau klik 'Edit Draf'.";
+                showToast(successMsg, "check-circle");
+            } catch (e) {
+                console.error(e);
+                showToast("Gagal: " + (e.message || e), "alert-triangle");
+            } finally {
+                btn.innerHTML = origBottom;
+                btnTop.innerHTML = origTop;
+                btn.disabled = false;
+                btnTop.disabled = false;
+                lucide.createIcons();
+            }
+        }
+
+        async function generateNotaDinas() {
+            const poinInputs = document.querySelectorAll('.nd-poin-input');
+            const isiPoints = [];
+            poinInputs.forEach(p => { if (p.value.trim()) isiPoints.push({ teks: p.value.trim() }); });
+            const tembusanLines = (document.getElementById('nd_tembusan')?.value || '').split('\n').filter(l => l.trim().length > 0);
+
+            const payload = {
+                kop_utama: document.getElementById('kopUtama')?.value,
+                kop_sub: document.getElementById('kopSub')?.value,
+                nomor_surat: document.getElementById('nd_nomor')?.value,
+                kepada: document.getElementById('nd_kepada')?.value,
+                dari: document.getElementById('nd_dari')?.value,
+                perihal: document.getElementById('nd_perihal')?.value,
+                dasar: document.getElementById('nd_dasar')?.value,
+                isi_ringkas: isiPoints,
+                nama_pejabat: document.getElementById('ttdNama')?.value,
+                jabatan_pejabat: document.getElementById('ttdJabatan')?.value,
+                pangkat_pejabat: document.getElementById('ttdPangkat')?.value,
+                tembusan: tembusanLines.length > 0 ? tembusanLines : null,
+                jenis_penutup: document.getElementById('nd_penutup')?.value
+            };
+
+            const res = await fetch(`${API_BASE}/draft-nota-dinas`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+            });
+            if (!res.ok) throw new Error((await res.json()).detail || 'Gagal menyusun draf Nota Dinas via AI');
+            const data = await res.json();
+
+            // Simpan draf AI dan reset editan kustom lama serta URL unduh
+            currentAiIsiList = data.isi_list || [];
+            currentAiNotaDinasText = data.konten_gabungan || '';
+            customEditedText = null;
+            lastDownloadUrl = null;
+
+            // Sinkronkan form input kiri dengan teks yang dihasilkan AI
+            if (data.isi_list && data.isi_list.length > 0) {
+                const container = document.getElementById('ndPoinList');
+                if (container) {
+                    container.innerHTML = '';
+                    data.isi_list.forEach((item, idx) => {
+                        const num = idx + 2;
+                        const box = document.createElement('div');
+                        box.className = 'poin-box';
+                        const teks = typeof item === 'object' ? item.teks : item;
+                        let fullVal = (teks || '').replace(/^\d+[\.\)]\s*/, '').trim();
+                        if (typeof item === 'object' && item.sub_poin && item.sub_poin.length > 0) {
+                            fullVal += '\n' + item.sub_poin.map((s, j) => `   ${String.fromCharCode(97 + j)}. ${s}`).join('\n');
+                        }
+                        box.innerHTML = `
+                            <div class="poin-box-header">
+                                <span class="poin-box-title">Poin ${num} ${idx === 0 ? '(Paragraf Inti/Pembuka)' : ''}</span>
+                                ${idx > 0 ? `<button type="button" onclick="this.closest('.poin-box').remove();updatePaperPreview()" class="btn-trash">Hapus</button>` : ''}
+                            </div>
+                            <textarea class="nd-poin-input input-textarea" rows="3" oninput="updatePaperPreview()">${fullVal}</textarea>
+                        `;
+                        container.appendChild(box);
+                    });
+                    ndPoinIndex = data.isi_list.length + 1;
+                }
+            }
+
+            updatePaperPreview();
+        }
+
+        async function generateTelaahanStaf() {
+            const payload = {
+                kategori: "TELAAHAN_STAF",
+                kop_utama: document.getElementById('kopUtama')?.value,
+                kop_satuan_bawah: document.getElementById('kopSub')?.value,
+                judul_atau_topik: document.getElementById('ts_judul')?.value,
+                nomor_naskah: document.getElementById('ts_nomor')?.value,
+                tempat: document.getElementById('ts_tempat')?.value,
+                nama_pejabat_atau_pasis: document.getElementById('ttdNama')?.value,
+                jabatan: document.getElementById('ttdJabatan')?.value,
+                pangkat_korps_nrp: document.getElementById('ttdPangkat')?.value,
+                input_persoalan: document.getElementById('ts_persoalan')?.value,
+                input_praanggapan: document.getElementById('ts_praanggapan')?.value,
+                input_fakta: document.getElementById('ts_fakta')?.value,
+                input_analisis: document.getElementById('ts_analisis')?.value,
+                input_kesimpulan: document.getElementById('ts_kesimpulan')?.value,
+                input_saran: document.getElementById('ts_saran')?.value
+            };
+
+            const res = await fetch(`${API_BASE}/api/v1/kajian/draft`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+            });
+            if (!res.ok) throw new Error((await res.json()).detail || 'Gagal menyusun draf Telaahan Staf via AI');
+            const data = await res.json();
+            customEditedText = null;
+            lastDownloadUrl = null;
+
+            // Isi bidang form dengan 6 pasal hasil AI
+            if (data.sections) {
+                if (data.sections.persoalan && document.getElementById('ts_persoalan')) document.getElementById('ts_persoalan').value = data.sections.persoalan;
+                if (data.sections.praanggapan && document.getElementById('ts_praanggapan')) document.getElementById('ts_praanggapan').value = data.sections.praanggapan;
+                if (data.sections.fakta && document.getElementById('ts_fakta')) document.getElementById('ts_fakta').value = data.sections.fakta;
+                if (data.sections.analisis && document.getElementById('ts_analisis')) document.getElementById('ts_analisis').value = data.sections.analisis;
+                if (data.sections.kesimpulan && document.getElementById('ts_kesimpulan')) document.getElementById('ts_kesimpulan').value = data.sections.kesimpulan;
+                if (data.sections.saran && document.getElementById('ts_saran')) document.getElementById('ts_saran').value = data.sections.saran;
+            }
+            updatePaperPreview();
+        }
+
+        async function generateKkaSeskoal() {
+            const sub = document.getElementById('kkaModelType')?.value || 'STUDI_KASUS';
+            const payload = {
+                kategori: "KKA_SESKOAL", kka_model: sub,
+                kop_utama: document.getElementById('kopUtama')?.value,
+                kop_satuan_bawah: document.getElementById('kopSub')?.value,
+                judul_atau_topik: document.getElementById('kka_judul')?.value,
+                nomor_pasis: document.getElementById('kka_no_pasis')?.value,
+                kelompok_pasis: document.getElementById('kka_kelompok')?.value,
+                jenis_dan_tahun_pendidikan: document.getElementById('kka_dikreg')?.value,
+                nama_pejabat_atau_pasis: document.getElementById('ttdNama')?.value,
+                pangkat_korps_nrp: document.getElementById('ttdPangkat')?.value,
+                jabatan: document.getElementById('ttdJabatan')?.value
+            };
+
+            if (sub === 'STUDI_KASUS') {
+                payload.input_fakta = document.getElementById('kka_a_latar')?.value;
+                payload.input_kronologis_pra = document.getElementById('kka_a_pra')?.value;
+                payload.input_kronologis_kejadian = document.getElementById('kka_a_kejadian')?.value;
+                payload.input_kronologis_pasca = document.getElementById('kka_a_pasca')?.value;
+                payload.input_saran = document.getElementById('kka_a_saran')?.value;
+            } else if (sub === 'ANALISIS_MOE') {
+                payload.input_alutsista_opsi_1 = document.getElementById('kka_b_opsi1')?.value;
+                payload.input_alutsista_opsi_2 = document.getElementById('kka_b_opsi2')?.value;
+                payload.input_fakta = document.getElementById('kka_b_latar')?.value;
+                payload.input_saran = document.getElementById('kka_b_saran')?.value;
+            } else {
+                payload.input_pokok_masalah = document.getElementById('kka_c_pokok')?.value;
+                payload.input_permasalahan_list = [
+                    document.getElementById('kka_c_p1')?.value,
+                    document.getElementById('kka_c_p2')?.value,
+                    document.getElementById('kka_c_p3')?.value
+                ].filter(Boolean);
+                payload.input_saran = document.getElementById('kka_c_saran')?.value;
+            }
+
+            const res = await fetch(`${API_BASE}/api/v1/kajian/draft`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+            });
+            if (!res.ok) throw new Error((await res.json()).detail || 'Gagal menyusun draf KKA Seskoal via AI');
+            const data = await res.json();
+            customEditedText = null;
+            lastDownloadUrl = null;
+
+            if (data.sections) {
+                currentKkaAiSections = data.sections;
+                if (sub === 'STUDI_KASUS') {
+                    if (data.sections.latar_belakang_umum && document.getElementById('kka_a_latar')) document.getElementById('kka_a_latar').value = data.sections.latar_belakang_umum;
+                    if (data.sections.kronologis_pra && document.getElementById('kka_a_pra')) document.getElementById('kka_a_pra').value = data.sections.kronologis_pra;
+                    if (data.sections.kronologis_kejadian && document.getElementById('kka_a_kejadian')) document.getElementById('kka_a_kejadian').value = data.sections.kronologis_kejadian;
+                    if (data.sections.kronologis_pasca && document.getElementById('kka_a_pasca')) document.getElementById('kka_a_pasca').value = data.sections.kronologis_pasca;
+                    if (data.sections.saran && document.getElementById('kka_a_saran')) document.getElementById('kka_a_saran').value = data.sections.saran;
+                } else if (sub === 'ANALISIS_MOE') {
+                    if (data.sections.latar_belakang && document.getElementById('kka_b_latar')) document.getElementById('kka_b_latar').value = data.sections.latar_belakang;
+                    if (data.sections.saran && document.getElementById('kka_b_saran')) document.getElementById('kka_b_saran').value = data.sections.saran;
+                } else {
+                    if (data.sections.pokok_masalah && document.getElementById('kka_c_pokok')) document.getElementById('kka_c_pokok').value = data.sections.pokok_masalah;
+                    if (data.sections.saran && document.getElementById('kka_c_saran')) document.getElementById('kka_c_saran').value = data.sections.saran;
+                }
+            }
+            updatePaperPreview();
+        }
+
+        async function compilePdfNotaDinas() {
+            const poinInputs = document.querySelectorAll('.nd-poin-input');
+            const isiPoints = [];
+            poinInputs.forEach(p => { if (p.value.trim()) isiPoints.push({ teks: p.value.trim() }); });
+            const tembusanLines = (document.getElementById('nd_tembusan')?.value || '').split('\n').filter(l => l.trim().length > 0);
+
+            const payload = {
+                kop_utama: document.getElementById('kopUtama')?.value,
+                kop_sub: document.getElementById('kopSub')?.value,
+                nomor_surat: document.getElementById('nd_nomor')?.value,
+                kepada: document.getElementById('nd_kepada')?.value,
+                dari: document.getElementById('nd_dari')?.value,
+                perihal: document.getElementById('nd_perihal')?.value,
+                dasar: document.getElementById('nd_dasar')?.value,
+                isi_ringkas: isiPoints,
+                isi_custom_list: (customEditedText ? null : currentAiIsiList),
+                konten_custom: customEditedText,
+                nama_pejabat: document.getElementById('ttdNama')?.value,
+                jabatan_pejabat: document.getElementById('ttdJabatan')?.value,
+                pangkat_pejabat: document.getElementById('ttdPangkat')?.value,
+                tembusan: tembusanLines.length > 0 ? tembusanLines : null,
+                jenis_penutup: document.getElementById('nd_penutup')?.value
+            };
+
+            const res = await fetch(`${API_BASE}/generate-nota-dinas`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.detail || 'Gagal kompilasi PDF Nota Dinas');
+            }
+            const data = await res.json();
+            lastDownloadUrl = data.download_url;
+        }
+
+        async function compilePdfTelaahanStaf() {
+            const payload = {
+                kategori: "TELAAHAN_STAF",
+                kop_utama: document.getElementById('kopUtama')?.value,
+                kop_satuan_bawah: document.getElementById('kopSub')?.value,
+                judul_atau_topik: document.getElementById('ts_judul')?.value,
+                nomor_naskah: document.getElementById('ts_nomor')?.value,
+                tempat: document.getElementById('ts_tempat')?.value,
+                nama_pejabat_atau_pasis: document.getElementById('ttdNama')?.value,
+                jabatan: document.getElementById('ttdJabatan')?.value,
+                pangkat_korps_nrp: document.getElementById('ttdPangkat')?.value,
+                input_persoalan: document.getElementById('ts_persoalan')?.value,
+                input_praanggapan: document.getElementById('ts_praanggapan')?.value,
+                input_fakta: document.getElementById('ts_fakta')?.value,
+                input_analisis: document.getElementById('ts_analisis')?.value,
+                input_kesimpulan: document.getElementById('ts_kesimpulan')?.value,
+                input_saran: document.getElementById('ts_saran')?.value,
+                konten_custom: customEditedText
+            };
+
+            const res = await fetch(`${API_BASE}/api/v1/kajian/generate`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.detail || 'Gagal kompilasi PDF Telaahan Staf');
+            }
+            const data = await res.json();
+            lastDownloadUrl = data.download_url;
+        }
+
+        async function compilePdfKkaSeskoal() {
+            const sub = document.getElementById('kkaModelType')?.value || 'STUDI_KASUS';
+            const payload = {
+                kategori: "KKA_SESKOAL", kka_model: sub,
+                kop_utama: document.getElementById('kopUtama')?.value,
+                kop_satuan_bawah: document.getElementById('kopSub')?.value,
+                judul_atau_topik: document.getElementById('kka_judul')?.value,
+                nomor_pasis: document.getElementById('kka_no_pasis')?.value,
+                kelompok_pasis: document.getElementById('kka_kelompok')?.value,
+                jenis_dan_tahun_pendidikan: document.getElementById('kka_dikreg')?.value,
+                nama_pejabat_atau_pasis: document.getElementById('ttdNama')?.value,
+                pangkat_korps_nrp: document.getElementById('ttdPangkat')?.value,
+                jabatan: document.getElementById('ttdJabatan')?.value,
+                konten_custom: customEditedText
+            };
+
+            if (sub === 'STUDI_KASUS') {
+                payload.input_fakta = document.getElementById('kka_a_latar')?.value;
+                payload.input_kronologis_pra = document.getElementById('kka_a_pra')?.value;
+                payload.input_kronologis_kejadian = document.getElementById('kka_a_kejadian')?.value;
+                payload.input_kronologis_pasca = document.getElementById('kka_a_pasca')?.value;
+                payload.input_saran = document.getElementById('kka_a_saran')?.value;
+            } else if (sub === 'ANALISIS_MOE') {
+                payload.input_alutsista_opsi_1 = document.getElementById('kka_b_opsi1')?.value;
+                payload.input_alutsista_opsi_2 = document.getElementById('kka_b_opsi2')?.value;
+                payload.input_fakta = document.getElementById('kka_b_latar')?.value;
+                payload.input_saran = document.getElementById('kka_b_saran')?.value;
+            } else {
+                payload.input_pokok_masalah = document.getElementById('kka_c_pokok')?.value;
+                payload.input_permasalahan_list = [
+                    document.getElementById('kka_c_p1')?.value,
+                    document.getElementById('kka_c_p2')?.value,
+                    document.getElementById('kka_c_p3')?.value
+                ].filter(Boolean);
+                payload.input_saran = document.getElementById('kka_c_saran')?.value;
+            }
+
+            const res = await fetch(`${API_BASE}/api/v1/kajian/generate`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.detail || 'Gagal kompilasi PDF KKA Seskoal');
+            }
+            const data = await res.json();
+            lastDownloadUrl = data.download_url;
+        }
+
+        async function handleDownloadPdfDirect() {
+            if (lastDownloadUrl && !customEditedText) {
+                window.open(`${API_BASE}${lastDownloadUrl}`, '_blank');
+                return;
+            }
+
+            showToast("Mengompilasi PDF Resmi KEP/868...", "info");
+            try {
+                if (currentDocType === 'nota_dinas') {
+                    await compilePdfNotaDinas();
+                } else if (currentDocType === 'telaahan_staf') {
+                    await compilePdfTelaahanStaf();
+                } else if (currentDocType === 'kka_seskoal') {
+                    await compilePdfKkaSeskoal();
+                } else if (currentDocType === 'lapju') {
+                    await generateLapju();
+                }
+
+                if (lastDownloadUrl) {
+                    window.open(`${API_BASE}${lastDownloadUrl}`, '_blank');
+                    showToast("PDF Resmi berhasil dicetak & diunduh!", "check-circle");
+                }
+            } catch (err) {
+                console.error(err);
+                showToast("Gagal mengompilasi PDF: " + (err.message || err), "alert-triangle");
+            }
+        }
+
+        // ── Modal Editor (Hanya Bagian Naskah / Substansi yang Diedit) ──
+        function openEditModal() {
+            const textarea = document.getElementById('modalTextarea');
+            const titleEl = document.querySelector('#editModal .modal-title');
+            const subtitleEl = document.getElementById('modalEditSubtitle');
+
+            if (currentDocType === 'nota_dinas') {
+                if (titleEl) titleEl.textContent = "✏️ Editor Redaksi Naskah (Poin Isi Nota Dinas)";
+                if (subtitleEl) subtitleEl.textContent = "Edit redaksi poin naskah di bawah ini. Hasil editan akan langsung tampil di panel Pertinjau.";
+
+                if (customEditedText && customEditedText.trim()) {
+                    textarea.value = customEditedText;
+                } else if (currentAiIsiList && currentAiIsiList.length > 0) {
+                    // Draf dari AI yang tersimpan
+                    textarea.value = currentAiIsiList.map((item, idx) => {
+                        const teks = typeof item === 'object' ? item.teks : item;
+                        const cleanTeks = (teks || '').replace(/^\d+[\.\)]\s*/, '').trim();
+                        let subStr = '';
+                        if (typeof item === 'object' && item.sub_poin && item.sub_poin.length > 0) {
+                            subStr = '\n' + item.sub_poin.map((s, j) => `   ${String.fromCharCode(97 + j)}. ${s}`).join('\n');
+                        }
+                        return `${idx + 2}. ${cleanTeks}${subStr}`;
+                    }).join('\n\n');
+                } else {
+                    const poinInputs = document.querySelectorAll('.nd-poin-input');
+                    const paras = [];
+                    poinInputs.forEach((p, idx) => {
+                        if (p.value.trim()) paras.push(`${idx + 2}. ${p.value.trim()}`);
+                    });
+                    textarea.value = paras.join('\n\n');
+                }
+            } else if (currentDocType === 'telaahan_staf') {
+                if (titleEl) titleEl.textContent = "✏️ Editor Redaksi 6 Pasal Telaahan Staf";
+                if (subtitleEl) subtitleEl.textContent = "Edit redaksi 6 pasal baku KEP/868 di bawah ini.";
+
+                if (customEditedText && customEditedText.trim()) {
+                    textarea.value = customEditedText;
+                } else {
+                    const p1 = document.getElementById('ts_persoalan')?.value || '';
+                    const p2 = document.getElementById('ts_praanggapan')?.value || '';
+                    const p3 = document.getElementById('ts_fakta')?.value || '';
+                    const p4 = document.getElementById('ts_analisis')?.value || '';
+                    const p5 = document.getElementById('ts_kesimpulan')?.value || '';
+                    const p6 = document.getElementById('ts_saran')?.value || '';
+                    textarea.value = `1. Persoalan.\n${p1}\n\n2. Praanggapan.\n${p2}\n\n3. Fakta/Data yang Memengaruhi.\n${p3}\n\n4. Analisis.\n${p4}\n\n5. Kesimpulan.\n${p5}\n\n6. Saran.\n${p6}`;
+                }
+            } else if (currentDocType === 'kka_seskoal') {
+                if (titleEl) titleEl.textContent = "✏️ Editor Redaksi Naskah KKA Seskoal";
+                if (subtitleEl) subtitleEl.textContent = "Edit naskah KKA di bawah ini sebelum dicetak ke PDF.";
+                textarea.value = customEditedText || document.getElementById('paperPreview').innerText;
+            } else {
+                textarea.value = customEditedText || document.getElementById('paperPreview').innerText;
+            }
+
+            document.getElementById('editModal').classList.add('active');
+            textarea.focus();
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+
+        function applyModalEdit() {
+            const val = document.getElementById('modalTextarea').value.trim();
+            if (!val) {
+                showToast("Teks naskah tidak boleh kosong", "alert-triangle");
+                return;
+            }
+            customEditedText = val;
+            lastDownloadUrl = null; // Menandai PDF perlu dikompilasi ulang saat tombol unduh ditekan
+            closeEditModal();
+            updatePaperPreview();
+            showToast("Perubahan naskah diterapkan ke panel Pertinjau!", "check-circle");
+        }
+
+        function copyDraftText() {
+            const text = document.getElementById('paperPreview').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Teks naskah berhasil disalin ke clipboard");
+            });
+        }
+
+        // ── Local Storage Draft Save & Load ──
+        function saveDraftLocal() {
+            const draft = {
+                type: currentDocType,
+                kopUtama: document.getElementById('kopUtama').value,
+                kopSub: document.getElementById('kopSub').value,
+                ttdJabatan: document.getElementById('ttdJabatan').value,
+                ttdNama: document.getElementById('ttdNama').value,
+                ttdPangkat: document.getElementById('ttdPangkat').value,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('sseb_draft_' + currentDocType, JSON.stringify(draft));
+            showToast(`Draf ${currentDocType.toUpperCase()} berhasil disimpan di browser`);
+        }
+
+        function loadDraftLocal() {
+            const raw = localStorage.getItem('sseb_draft_' + currentDocType);
+            if (!raw) {
+                showToast("Tidak ada draf tersimpan untuk dokumen ini", "alert-triangle");
+                return;
+            }
+            const d = JSON.parse(raw);
+            if (d.kopUtama) document.getElementById('kopUtama').value = d.kopUtama;
+            if (d.kopSub) document.getElementById('kopSub').value = d.kopSub;
+            if (d.ttdJabatan) document.getElementById('ttdJabatan').value = d.ttdJabatan;
+            if (d.ttdNama) document.getElementById('ttdNama').value = d.ttdNama;
+            if (d.ttdPangkat) document.getElementById('ttdPangkat').value = d.ttdPangkat;
+            updatePaperPreview();
+            showToast("Draf lokal berhasil dimuat kembali");
+        }
+
+        function clearFormCurrent() {
+            if (!confirm("Bersihkan seluruh isi form saat ini?")) return;
+            if (currentDocType === 'nota_dinas') {
+                document.getElementById('nd_perihal').value = '';
+                document.getElementById('nd_dasar').value = '';
+            } else if (currentDocType === 'telaahan_staf') {
+                document.getElementById('ts_persoalan').value = '';
+                document.getElementById('ts_analisis').value = '';
+            }
+            updatePaperPreview();
+            showToast("Form berhasil dibersihkan");
+        }
+
+        function loadSampleScenario() {
+            if (currentDocType === 'nota_dinas') {
+                document.getElementById('nd_perihal').value = 'Permohonan Dukungan Satgas Operasi Patroli Siber Terpadu TA 2026';
+                document.getElementById('nd_dasar').value = 'Keputusan Panglima TNI Nomor KEP/868/IX/2022 tentang Petunjuk Tata Tulis Militer\nSurat Perintah Kasal Nomor Sprin/245/II/2026 tanggal 15 Februari 2026';
+            } else if (currentDocType === 'telaahan_staf') {
+                document.getElementById('ts_judul').value = 'STRATEGI PENGUATAN CSIRT MARITIM GUNA MENGANTISIPASI ANCAMAN RANSOMWARE PADA JALUR LOGISTIK ALUT';
+            }
+            updatePaperPreview();
+            showToast("Skenario contoh berhasil diisikan ke form");
+        }
+
+        // ── Toast Notification ──
+        function showToast(msg, icon = "check-circle") {
+            const t = document.getElementById('toast');
+            const ti = document.getElementById('toastIcon');
+            document.getElementById('toastMsg').textContent = msg;
+            ti.setAttribute('data-lucide', icon);
+            ti.className = icon === 'alert-triangle' ? 'snackbar-icon error' : 'snackbar-icon';
+            lucide.createIcons();
+            t.classList.add('show');
+            setTimeout(() => { t.classList.remove('show'); }, 3500);
+        }
+
+        // ── RAG Telemetry ──
+        async function loadRagStatus() {
+            try {
+                const r = await fetch(`${API_BASE}/rag/status`);
+                if (!r.ok) return;
+                const d = await r.json();
+                document.getElementById('ragText').textContent = d.is_enabled ? `RAG Siap (${d.total_documents} Dok)` : 'RAG Non-Aktif';
+            } catch (e) { console.warn('RAG status error:', e); }
+        }
+
+        async function syncRag() {
+            const b = document.getElementById('ragText');
+            b.textContent = 'Sinkronisasi...';
+            try {
+                const r = await fetch(`${API_BASE}/rag/reindex`, { method: 'POST' });
+                if (!r.ok) throw new Error('Gagal reindex');
+                const d = await r.json();
+                b.textContent = `RAG Siap (${d.total_documents} Dok)`;
+                showToast(`RAG Berhasil Disinkronisasi (${d.total_documents} Dokumen Doktrin)`);
+            } catch (e) {
+                b.textContent = 'RAG Error';
+                showToast("Gagal sinkronisasi RAG", "alert-triangle");
+            }
+        }
+    </script>
+</body>
+</html>
