@@ -48,9 +48,9 @@ fun KajianScreen(
     var selectedKkaModel by remember { mutableStateOf(KKAModelType.STUDI_KASUS) }
 
     // Common Form State
-    var kopUtama by remember { mutableStateOf("PUSAT SIBER PERTAHANAN") }
-    var kopSub by remember { mutableStateOf("SATUAN PENINDAK SIBER") }
-    var judulAtauTopik by remember { mutableStateOf("PENGUATAN KEAMANAN SIBER OPERASIONAL SATUAN") }
+    var kopUtama by remember { mutableStateOf("PUSAT KOMANDO OPERASI") }
+    var kopSub by remember { mutableStateOf("SATUAN PELAKSANA OPERASI") }
+    var judulAtauTopik by remember { mutableStateOf("PENGUATAN SISTEM KESIAPSIAGAAN OPERASIONAL SATUAN") }
     // Kosong = backend menomori otomatis (Nomor TS/01/<ROMAWI>/<TAHUN>/<KODE_SATKER>).
     // Sebelumnya prefill usang "Nomor TS/01/IV/2025" selalu terkirim dan menekan
     // penomoran otomatis server dengan format yang sudah kedaluwarsa.
@@ -90,11 +90,11 @@ fun KajianScreen(
     var inputSaranMoE by remember { mutableStateOf("Disarankan memprioritaskan opsi alutsista dengan perolehan skor MoE tertinggi.") }
 
     // KKA Model C (Pemecahan Masalah SOM) Specific State
-    var inputPokokMasalah by remember { mutableStateOf("Belum optimalnya integrasi pusat komando siber maritim antarsatker operasi.") }
-    var inputPersoalan1 by remember { mutableStateOf("Keterbatasan kuantitas dan kompetensi SDM personel siber.") }
+    var inputPokokMasalah by remember { mutableStateOf("Belum optimalnya integrasi pusat komando dan koordinasi operasi maritim antarsatker operasi.") }
+    var inputPersoalan1 by remember { mutableStateOf("Keterbatasan kuantitas dan kompetensi SDM personel operasional.") }
     var inputPersoalan2 by remember { mutableStateOf("Infrastruktur server dan sensor pemantau belum merata.") }
     var inputPersoalan3 by remember { mutableStateOf("SOP koordinasi tanggap insiden lintas pangkalan masih manual.") }
-    var inputSaranSOM by remember { mutableStateOf("Pemberlakuan doktrin pertahanan siber terpadu dan pembentukan satgas siber pangkalan.") }
+    var inputSaranSOM by remember { mutableStateOf("Pemberlakuan doktrin operasional terpadu dan pembentukan satgas operasi pangkalan.") }
 
     // Dialog Preview & Live Edit — STATE DIMILIKI VIEWMODEL (bertahan lintas tab & rotasi).
     // Sebelumnya state Compose lokal: pindah tab saat AI menyusun membuang hasil senyap.

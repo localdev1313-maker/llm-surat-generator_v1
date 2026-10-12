@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "PussiberSuratGenerator"
+rootProject.name = "SuratGeneratorApp"
 include(":app")

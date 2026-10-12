@@ -228,7 +228,7 @@ async def generate_nota_dinas(request: NotaDinasRequest):
             kalimat_penutup = "Demikian disampaikan mohon menjadi perhatian."
 
         template_data = {
-            'kop_utama': (request.kop_utama or "PUSAT SIBER PERTAHANAN").strip(),
+            'kop_utama': (request.kop_utama or "PUSAT KOMANDO OPERASI").strip(),
             'kop_sub': (request.kop_sub or "SATUAN BAWAH").strip(),
             'nomor_surat': (request.nomor_surat or "").strip(),
             'kepada': (request.kepada or "").strip(),

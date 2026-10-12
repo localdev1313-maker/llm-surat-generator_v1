@@ -30,7 +30,7 @@ class NotaDinasPoinItem(BaseModel):
     sub_poin: Optional[List[str]] = None
 
 class NotaDinasRequest(BaseModel):
-    kop_utama: Optional[str] = "PUSAT SIBER PERTAHANAN"
+    kop_utama: Optional[str] = "PUSAT KOMANDO OPERASI"
     kop_sub: Optional[str] = "SATUAN BAWAH"
     nomor_surat: str
     kepada: str

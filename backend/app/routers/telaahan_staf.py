@@ -81,7 +81,7 @@ async def draft_telaahan_staf(request: TelaahanStafInput):
         lampiran_clean = [l.strip() for l in (request.lampiran_list or []) if l.strip()]
 
         konten_gabungan = _format_telaahan_staf_gabungan(
-            kop_utama=request.kop_utama or "PUSAT SIBER PERTAHANAN",
+            kop_utama=request.kop_utama or "PUSAT KOMANDO OPERASI",
             kop_sub=request.kop_satuan_bawah or "",
             judul=request.judul,
             nomor_naskah=request.nomor_naskah or "",
@@ -129,7 +129,7 @@ async def generate_telaahan_staf(request: TelaahanStafInput):
         lampiran_clean = [l.strip() for l in (request.lampiran_list or []) if l.strip()]
 
         template_data = {
-            'kop_utama': (request.kop_utama or "PUSAT SIBER PERTAHANAN").strip(),
+            'kop_utama': (request.kop_utama or "PUSAT KOMANDO OPERASI").strip(),
             'kop_satuan_bawah': (request.kop_satuan_bawah or "").strip(),
             'judul': request.judul.strip().upper(),
             'nomor_naskah': (request.nomor_naskah or "").strip(),
@@ -146,7 +146,7 @@ async def generate_telaahan_staf(request: TelaahanStafInput):
         await asyncio.to_thread(create_pdf_telaahan_staf, template_data, pdf_path)
 
         konten_gabungan = _format_telaahan_staf_gabungan(
-            kop_utama=request.kop_utama or "PUSAT SIBER PERTAHANAN",
+            kop_utama=request.kop_utama or "PUSAT KOMANDO OPERASI",
             kop_sub=request.kop_satuan_bawah or "",
             judul=request.judul,
             nomor_naskah=request.nomor_naskah or "",
@@ -211,7 +211,7 @@ async def render_telaahan_staf_pdf(request: TelaahanStafRenderRequest):
         konten_custom_clean = escape_custom_html((request.konten_custom or "").strip())
 
         template_data = {
-            'kop_utama': (request.kop_utama or "PUSAT SIBER PERTAHANAN").strip(),
+            'kop_utama': (request.kop_utama or "PUSAT KOMANDO OPERASI").strip(),
             'kop_satuan_bawah': (request.kop_satuan_bawah or "").strip(),
             'judul': request.judul.strip().upper(),
             'nomor_naskah': (request.nomor_naskah or "").strip(),
@@ -230,7 +230,7 @@ async def render_telaahan_staf_pdf(request: TelaahanStafRenderRequest):
 
         konten_gabungan = (
             konten_custom_clean if konten_custom_clean else _format_telaahan_staf_gabungan(
-                kop_utama=request.kop_utama or "PUSAT SIBER PERTAHANAN",
+                kop_utama=request.kop_utama or "PUSAT KOMANDO OPERASI",
                 kop_sub=request.kop_satuan_bawah or "",
                 judul=request.judul,
                 nomor_naskah=request.nomor_naskah or "",

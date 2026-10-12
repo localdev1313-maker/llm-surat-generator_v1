@@ -15,12 +15,12 @@ def test_pdf():
     tanggal_ttd = f"Jakarta, {now.day} {bulan_id[now.month - 1]} {now.year}"
 
     template_data = {
-        "kop_utama": "PUSAT SIBER PERTAHANAN",
-        "kop_satuan_bawah": "SATUAN PENGAMANAN SIBER",
-        "judul": "PENGUATAN KEAMANAN SIBER PADA PUSAT DATA OPERASIONAL",
+        "kop_utama": "PUSAT KOMANDO OPERASI",
+        "kop_satuan_bawah": "SATUAN PENGAMANAN OPERASI",
+        "judul": "PENGUATAN KEAMANAN SISTEM PADA PUSAT DATA OPERASIONAL",
         "nomor_naskah": "Nomor TS/01/V/2026",
         "pasal": {
-            "persoalan": "Kebutuhan perumusan langkah strategis dan terpadu dalam mengatasi peningkatan intensitas serangan siber jenis ransomware pada server operasional satuan guna menjamin kelancaran pelaksanaan tugas pokok satuan secara optimal.",
+            "persoalan": "Kebutuhan perumusan langkah strategis dan terpadu dalam mengatasi peningkatan intensitas gangguan sistem operasional jenis ransomware pada server operasional satuan guna menjamin kelancaran pelaksanaan tugas pokok satuan secara optimal.",
             "praanggapan": "Dukungan alokasi sumber daya yang memadai, penguatan regulasi operasional, serta sinergi antarunsur terkait diyakini mampu mengakselerasi penyelesaian persoalan dan meminimalisasi potensi hambatan di masa mendatang.",
             "fakta": "Berdasarkan data dan evaluasi di lapangan, kondisi saat ini menunjukkan bahwa dalam triwulan I tahun 2026 tercatat 145 upaya intrusi berbahaya, dan utilisasi kapasitas firewall eksisting telah mencapai 94%. Kondisi ini secara langsung memengaruhi efektivitas pelaksanaan tugas kedinasan.",
             "analisis": "Melalui penelaahan mendalam terhadap fakta yang ada, keterbatasan yang dihadapi dapat diatasi melalui penerapan langkah terstruktur dan terukur. Alternatif tindakan ini memberikan keuntungan signifikan berupa efisiensi waktu, optimalisasi sumber daya yang ada, serta memitigasi risiko disrupsi operasional, meskipun memerlukan koordinasi intensif pada tahap awal implementasi.",

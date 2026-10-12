@@ -16,7 +16,7 @@ DAFTAR 50 NOTA DINAS DUMMY
 015. Nota Dinas Dummy - 015.docx | Permohonan Jalur Internet Cadangan
 016. Nota Dinas Dummy - 016.docx | Permohonan Perpanjangan Domain
 017. Nota Dinas Dummy - 017.docx | Permohonan Sertifikat Digital
-018. Nota Dinas Dummy - 018.docx | Permohonan Pelatihan Keamanan Siber
+018. Nota Dinas Dummy - 018.docx | Permohonan Pelatihan Keamanan Sistem Informasi
 019. Nota Dinas Dummy - 019.docx | Rencana Simulasi Respons Insiden
 020. Nota Dinas Dummy - 020.docx | Permohonan Audit Aset TI
 021. Nota Dinas Dummy - 021.docx | Pemutakhiran Data Inventaris

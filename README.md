@@ -1,13 +1,13 @@
-# 📱 Pussiber AI Mobile — LLM Surat & Nota Dinas Generator (Android Version)
+# 📱 SSEB-AI Mobile — LLM Surat & Nota Dinas Generator (Android Version)
 
-Aplikasi Android Native (Kotlin + Jetpack Compose) untuk pembuatan **Surat Resmi** dan **Nota Dinas Baku Militer** secara cepat menggunakan kecerdasan buatan lokal (**Local LLM** via Ollama) dan rendering PDF langsung dari smartphone atau tablet.
+Aplikasi Android Native (Kotlin + Jetpack Compose) untuk pembuatan **Surat Resmi** dan **Nota Dinas Baku Kedinasan/Militer** secara cepat menggunakan kecerdasan buatan lokal (**Local LLM** via Ollama) dan rendering PDF langsung dari smartphone atau tablet.
 
 ---
 
 ## 🌟 Fitur Utama (Android Mobile)
 
 - **Input Cepat & Dikte Suara (Speech-to-Text)**: Memungkinkan penyusunan draf naskah dinas melalui pendiktean suara atau pengisian poin-poin ringkas (*progressive disclosure*).
-- **Format Nota Dinas Baku Pussiber**: Layout presisi 100% (margin A4, kop instansi, nomor surat, dasar hukum bernomor abjad `a., b.`, isi bernomor angka, dan blok tanda tangan).
+- **Format Nota Dinas Baku**: Layout presisi 100% (margin A4, kop instansi, nomor surat, dasar hukum bernomor abjad `a., b.`, isi bernomor angka, dan blok tanda tangan).
 - **Arsitektur Hybrid AI**:
   - **Intranet Mode**: Terhubung ke backend server FastAPI + Ollama (`qwen2.5:14b`) via Wi-Fi internal.
   - **Offline Mode**: Berjalan 100% tanpa jaringan menggunakan *On-Device LLM* (`qwen2.5:1.5b/3b`).
@@ -83,4 +83,4 @@ Server akan berjalan di `http://0.0.0.0:8001`. Tes status kesehatan server via b
 
 ## 📄 Lisensi & Klasifikasi Data
 
-Terbatas / Internal Pusat Siber Pertahanan (Pussiber). 100% Air-Gapped & Offline Capable.
+Terbatas / Internal Satuan Operasional. 100% Air-Gapped & Offline Capable.

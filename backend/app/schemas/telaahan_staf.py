@@ -10,9 +10,9 @@ class TelaahanStafPasal(BaseModel):
     saran: str = Field(..., description="Pasal 6: Saran")
 
 class TelaahanStafInput(BaseModel):
-    kop_utama: Optional[str] = "PUSAT SIBER PERTAHANAN"
+    kop_utama: Optional[str] = "PUSAT KOMANDO OPERASI"
     kop_satuan_bawah: Optional[str] = "SATUAN BAWAH"
-    judul: str = Field(..., description="Judul permasalahan telaahan staf (misal: PENGUATAN KEAMANAN SIBER OPERASIONAL)")
+    judul: str = Field(..., description="Judul permasalahan telaahan staf (misal: PENGUATAN SISTEM KESIAPSIAGAAN OPERASIONAL)")
     nomor_naskah: Optional[str] = None  # Format: Nomor TS/01/V/2026
 
     # 6 Poin Masukan Materi Kajian
@@ -58,7 +58,7 @@ class TelaahanStafOutput(BaseModel):
     llm_warnings: List[str] = Field(default_factory=list)
 
 class TelaahanStafRenderRequest(BaseModel):
-    kop_utama: Optional[str] = "PUSAT SIBER PERTAHANAN"
+    kop_utama: Optional[str] = "PUSAT KOMANDO OPERASI"
     kop_satuan_bawah: Optional[str] = "SATUAN BAWAH"
     judul: str
     nomor_naskah: Optional[str] = None

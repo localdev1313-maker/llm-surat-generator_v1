@@ -22,7 +22,7 @@ abstract class AppDatabase : RoomDatabase() {
         private const val TAG = "AppDatabase"
 
         /** Nama DB terenkripsi — BERBEDA dari nama lama agar migrasi bisa dua-arah. */
-        private const val DB_NAME = "pussiber_surat_database_enc"
+        private const val DB_NAME = "app_surat_database_enc"
 
         /** Nama DB versi lama yang TIDAK terenkripsi (SQLCipher dibundel tapi tak dipasang). */
         private const val LEGACY_PLAIN_DB_NAME = "pussiber_surat_database"

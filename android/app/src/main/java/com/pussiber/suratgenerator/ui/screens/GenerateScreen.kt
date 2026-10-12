@@ -59,12 +59,12 @@ fun GenerateScreen(
     var selectedTab by remember { mutableIntStateOf(0) } // 0: Nota Dinas, 1: Kajian, 2: Lapju, 3: Surat Umum
 
     // Form State Nota Dinas
-    var kopUtama by remember { mutableStateOf("PUSAT SIBER PERTAHANAN") }
-    var kopSub by remember { mutableStateOf("SATUAN PENINDAK SIBER") }
+    var kopUtama by remember { mutableStateOf("PUSAT KOMANDO OPERASI") }
+    var kopSub by remember { mutableStateOf("SATUAN PELAKSANA OPERASI") }
     var nomorSurat by remember { mutableStateOf("") }
-    var kepada by remember { mutableStateOf("Kepala Pusat Siber Pertahanan") }
-    var dari by remember { mutableStateOf("Kadiv Operasi Siber") }
-    var perihal by remember { mutableStateOf("Laporan Kesiapsiagaan Tim Tanggap Insiden Siber Maritim") }
+    var kepada by remember { mutableStateOf("Kepala Pusat Komando Operasi") }
+    var dari by remember { mutableStateOf("Kadiv Operasional") }
+    var perihal by remember { mutableStateOf("Laporan Kesiapsiagaan Tim Tanggap Insiden Operasional") }
     var dasar by remember {
         mutableStateOf(
             "Keputusan Panglima TNI Nomor KEP/868/IX/2022 tentang Petunjuk Tata Tulis Militer\n" +
@@ -78,7 +78,7 @@ fun GenerateScreen(
 
     val isiPoinList = remember {
         mutableStateListOf<PoinItemState>().apply {
-            add(PoinItemState("Sehubungan dasar tersebut di atas, dilaporkan bahwa kesiapsiagaan operasional pemantauan siber wilayah pertahanan maritim berada dalam status siaga penuh selama 24/7."))
+            add(PoinItemState("Sehubungan dasar tersebut di atas, dilaporkan bahwa kesiapsiagaan operasional pemantauan sistem wilayah pertahanan berada dalam status siaga penuh selama 24/7."))
         }
     }
 

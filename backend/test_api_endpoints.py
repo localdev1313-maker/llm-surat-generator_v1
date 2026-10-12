@@ -22,11 +22,11 @@ async def run_tests():
 
         print("[2/4] Testing POST /draft-telaahan-staf...")
         payload = {
-            "kop_utama": "PUSAT SIBER PERTAHANAN",
-            "kop_satuan_bawah": "SATUAN PENGAMANAN SIBER",
-            "judul": "PENGUATAN KEAMANAN SIBER PADA PUSAT DATA OPERASIONAL",
+            "kop_utama": "PUSAT KOMANDO OPERASI",
+            "kop_satuan_bawah": "SATUAN PENGAMANAN OPERASI",
+            "judul": "PENGUATAN KEAMANAN SISTEM PADA PUSAT DATA OPERASIONAL",
             "nomor_naskah": "Nomor TS/01/V/2026",
-            "input_persoalan": "Peningkatan intensitas serangan siber jenis ransomware pada server operasional satuan.",
+            "input_persoalan": "Peningkatan intensitas ancaman gangguan sistem jenis ransomware pada server operasional satuan.",
             "input_fakta": "Dalam triwulan I tahun 2026 tercatat 145 upaya intrusi berbahaya dan utilisasi firewall mencapai 94%.",
             "input_saran": "Pengadaan Next-Generation Firewall dan pelatihan Incident Response terpadu.",
             "nama_pejabat": "Budi Santoso",

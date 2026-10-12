@@ -1,5 +1,5 @@
 # Product Requirement Document (PRD)
-# LLM Surat & Nota Dinas Generator Mobile — Pussiber AI Mobile
+# LLM Surat & Nota Dinas Generator Mobile — SSEB-AI Mobile
 
 ---
 
@@ -7,15 +7,15 @@
 
 | Metadata | Keterangan |
 |---|---|
-| **Nama Produk** | LLM Surat & Nota Dinas Generator Mobile (Pussiber AI Mobile) |
+| **Nama Produk** | LLM Surat & Nota Dinas Generator Mobile (SSEB-AI Mobile) |
 | **Versi Dokumen** | 2.0.0-alpha |
 | **Status** | In-Development / Migration to Mobile |
-| **Target Pengguna** | Staf Tata Usaha, Sekretariat, dan Personel Administrasi Pusat Siber Pertahanan (Pussiber) & Satuan Bawah |
+| **Target Pengguna** | Staf Tata Usaha, Sekretariat, dan Personel Administrasi Pusat Komando Operasi & Satuan Pelaksana |
 | **Klasifikasi Keamanan** | Terbatas / Internal On-Premise (100% Offline & Air-Gapped Mobile Capable) |
 | **Platform** | Android Mobile Application (Native Kotlin / Jetpack Compose) |
 
 ### Ringkasan Produk
-**LLM Surat & Nota Dinas Generator Mobile** adalah evolusi platform Pussiber AI ke ranah perangkat bergerak (*mobile device*). Aplikasi Android ini dirancang khusus untuk memudahkan personel militer dan administrasi menyusun **Surat Resmi** dan **Nota Dinas Baku** langsung dari smartphone atau tablet mereka. Menggunakan arsitektur *hybrid*, aplikasi ini dapat melakukan inferensi secara offline menggunakan *On-Device LLM* (untuk situasi lapangan tanpa sinyal) maupun terhubung ke server intranet Pussiber via Wi-Fi terenkripsi untuk memanfaatkan model yang lebih besar. Hasil akhir berupa dokumen PDF resmi yang sesuai dengan Tata Naskah Dinas militer, siap dibagikan melalui aplikasi pesan instan aman atau dicetak langsung via printer nirkabel.
+**LLM Surat & Nota Dinas Generator Mobile** adalah evolusi platform SSEB-AI ke ranah perangkat bergerak (*mobile device*). Aplikasi Android ini dirancang khusus untuk memudahkan personel kedinasan dan administrasi menyusun **Surat Resmi** dan **Nota Dinas Baku** langsung dari smartphone atau tablet mereka. Menggunakan arsitektur *hybrid*, aplikasi ini dapat melakukan inferensi secara offline menggunakan *On-Device LLM* (untuk situasi lapangan tanpa sinyal) maupun terhubung ke server intranet lokal via Wi-Fi terenkripsi untuk memanfaatkan model yang lebih besar. Hasil akhir berupa dokumen PDF resmi yang sesuai dengan Tata Naskah Dinas kedinasan/militer, siap dibagikan melalui aplikasi pesan instan aman atau dicetak langsung via printer nirkabel.
 
 ---
 
@@ -39,7 +39,7 @@ Aplikasi Android mandiri (*native*) yang:
 ## 3. Visi Produk & Sasaran (Objectives & Success Metrics)
 
 ### 3.1 Visi Produk
-Menjadi platform asisten administrasi militer mobile yang portabel, aman, dan responsif, guna menjamin kelancaran komando dan administrasi di lingkungan Pusat Siber Pertahanan di mana pun personel berada.
+Menjadi platform asisten administrasi kedinasan mobile yang portabel, aman, dan responsif, guna menjamin kelancaran komando dan administrasi di lingkungan Satuan Kerja Operasional di mana pun personel berada.
 
 ### 3.2 Key Performance Indicators (KPIs)
 
@@ -99,7 +99,7 @@ flowchart TD
         NET[Retrofit Client / Sync Engine]
     end
 
-    subgraph Server Intranet Pussiber [Server On-Premise Backend]
+    subgraph Server Intranet Lokal [Server On-Premise Backend]
         API[FastAPI Gateway\nEndpoints: /generate, /sync, /verify-qr]
         OLLAMA[Local Ollama Server\nModel: qwen2.5:14b]
         S_PDF[Server PDF Engine\nJinja2 + wkhtmltopdf]
@@ -137,7 +137,7 @@ flowchart TD
 - **FR-2.3**: Formulir input menerapkan *Progressive Disclosure* untuk poin Nota Dinas, memungkinkan pengguna menambah hingga 5 poin secara dinamis dengan menekan satu tombol mengambang (*Floating Action Button*).
 
 ### FR-3: Hybrid Generasi AI (On-Device & Server)
-- **FR-3.1**: Sistem otomatis mendeteksi koneksi jaringan. Jika terhubung ke Wi-Fi Intranet Pussiber, pemrosesan LLM didelegasikan ke Server FastAPI (`qwen2.5:14b`) untuk kualitas redaksi maksimal.
+- **FR-3.1**: Sistem otomatis mendeteksi koneksi jaringan. Jika terhubung ke Wi-Fi Intranet Dinas, pemrosesan LLM didelegasikan ke Server FastAPI (`qwen2.5:14b`) untuk kualitas redaksi maksimal.
 - **FR-3.2**: Jika dalam kondisi offline/air-gapped, aplikasi beralih menggunakan *On-Device LLM* (`qwen2.5:1.5b` atau `3b`) untuk menghasilkan draf teks secara instan tanpa internet.
 - **FR-3.3**: Pengguna dapat mengganti mode AI secara manual melalui halaman Pengaturan (*Settings*).
 
@@ -158,7 +158,7 @@ flowchart TD
 
 ### 7.1 Keamanan & Privasi Mobile
 - **Secure Sandbox**: File PDF hasil generasi disimpan sementara di direktori *cache* privat aplikasi (`context.cacheDir`) dan akan dihapus secara otomatis setelah dibagikan atau setelah periode waktu tertentu untuk mencegah kebocoran data.
-- **No Cloud Analytics**: Tidak ada pelacakan analitik (*analytics tracker*) pihak ketiga (seperti Firebase Analytics atau AppCenter) untuk menjamin kerahasiaan data internal Pussiber.
+- **No Cloud Analytics**: Tidak ada pelacakan analitik (*analytics tracker*) pihak ketiga (seperti Firebase Analytics atau AppCenter) untuk menjamin kerahasiaan data internal kedinasan.
 
 ### 7.2 Performa, RAM & Konsumsi Baterai
 - **Optimasi RAM On-Device AI**: Penggunaan RAM untuk inferensi LLM offline dibatasi maksimal **2.0 GB** agar tidak mengganggu performa sistem operasi Android atau memicu *Out Of Memory (OOM) error*.
@@ -192,7 +192,7 @@ flowchart TD
 
 Format PDF yang dihasilkan oleh aplikasi Android wajib mematuhi matriks layout resmi berikut:
 
-| Bagian Dokumen | Standar Baku Format Nota Dinas Pussiber |
+| Bagian Dokumen | Standar Baku Format Nota Dinas Kedinasan |
 |---|---|
 | **Ukuran Kertas** | A4 (`210 mm x 297 mm`) |
 | **Margin Halaman** | Atas: `2.03 cm`, Kanan: `1.52 cm`, Bawah: `1.27 cm`, Kiri: `2.54 cm` |
@@ -213,7 +213,7 @@ Format PDF yang dihasilkan oleh aplikasi Android wajib mematuhi matriks layout r
 
 ```mermaid
 gantt
-    title Roadmap Pengembangan Pussiber AI Mobile
+    title Roadmap Pengembangan SSEB-AI Mobile
     dateFormat  YYYY-MM
     section Fase 1: Core & API
     Desain UI & Integrasi API Backend       :active, f1, 2026-09, 2026-10
@@ -242,4 +242,4 @@ gantt
 
 ## 11. Kesimpulan
 
-PRD versi 2.0.0-alpha ini menandai pergeseran strategis platform **LLM Surat Generator Pussiber** menuju ekosistem mobile. Dengan menargetkan platform Android secara native, aplikasi ini menjawab tantangan mobilitas personel militer di lapangan tanpa mengorbankan kepatuhan terhadap format tata naskah dinas yang ketat serta kedaulatan keamanan data. Implementasi hybrid (online/offline) memastikan keandalan operasi administrasi Pusat Siber Pertahanan tetap terjaga dalam situasi apa pun.
+PRD versi 2.0.0-alpha ini menandai pergeseran strategis platform **LLM Surat Generator Kedinasan** menuju ekosistem mobile. Dengan menargetkan platform Android secara native, aplikasi ini menjawab tantangan mobilitas personel kedinasan di lapangan tanpa mengorbankan kepatuhan terhadap format tata naskah dinas yang ketat serta kedaulatan keamanan data. Implementasi hybrid (online/offline) memastikan keandalan operasi administrasi Satuan Operasional tetap terjaga dalam situasi apa pun.

@@ -8,7 +8,7 @@ data class PoinNotaDinasModel(
 )
 
 data class GenerateNotaDinasRequest(
-    @SerializedName("kop_utama") val kopUtama: String = "PUSAT SIBER PERTAHANAN",
+    @SerializedName("kop_utama") val kopUtama: String = "PUSAT KOMANDO OPERASI",
     @SerializedName("kop_sub") val kopSub: String = "SATUAN BAWAH",
     @SerializedName("nomor_surat") val nomorSurat: String,
     @SerializedName("kepada") val kepada: String,
@@ -80,7 +80,7 @@ data class TelaahanStafPasalModel(
 )
 
 data class GenerateTelaahanStafRequest(
-    @SerializedName("kop_utama") val kopUtama: String = "PUSAT SIBER PERTAHANAN",
+    @SerializedName("kop_utama") val kopUtama: String = "PUSAT KOMANDO OPERASI",
     @SerializedName("kop_satuan_bawah") val kopSatuanBawah: String = "SATUAN BAWAH",
     @SerializedName("judul") val judul: String,
     @SerializedName("nomor_naskah") val nomorNaskah: String? = null,
@@ -110,7 +110,7 @@ data class DraftTelaahanStafResponse(
 )
 
 data class RenderTelaahanStafPdfRequest(
-    @SerializedName("kop_utama") val kopUtama: String = "PUSAT SIBER PERTAHANAN",
+    @SerializedName("kop_utama") val kopUtama: String = "PUSAT KOMANDO OPERASI",
     @SerializedName("kop_satuan_bawah") val kopSatuanBawah: String = "SATUAN BAWAH",
     @SerializedName("judul") val judul: String,
     @SerializedName("nomor_naskah") val nomorNaskah: String? = null,
@@ -142,7 +142,7 @@ enum class KKAModelType {
 data class KajianGenerateRequest(
     @SerializedName("kategori") val kategori: KajianCategory = KajianCategory.TELAAHAN_STAF,
     @SerializedName("kka_model") val kkaModel: KKAModelType? = null,
-    @SerializedName("kop_utama") val kopUtama: String = "PUSAT SIBER PERTAHANAN",
+    @SerializedName("kop_utama") val kopUtama: String = "PUSAT KOMANDO OPERASI",
     @SerializedName("kop_satuan_bawah") val kopSatuanBawah: String = "SATUAN BAWAH",
     @SerializedName("judul_atau_topik") val judulAtauTopik: String,
     @SerializedName("nomor_naskah") val nomorNaskah: String? = null,
@@ -209,7 +209,7 @@ data class KajianGenerateResponse(
 data class KajianRenderPDFRequest(
     @SerializedName("kategori") val kategori: KajianCategory = KajianCategory.TELAAHAN_STAF,
     @SerializedName("kka_model") val kkaModel: KKAModelType? = null,
-    @SerializedName("kop_utama") val kopUtama: String = "PUSAT SIBER PERTAHANAN",
+    @SerializedName("kop_utama") val kopUtama: String = "PUSAT KOMANDO OPERASI",
     @SerializedName("kop_satuan_bawah") val kopSatuanBawah: String = "SATUAN BAWAH",
     @SerializedName("judul_atau_topik") val judulAtauTopik: String,
     @SerializedName("nomor_naskah") val nomorNaskah: String? = null,

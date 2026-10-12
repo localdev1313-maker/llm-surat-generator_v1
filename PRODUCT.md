@@ -8,7 +8,7 @@ android
 
 ## Users
 
-Staf administrasi dan pimpinan di lingkungan **Pusat Siber Pertahanan** (Pussiber) dan satuan bawahnya yang bermobilitas tinggi. Pengguna membuat surat resmi dan nota dinas baku militer langsung dari perangkat genggam (smartphone atau tablet Android) saat bertugas di kantor maupun di lapangan/area operasional.
+Staf administrasi dan pimpinan di lingkungan **Satuan Kerja Operasional** dan satuan pelaksananya yang bermobilitas tinggi. Pengguna membuat surat resmi dan nota dinas baku kedinasan/militer langsung dari perangkat genggam (smartphone atau tablet Android) saat bertugas di kantor maupun di lapangan/area operasional.
 
 ## Product Purpose
 
@@ -16,7 +16,7 @@ Menghasilkan surat resmi dan nota dinas dalam hitungan detik langsung dari peran
 
 ## Positioning
 
-Pemrosesan berjalan secara mandiri di perangkat Android (fully offline) menggunakan on-device LLM atau terhubung ke server lokal intranet Pussiber. Data sensitif diamankan menggunakan enkripsi database lokal dan autentikasi biometrik, menjamin kerahasiaan informasi pertahanan tanpa kebocoran ke cloud publik.
+Pemrosesan berjalan secara mandiri di perangkat Android (fully offline) menggunakan on-device LLM atau terhubung ke server lokal intranet dinas. Data sensitif diamankan menggunakan enkripsi database lokal dan autentikasi biometrik, menjamin kerahasiaan informasi kedinasan tanpa kebocoran ke cloud publik.
 
 ## Operating Context
 
@@ -44,9 +44,9 @@ Pemrosesan berjalan secara mandiri di perangkat Android (fully offline) mengguna
 
 ## Brand Commitments
 
-- Nama instansi default: "PUSAT SIBER PERTAHANAN" dengan sub "SATUAN BAWAH"
+- Nama instansi default: "PUSAT KOMANDO OPERASI" dengan sub "SATUAN PELAKSANA OPERASI"
 - Logo Resmi: Menggunakan lambang resmi "Autonomous AI Surat Generator" (`android/app/src/main/res/drawable/logo_utama.jpg`) yang menampilkan stempel lingkar emas formal, pena bulu emas & tempat tinta, dokumen naskah dinas, serta sirkuit AI.
-- Format dokumen wajib mengikuti standar baku tata naskah dinas militer Pussiber (kop, margin presisi, penomoran dasar abjad, penomoran isi angka, dan penutup formal).
+- Format dokumen wajib mengikuti standar baku tata naskah dinas kedinasan/militer (kop, margin presisi, penomoran dasar abjad, penomoran isi angka, dan penutup formal).
 - Identitas visual bernuansa taktis/militer modern (olive green, dark indigo & gold accent) yang disesuaikan dengan lambang resmi dan panduan Material You (Material 3).
 
 ## Evidence on Hand

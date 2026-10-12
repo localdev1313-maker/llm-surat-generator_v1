@@ -29,7 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.pussiber.suratgenerator.ui.screens.HomeScreen
 import com.pussiber.suratgenerator.ui.screens.LoginScreen
 import com.pussiber.suratgenerator.ui.screens.PreviewPdfScreen
-import com.pussiber.suratgenerator.ui.theme.PussiberSuratGeneratorTheme
+import com.pussiber.suratgenerator.ui.theme.AppSuratGeneratorTheme
 
 /**
  * Activity kini TIPIS: hanya meng-host Compose, mengumpulkan state ViewModel,
@@ -47,7 +47,7 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            PussiberSuratGeneratorTheme {
+            AppSuratGeneratorTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

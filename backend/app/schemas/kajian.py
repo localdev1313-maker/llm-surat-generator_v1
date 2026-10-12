@@ -75,7 +75,7 @@ class KajianGenerateRequest(BaseModel):
     kka_model: Optional[KKAModelType] = Field(default=None, description="Sub-model KKA: STUDI_KASUS, ANALISIS_MOE, atau PEMECAHAN_MASALAH")
     
     # Metadata Dokumen
-    kop_utama: str = Field(default="PUSAT SIBER PERTAHANAN", description="Kop Nama Badan Utama")
+    kop_utama: str = Field(default="PUSAT KOMANDO OPERASI", description="Kop Nama Badan Utama")
     kop_satuan_bawah: str = Field(default="SATUAN BAWAH", description="Kop Sub Satuan / Divisi")
     judul_atau_topik: str = Field(..., description="Judul Kajian / Topik Permasalahan")
     nomor_naskah: Optional[str] = Field(default=None, description="Nomor Naskah TS / Penomoran Dokumen")
@@ -133,7 +133,7 @@ class KajianDraftResponse(BaseModel):
 class KajianRenderPDFRequest(BaseModel):
     kategori: KajianCategory
     kka_model: Optional[KKAModelType] = None
-    kop_utama: str = "PUSAT SIBER PERTAHANAN"
+    kop_utama: str = "PUSAT KOMANDO OPERASI"
     kop_satuan_bawah: str = "SATUAN BAWAH"
     judul_atau_topik: str
     nomor_naskah: Optional[str] = None

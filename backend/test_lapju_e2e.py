@@ -198,16 +198,16 @@ async def run_all_tests():
         # Nota Dinas
         nd_payload = {
             "kop_utama": "MARKAS BESAR ANGKATAN LAUT",
-            "kop_sub": "SATUAN OPERASI SIBER",
-            "nomor_surat": "B/ND-99/IV/2025/Satsiber",
-            "kepada": "Kepala Pusat Siber Pertahanan",
-            "dari": "Komandan Satuan Operasi Siber",
+            "kop_sub": "SATUAN OPERASI DAN LATIHAN",
+            "nomor_surat": "B/ND-99/IV/2025/Satops",
+            "kepada": "Kepala Pusat Komando Operasi",
+            "dari": "Komandan Satuan Operasi",
             "perihal": "Laporan Kesiapsiagaan Tim Tanggap Insiden",
             "dasar": "Surat Perintah Kasal Nomor Sprin/100/I/2025",
             "isi_ringkas": [
-                {"teks": "Sehubungan dengan dasar di atas, dilaporkan kesiapan tim operasi siber."}
+                {"teks": "Sehubungan dengan dasar di atas, dilaporkan kesiapan tim tugas operasi."}
             ],
-            "konten_custom": "Sehubungan dengan dasar di atas, dilaporkan kesiapan tim operasi siber dalam kondisi siaga penuh.",
+            "konten_custom": "Sehubungan dengan dasar di atas, dilaporkan kesiapan tim tugas operasi dalam kondisi siaga penuh.",
             "nama_pejabat": "Kolonel Laut (E) Ahmad",
             "jabatan_pejabat": "Komandan Satker"
         }
@@ -218,7 +218,7 @@ async def run_all_tests():
         # Kajian Dual-Mode (Telaahan Staf)
         kajian_payload = {
             "kategori": "TELAAHAN_STAF",
-            "kop_utama": "PUSAT SIBER PERTAHANAN",
+            "kop_utama": "PUSAT KOMANDO OPERASI",
             "kop_satuan_bawah": "SATUAN BAWAH",
             "judul_atau_topik": "Optimalisasi Pengamanan Data Maritim",
             "tempat": "Jakarta",
@@ -226,7 +226,7 @@ async def run_all_tests():
             "jabatan": "Perwira Staf",
             "pangkat_korps_nrp": "Kolonel Laut (E) NRP 12345/P",
             "sections_custom": {
-                "persoalan": "Peningkatan ancaman siber pada sistem informasi maritim.",
+                "persoalan": "Peningkatan ancaman gangguan keamanan pada sistem informasi maritim.",
                 "praanggapan": "Potensi insiden berulang jika pengamanan tidak dimutakhirkan.",
                 "fakta": "Terjadi peningkatan probing dan eksploitasi celah keamanan.",
                 "analisis": "Pembaruan infrastruktur firewall dan SOC meningkatkan resiliensi hingga 90%.",

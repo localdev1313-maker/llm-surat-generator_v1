@@ -30,11 +30,11 @@ async def run_all_tests():
         # Test 1: Draft Telaahan Staf
         payload_1 = {
             "kategori": "TELAAHAN_STAF",
-            "kop_utama": "PUSAT SIBER PERTAHANAN",
-            "kop_satuan_bawah": "SATUAN OPERASI SIBER",
-            "judul_atau_topik": "PENGUATAN SISTEM PERTAHANAN SIBER OPERASIONAL",
+            "kop_utama": "PUSAT KOMANDO OPERASI",
+            "kop_satuan_bawah": "SATUAN PELAKSANA OPERASI",
+            "judul_atau_topik": "PENGUATAN SISTEM KESIAPSIAGAAN OPERASIONAL",
             "nomor_naskah": "Nomor TS/01/VIII/2026",
-            "input_persoalan": "Peningkatan frekuensi serangan siber lanjutan (APT) pada jaringan komando dan kendali.",
+            "input_persoalan": "Peningkatan frekuensi gangguan operasional lanjutan (APT) pada jaringan komando dan kendali.",
             "input_fakta": "Terjadi 250 upaya anomali trafik per hari dan kapasitas firewall perimeter mendekati 90%.",
             "input_saran": "Implementasi sistem Next-Generation SIEM dan peningkatan kapasitas SOC 24/7.",
             "nama_pejabat_atau_pasis": "Budi Santoso",
@@ -55,17 +55,17 @@ async def run_all_tests():
         # Test 2: Generate Telaahan Staf PDF
         payload_2 = {
             "kategori": "TELAAHAN_STAF",
-            "kop_utama": "PUSAT SIBER PERTAHANAN",
-            "kop_satuan_bawah": "SATUAN OPERASI SIBER",
-            "judul_atau_topik": "PENGUATAN SISTEM PERTAHANAN SIBER OPERASIONAL",
+            "kop_utama": "PUSAT KOMANDO OPERASI",
+            "kop_satuan_bawah": "SATUAN PELAKSANA OPERASI",
+            "judul_atau_topik": "PENGUATAN SISTEM KESIAPSIAGAAN OPERASIONAL",
             "nomor_naskah": "Nomor TS/01/VIII/2026",
-            "input_persoalan": "Peningkatan frekuensi serangan siber lanjutan (APT) pada jaringan komando dan kendali.",
+            "input_persoalan": "Peningkatan frekuensi gangguan operasional lanjutan (APT) pada jaringan komando dan kendali.",
             "input_fakta": "Terjadi 250 upaya anomali trafik per hari dan kapasitas firewall perimeter mendekati 90%.",
             "input_saran": "Implementasi sistem Next-Generation SIEM dan peningkatan kapasitas SOC 24/7.",
             "nama_pejabat_atau_pasis": "Budi Santoso",
             "pangkat_korps_nrp": "Kolonel Laut (E) NRP 12345/P",
             "jabatan": "Perwira Staf",
-            "lampiran_list": ["Tabel Matriks Analisis Solusi Cyber Defense"]
+            "lampiran_list": ["Tabel Matriks Analisis Solusi Operasional Defense"]
         }
         res_2 = await client.post("/api/v1/kajian/generate", json=payload_2)
         assert res_2.status_code == 200, f"Generate TS failed: {res_2.text}"
@@ -182,8 +182,8 @@ async def run_all_tests():
         # Test 6: Render PDF Custom Edit
         payload_6 = {
             "kategori": "TELAAHAN_STAF",
-            "kop_utama": "PUSAT SIBER PERTAHANAN",
-            "kop_satuan_bawah": "SATUAN OPERASI SIBER",
+            "kop_utama": "PUSAT KOMANDO OPERASI",
+            "kop_satuan_bawah": "SATUAN PELAKSANA OPERASI",
             "judul_atau_topik": "TELAAHAN STAF HASIL EDIT MANUAL",
             "nomor_naskah": "Nomor TS/99/VIII/2026",
             "tempat": "Jakarta",
@@ -209,13 +209,13 @@ async def run_all_tests():
 
         # Test 7: Regression Check Nota Dinas
         payload_7 = {
-            "kop_utama": "PUSAT SIBER PERTAHANAN",
+            "kop_utama": "PUSAT KOMANDO OPERASI",
             "kop_sub": "SATUAN BAWAH",
             "nomor_surat": "B/ND-01/VIII/2026/Unit",
             "kepada": "Kepala Bagian Logistik",
-            "dari": "Divisi Operasi Siber",
+            "dari": "Divisi Operasional",
             "perihal": "Permohonan Dukungan Laptop Operasional",
-            "dasar": "Peraturan Panglima TNI Nomor 1 Tahun 2022\nSurat Perintah Kepala Siber",
+            "dasar": "Peraturan Panglima TNI Nomor 1 Tahun 2022\nSurat Perintah Kepala Operasi",
             "isi_ringkas_1": "Permohonan pengadaan 5 unit laptop operasional berspesifikasi tinggi.",
             "nama_pejabat": "Budi Santoso",
             "jabatan_pejabat": "Kadiv",

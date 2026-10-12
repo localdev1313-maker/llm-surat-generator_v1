@@ -28,7 +28,7 @@
 
 ## 1. LATAR BELAKANG & URGENSI PLATFORM
 
-Dalam ekosistem militer (seperti lingkungan TNI dan Pusat Siber Pertahanan) serta instansi pemerintahan, **Tata Naskah Dinas** (Nota Dinas, Surat Resmi, Surat Perintah, Laporan Kesiapan) merupakan tulang punggung kendali komando, koordinasi staf, dan legalitas operasional.
+Dalam ekosistem kedinasan/militer serta instansi pemerintahan, **Tata Naskah Dinas** (Nota Dinas, Surat Resmi, Surat Perintah, Laporan Kesiapan) merupakan tulang punggung kendali komando, koordinasi staf, dan legalitas operasional.
 
 ### Permasalahan Nyata di Lapangan:
 1. **Inefisiensi Waktu**: Personel dan perumus naskah rata-rata membutuhkan waktu 30 hingga 90 menit per dokumen hanya untuk merangkai kalimat formal, merapikan struktur margin, dan menyusun hierarki penomoran sub-poin.
@@ -316,7 +316,7 @@ sequenceDiagram
 
 1. **Pengguna Mengisi Parameter Naskah**:
    - **Jenis Naskah**: Nota Dinas Baku, Telaahan Staf (6 Pasal), atau Surat Resmi.
-   - **Kop Satker**: Contoh `PUSAT SIBER PERTAHANAN` / `SATUAN PENGAMANAN SIBER`.
+   - **Kop Satker**: Contoh `PUSAT KOMANDO OPERASI` / `SATUAN PELAKSANA OPERASI`.
    - **Metadata Identitas**: Nomor Naskah (Auto/Manual), Kepada Yth, Dari, Judul/Perihal.
    - **Untuk Nota Dinas**: Dasar hukum bertingkat dan poin isi ringkas.
    - **Untuk Telaahan Staf**: Poin Persoalan, Praanggapan, Fakta, Analisis, Kesimpulan, dan Saran.

@@ -37,7 +37,7 @@ BULAN_ROMAWI = {
 }
 
 
-def _get_auto_nomor_ts(satker: str = "PUSSIBER") -> str:
+def _get_auto_nomor_ts(satker: str = "PUSOPS") -> str:
     now = datetime.now()
     bulan_rom = BULAN_ROMAWI.get(now.month, "VIII")
     satker_code = "".join([w[0] for w in satker.split() if w]).upper() or "SAT"

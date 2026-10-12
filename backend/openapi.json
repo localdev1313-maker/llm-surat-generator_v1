@@ -160,7 +160,7 @@
           "kop_utama": {
             "type": "string",
             "title": "Kop Utama",
-            "default": "PUSAT SIBER PERTAHANAN"
+            "default": "PUSAT KOMANDO OPERASI"
           },
           "kop_sub": {
             "type": "string",

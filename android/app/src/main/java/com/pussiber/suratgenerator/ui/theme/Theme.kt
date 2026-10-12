@@ -58,7 +58,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun PussiberSuratGeneratorTheme(
+fun AppSuratGeneratorTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit

@@ -18,11 +18,11 @@ async def test_full_telaahan_staf_pipeline():
 
         print("\n--- 2. Testing POST /draft-telaahan-staf ---")
         draft_payload = {
-            "kop_utama": "PUSAT SIBER PERTAHANAN",
-            "kop_satuan_bawah": "SATUAN PENGAMANAN SIBER",
-            "judul": "PENGUATAN KEAMANAN SIBER PADA PUSAT DATA OPERASIONAL",
+            "kop_utama": "PUSAT KOMANDO OPERASI",
+            "kop_satuan_bawah": "SATUAN PENGAMANAN OPERASI",
+            "judul": "PENGUATAN KEAMANAN SISTEM PADA PUSAT DATA OPERASIONAL",
             "nomor_naskah": "Nomor TS/01/V/2026",
-            "input_persoalan": "Meningkatnya intensitas serangan siber jenis ransomware pada server operasional satuan yang berpotensi melumpuhkan sistem komando dan kendali.",
+            "input_persoalan": "Meningkatnya intensitas gangguan sistem operasional jenis ransomware pada server operasional satuan yang berpotensi melumpuhkan sistem komando dan kendali.",
             "input_fakta": "Dalam triwulan I tahun 2026 tercatat 145 upaya intrusi berbahaya, dan utilisasi kapasitas firewall eksisting telah mencapai 94%.",
             "input_saran": "Perlu segera dilaksanakan pengadaan Next-Generation Firewall (NGFW) dan pelatihan Incident Response bagi personel pengawak.",
             "nama_pejabat": "Budi Santoso",
@@ -69,9 +69,9 @@ async def test_full_telaahan_staf_pipeline():
 
         print("\n--- 5. Testing POST /render-telaahan-staf-pdf ---")
         render_payload = {
-            "kop_utama": "PUSAT SIBER PERTAHANAN",
-            "kop_satuan_bawah": "SATUAN PENGAMANAN SIBER",
-            "judul": "PENGUATAN KEAMANAN SIBER PADA PUSAT DATA OPERASIONAL",
+            "kop_utama": "PUSAT KOMANDO OPERASI",
+            "kop_satuan_bawah": "SATUAN PENGAMANAN OPERASI",
+            "judul": "PENGUATAN KEAMANAN SISTEM PADA PUSAT DATA OPERASIONAL",
             "nomor_naskah": "Nomor TS/01/V/2026",
             "pasal": draft_data.get("pasal"),
             "tempat": "Jakarta",

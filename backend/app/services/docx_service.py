@@ -78,7 +78,7 @@ def _fill_docx(template_path: Path, data: Dict) -> docx.Document:
     for para in paras:
         text = para.text
 
-        if text.strip().startswith('PUSAT SIBER'):
+        if text.strip().startswith('PUSAT SIBER') or text.strip().startswith('PUSAT KOMANDO') or text.strip().startswith('KOP UTAMA'):
             _set_para_text(para, data['kop_utama'] + ' ')
             continue
 

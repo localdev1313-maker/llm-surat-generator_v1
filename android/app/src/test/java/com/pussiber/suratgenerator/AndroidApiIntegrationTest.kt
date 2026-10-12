@@ -54,7 +54,7 @@ class AndroidApiIntegrationTest {
         val request = GenerateSuratUmumRequest(
             jenisSurat = "SURAT EDARAN",
             namaPengirim = "Kolonel Inf. Bambang",
-            alamatPengirim = "Pusat Siber Pertahanan, Jakarta",
+            alamatPengirim = "Pusat Komando Operasi, Jakarta",
             namaPenerima = "Mayor Andi",
             alamatPenerima = "Surabaya",
             perihal = "Himbauan Kewaspadaan Phishing",
@@ -73,20 +73,20 @@ class AndroidApiIntegrationTest {
     @Test
     fun test3_DraftNotaDinas() = runBlocking {
         val request = GenerateNotaDinasRequest(
-            kopUtama = "PUSAT SIBER PERTAHANAN",
-            kopSub = "SATUAN PENGAMANAN SIBER",
+            kopUtama = "PUSAT KOMANDO OPERASI",
+            kopSub = "SATUAN PENGAMANAN OPERASI",
             nomorSurat = "B/ND-12/V/2026",
-            kepada = "Kepala Pusat Siber Pertahanan",
-            dari = "Komandan Satuan Pengamanan Siber",
+            kepada = "Kepala Pusat Komando Operasi",
+            dari = "Komandan Satuan Pengamanan Operasi",
             perihal = "Permohonan Peningkatan Kapasitas Server SIEM",
-            dasar = "Surat Keputusan Kapussiber Nomor Kep/05/I/2026.",
+            dasar = "Surat Keputusan Pimpinan Satuan Nomor Kep/05/I/2026.",
             isiRingkas = listOf(
                 PoinNotaDinasModel(
                     teks = "Log traffic firewall mengalami lonjakan 300% sehingga kapasitas server SIEM saat ini mencapai 92%.",
                     subPoin = listOf("Storage tersisa 8% pada volume utama", "CPU load rata-rata mencapai 88%")
                 ),
                 PoinNotaDinasModel(
-                    teks = "Disarankan untuk melakukan penambahan kapasitas RAM 64GB dan storage NVMe 4TB guna menjamin kelancaran analisis ancaman siber."
+                    teks = "Disarankan untuk melakukan penambahan kapasitas RAM 64GB dan storage NVMe 4TB guna menjamin kelancaran analisis ancaman operasional."
                 )
             ),
             namaPejabat = "Kolonel Laut (E) Hendra Wijaya",
@@ -112,7 +112,7 @@ class AndroidApiIntegrationTest {
             tempat = "Jakarta",
             bulan = "Mei",
             tahun = 2026,
-            perihal = "Laporan Kemajuan Belanja Modal Pengadaan Perangkat Siber",
+            perihal = "Laporan Kemajuan Belanja Modal Pengadaan Perangkat Operasional",
             kepadaYth = "Asisten Logistik Kasal",
             kotaTujuan = "Jakarta",
             dasarRujukan = "DIPA Petikan Tahun Anggaran 2026",
@@ -127,7 +127,7 @@ class AndroidApiIntegrationTest {
                     nomorKontrak = "KTR/01/V/2026",
                     tanggalKontrak = "10 Mei 2026",
                     tds = "2026-05-10",
-                    penyedia = "PT Teknologi Siber Nusantara",
+                    penyedia = "PT Teknologi Sistem Nusantara",
                     anggaranTerserap = 475000000.0,
                     sisaAnggaran = 475000000.0,
                     persentaseFisik = 50,
@@ -150,9 +150,9 @@ class AndroidApiIntegrationTest {
     @Test
     fun test5_DraftTelaahanStaf() = runBlocking {
         val request = GenerateTelaahanStafRequest(
-            kopUtama = "PUSAT SIBER PERTAHANAN",
-            kopSatuanBawah = "SATUAN PENGAMANAN SIBER",
-            judul = "PENGUATAN KEAMANAN SIBER DATA CENTER",
+            kopUtama = "PUSAT KOMANDO OPERASI",
+            kopSatuanBawah = "SATUAN PENGAMANAN OPERASI",
+            judul = "PENGUATAN KEAMANAN DAN KESIAPAN OPERASIONAL DATA CENTER",
             nomorNaskah = "TS/05/V/2026",
             inputPersoalan = "Kapasitas firewall utama mendekati batas maksimal akibat lonjakan serangan DDoS.",
             inputFakta = "Terdeteksi 45 kali serangan volume tinggi dalam 30 hari terakhir.",
