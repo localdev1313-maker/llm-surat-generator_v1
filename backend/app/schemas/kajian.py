@@ -161,6 +161,7 @@ class KajianGenerateResponse(BaseModel):
     konten_kajian: str
     file_path: str
     download_url: str
+    download_docx_url: Optional[str] = None
     preview_pdf_url: Optional[str] = None
     sections: Optional[Dict[str, Any]] = None
     llm_degraded: bool = False

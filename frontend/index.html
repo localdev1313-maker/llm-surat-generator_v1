@@ -1232,30 +1232,6 @@
                         </div>
                     </div>
 
-                    <!-- Group 2: Quick Tools -->
-                    <div class="nav-group">
-                        <div class="nav-group-title">Alat &amp; Templat Cepat</div>
-                        
-                        <button type="button" class="sidebar-tool-btn" onclick="loadSampleScenario()">
-                            <i data-lucide="sparkles" style="width:15px;height:15px"></i>
-                            <span>Isi Skenario Contoh Cepat</span>
-                        </button>
-
-                        <button type="button" class="sidebar-tool-btn" onclick="saveDraftLocal()">
-                            <i data-lucide="save" style="width:15px;height:15px"></i>
-                            <span>Simpan Draf ke Browser</span>
-                        </button>
-
-                        <button type="button" class="sidebar-tool-btn" onclick="loadDraftLocal()">
-                            <i data-lucide="folder-open" style="width:15px;height:15px"></i>
-                            <span>Muat Draf Tersimpan</span>
-                        </button>
-
-                        <button type="button" class="sidebar-tool-btn" onclick="clearFormCurrent()">
-                            <i data-lucide="rotate-ccw" style="width:15px;height:15px"></i>
-                            <span>Bersihkan Form</span>
-                        </button>
-                    </div>
 
                     <!-- Group 3: System & AI Engine Telemetry -->
                     <div class="nav-group">
@@ -1344,9 +1320,13 @@
                         <i data-lucide="maximize-2" style="width:14px;height:14px"></i>
                         <span>Layar Penuh</span>
                     </button>
-                    <button type="button" onclick="handleDownloadPdfDirect()" class="btn btn-secondary">
-                        <i data-lucide="download" style="width:14px;height:14px"></i>
+                    <button type="button" onclick="handleDownloadDirect('pdf')" class="btn btn-secondary" title="Unduh format PDF resmi KEP/868">
+                        <i data-lucide="file-text" style="width:14px;height:14px;color:#ef4444"></i>
                         <span>Unduh PDF</span>
+                    </button>
+                    <button type="button" onclick="handleDownloadDirect('docx')" class="btn btn-secondary" title="Unduh format DOCX (Word) siap diedit">
+                        <i data-lucide="file-edit" style="width:14px;height:14px;color:#3b82f6"></i>
+                        <span>Unduh DOCX</span>
                     </button>
                     <button type="button" id="btnGenerateTop" onclick="handleGenerateAction()" class="btn btn-primary">
                         <i data-lucide="sparkles" style="width:14px;height:14px"></i>
@@ -1803,9 +1783,13 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:8px">
-                <button type="button" onclick="handleDownloadPdfDirect()" class="btn btn-primary" style="font-size:12px;padding:6px 12px">
-                    <i data-lucide="download" style="width:14px;height:14px"></i>
+                <button type="button" onclick="handleDownloadDirect('pdf')" class="btn btn-primary" style="font-size:12px;padding:6px 12px" title="Unduh format PDF resmi">
+                    <i data-lucide="file-text" style="width:14px;height:14px"></i>
                     <span>Unduh PDF</span>
+                </button>
+                <button type="button" onclick="handleDownloadDirect('docx')" class="btn btn-secondary" style="font-size:12px;padding:6px 12px;background:rgba(255,255,255,0.08)" title="Unduh format DOCX (Word)">
+                    <i data-lucide="file-edit" style="width:14px;height:14px"></i>
+                    <span>Unduh DOCX</span>
                 </button>
                 <button type="button" onclick="closePopupPreview()" class="btn-icon" style="border:none;width:32px;height:32px">
                     <i data-lucide="x" style="width:16px;height:16px"></i>
@@ -1856,6 +1840,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
         let currentDocType = "nota_dinas";
         let lapjuCount = 0;
         let lastDownloadUrl = null;
+        let lastDownloadDocxUrl = null;
         let customEditedText = null;
         let currentAiIsiList = null;
         let currentAiNotaDinasText = null;
@@ -2645,6 +2630,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             currentAiNotaDinasText = data.konten_gabungan || '';
             customEditedText = null;
             lastDownloadUrl = null;
+            lastDownloadDocxUrl = null;
 
             // Sinkronkan form input kiri dengan teks yang dihasilkan AI
             if (data.isi_list && data.isi_list.length > 0) {
@@ -2702,6 +2688,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             const data = await res.json();
             customEditedText = null;
             lastDownloadUrl = null;
+            lastDownloadDocxUrl = null;
 
             // Isi bidang form dengan 6 pasal hasil AI
             if (data.sections) {
@@ -2758,6 +2745,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             const data = await res.json();
             customEditedText = null;
             lastDownloadUrl = null;
+            lastDownloadDocxUrl = null;
 
             if (data.sections) {
                 currentKkaAiSections = data.sections;
@@ -2811,6 +2799,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             }
             const data = await res.json();
             lastDownloadUrl = data.download_url;
+            lastDownloadDocxUrl = data.download_docx_url || `/download/${data.id || data.surat_id}.docx`;
         }
 
         async function compilePdfTelaahanStaf() {
@@ -2842,6 +2831,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             }
             const data = await res.json();
             lastDownloadUrl = data.download_url;
+            lastDownloadDocxUrl = data.download_docx_url || `/download/${data.id || data.surat_id}.docx`;
         }
 
         async function compilePdfKkaSeskoal() {
@@ -2890,15 +2880,98 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             }
             const data = await res.json();
             lastDownloadUrl = data.download_url;
+            lastDownloadDocxUrl = data.download_docx_url || `/download/${data.id || data.surat_id}.docx`;
         }
 
-        async function handleDownloadPdfDirect() {
-            if (lastDownloadUrl && !customEditedText) {
-                window.open(`${API_BASE}${lastDownloadUrl}`, '_blank');
+        async function generateLapju() {
+            const b = document.getElementById('lapju_bulan')?.value || 'April';
+            const t = parseInt(document.getElementById('lapju_tahun')?.value || '2025');
+            const no = document.getElementById('lapju_nomor_surat')?.value || 'B/   /IV/2025';
+            const kepada = document.getElementById('lapju_kepada')?.value || 'Asisten Logistik Kasal';
+            const kota = document.getElementById('lapju_kota')?.value || 'Jakarta';
+            const dasar = document.getElementById('lapju_dasar')?.value || 'Surat Perintah Kasal Nomor Sprin/123/I/2025 tanggal 10 Januari 2025';
+            const ttdJenis = document.getElementById('lapju_ttd_jenis')?.value === 'definitif' ? 'LANGSUNG' : 'MEWAKILI';
+
+            const cards = document.querySelectorAll('.lapju-entry');
+            const items = [];
+            cards.forEach((c, idx) => {
+                const nama = c.querySelector('.lapju-nama')?.value || `Kegiatan ${idx + 1}`;
+                const pagu = parseFloat(c.querySelector('.lapju-pagu')?.value) || 0;
+                const kontrak = parseFloat(c.querySelector('.lapju-kontrak')?.value) || 0;
+                const serap = parseFloat(c.querySelector('.lapju-serap')?.value) || 0;
+                const sisa = Math.max(0, pagu - serap);
+                const fisik = parseInt(c.querySelector('.lapju-fisik')?.value || '0');
+                const admin = parseInt(c.querySelector('.lapju-admin')?.value || '0');
+                const penyedia = c.querySelector('.lapju-penyedia')?.value || '-';
+
+                items.push({
+                    no_urut: idx + 1,
+                    nomor_dipa: "SP DIPA-012/2025",
+                    tanggal_dipa: "28 November 2024",
+                    nama_kegiatan: nama,
+                    pagu_anggaran: pagu,
+                    nilai_kontrak: kontrak,
+                    nomor_kontrak: `KTR/0${idx + 1}/2025`,
+                    tanggal_kontrak: "15 Februari 2025",
+                    tds: "30 Juni 2025",
+                    penyedia: penyedia,
+                    anggaran_terserap: serap,
+                    sisa_anggaran: sisa,
+                    persentase_fisik: fisik,
+                    persentase_admin: admin,
+                    keterangan_admin: ["BAP Terbit"],
+                    keterangan_fisik: ["Proses Pelaksanaan"]
+                });
+            });
+
+            const payload = {
+                kop_utama: document.getElementById('kopUtama')?.value || "MARKAS BESAR ANGKATAN LAUT",
+                kop_satker: document.getElementById('kopSub')?.value || "DINAS FASILITAS PANGKALAN",
+                nomor_surat: no,
+                bulan: b,
+                tahun: t,
+                klasifikasi: "Biasa",
+                lampiran_keterangan: "Dua lembar",
+                perihal: "Laporan Kemajuan Belanja Modal",
+                tempat: "Jakarta",
+                tanggal_surat: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+                kepada_yth: kepada,
+                kota_tujuan: kota,
+                dasar_rujukan: dasar,
+                jabatan_penandatangan: document.getElementById('ttdJabatan')?.value || "Kepala Dinas",
+                jenis_ttd: ttdJenis,
+                nama_penandatangan: document.getElementById('ttdNama')?.value || "Budi Santoso",
+                pangkat_korps_nrp: document.getElementById('ttdPangkat')?.value || "Kolonel Laut (T) NRP 12345/P",
+                items: items,
+                konten_custom: customEditedText
+            };
+
+            const res = await fetch(`${API_BASE}/api/v1/lapju/generate`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.detail || 'Gagal kompilasi LAPJU Belanja Modal');
+            }
+            const data = await res.json();
+            lastDownloadUrl = data.download_url;
+            lastDownloadDocxUrl = data.download_docx_url || `/download/${data.id || data.surat_id}.docx`;
+        }
+
+        async function handleDownloadDirect(format = 'pdf') {
+            const isDocx = format === 'docx';
+            const activeUrl = isDocx ? lastDownloadDocxUrl : lastDownloadUrl;
+
+            if (activeUrl && !customEditedText) {
+                window.open(`${API_BASE}${activeUrl}`, '_blank');
+                showToast(`Mengunduh dokumen format ${format.toUpperCase()}...`, "check-circle");
                 return;
             }
 
-            showToast("Mengompilasi PDF Resmi KEP/868...", "info");
+            const labelFormat = isDocx ? "DOCX (Word)" : "PDF Resmi KEP/868";
+            showToast(`Mengompilasi naskah ${labelFormat}...`, "info");
             try {
                 if (currentDocType === 'nota_dinas') {
                     await compilePdfNotaDinas();
@@ -2910,14 +2983,19 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                     await generateLapju();
                 }
 
-                if (lastDownloadUrl) {
-                    window.open(`${API_BASE}${lastDownloadUrl}`, '_blank');
-                    showToast("PDF Resmi berhasil dicetak & diunduh!", "check-circle");
+                const targetUrl = isDocx ? lastDownloadDocxUrl : lastDownloadUrl;
+                if (targetUrl) {
+                    window.open(`${API_BASE}${targetUrl}`, '_blank');
+                    showToast(`Dokumen ${format.toUpperCase()} berhasil dibuat & diunduh!`, "check-circle");
                 }
             } catch (err) {
                 console.error(err);
-                showToast("Gagal mengompilasi PDF: " + (err.message || err), "alert-triangle");
+                showToast(`Gagal mengompilasi ${format.toUpperCase()}: ` + (err.message || err), "alert-triangle");
             }
+        }
+
+        async function handleDownloadPdfDirect() {
+            return await handleDownloadDirect('pdf');
         }
 
         // ── Modal Editor (Hanya Bagian Naskah / Substansi yang Diedit) ──
@@ -2989,7 +3067,8 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                 return;
             }
             customEditedText = val;
-            lastDownloadUrl = null; // Menandai PDF perlu dikompilasi ulang saat tombol unduh ditekan
+            lastDownloadUrl = null;
+            lastDownloadDocxUrl = null;
             closeEditModal();
             updatePaperPreview();
             showToast("Perubahan naskah diterapkan ke panel Pertinjau!", "check-circle");

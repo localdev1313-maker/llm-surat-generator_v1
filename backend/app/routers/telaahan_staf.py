@@ -18,6 +18,7 @@ from ..schemas.telaahan_staf import (
 from ..services.rag_telaahan_staf import generate_telaahan_staf_sections
 from ..services.llm_health import start_llm_request_scope, collect_llm_warnings
 from ..services.pdf_service import create_pdf_telaahan_staf
+from ..services.docx_service import create_docx_telaahan_staf
 from ..services.guardrail import validate_and_sanitize_telaahan_staf
 from ..services.guardrail_kajian import escape_custom_html
 
@@ -143,7 +144,13 @@ async def generate_telaahan_staf(request: TelaahanStafInput):
 
         pdf_filename = f"telaahan_staf_{surat_id}.pdf"
         pdf_path = settings.OUTPUT_DIR / pdf_filename
-        await asyncio.to_thread(create_pdf_telaahan_staf, template_data, pdf_path)
+        docx_filename = f"telaahan_staf_{surat_id}.docx"
+        docx_path = settings.OUTPUT_DIR / docx_filename
+
+        await asyncio.gather(
+            asyncio.to_thread(create_pdf_telaahan_staf, template_data, pdf_path),
+            asyncio.to_thread(create_docx_telaahan_staf, template_data, docx_path)
+        )
 
         konten_gabungan = _format_telaahan_staf_gabungan(
             kop_utama=request.kop_utama or "PUSAT KOMANDO OPERASI",
@@ -166,6 +173,7 @@ async def generate_telaahan_staf(request: TelaahanStafInput):
             konten_gabungan=konten_gabungan,
             file_path=str(pdf_path),
             download_url=f"/download/{surat_id}",
+            download_docx_url=f"/download/{surat_id}.docx",
             llm_degraded=bool(warnings),
             llm_warnings=warnings
         )
@@ -226,7 +234,13 @@ async def render_telaahan_staf_pdf(request: TelaahanStafRenderRequest):
 
         pdf_filename = f"telaahan_staf_{surat_id}.pdf"
         pdf_path = settings.OUTPUT_DIR / pdf_filename
-        await asyncio.to_thread(create_pdf_telaahan_staf, template_data, pdf_path)
+        docx_filename = f"telaahan_staf_{surat_id}.docx"
+        docx_path = settings.OUTPUT_DIR / docx_filename
+
+        await asyncio.gather(
+            asyncio.to_thread(create_pdf_telaahan_staf, template_data, pdf_path),
+            asyncio.to_thread(create_docx_telaahan_staf, template_data, docx_path)
+        )
 
         konten_gabungan = (
             konten_custom_clean if konten_custom_clean else _format_telaahan_staf_gabungan(
@@ -250,7 +264,8 @@ async def render_telaahan_staf_pdf(request: TelaahanStafRenderRequest):
             pasal=pasal_obj,
             konten_gabungan=konten_gabungan,
             file_path=str(pdf_path),
-            download_url=f"/download/{surat_id}"
+            download_url=f"/download/{surat_id}",
+            download_docx_url=f"/download/{surat_id}.docx"
         )
     except Exception as e:
         logger.error(f"Error in render_telaahan_staf_pdf: {e}", exc_info=True)

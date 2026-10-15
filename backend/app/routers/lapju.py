@@ -21,6 +21,7 @@ from ..services.lapju_service import (
     build_lapju_pasal_list
 )
 from ..services.pdf_service import create_pdf_lapju
+from ..services.docx_service import create_docx_lapju
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +73,7 @@ async def draft_lapju(req: LapjuGenerateRequest):
 @router.post("/generate", response_model=LapjuGenerateResponse)
 async def generate_lapju(req: LapjuGenerateRequest):
     """
-    Generate dokumen Laporan Kemajuan (LAPJU) Belanja Modal terpadu (Portrait + Landscape PDF) 100% data riil tanpa AI.
+    Generate dokumen Laporan Kemajuan (LAPJU) Belanja Modal terpadu (Portrait + Landscape PDF & DOCX) 100% data riil tanpa AI.
     """
     try:
         lapju_id = str(uuid.uuid4())
@@ -81,12 +82,21 @@ async def generate_lapju(req: LapjuGenerateRequest):
         
         filename = f"lapju_belanja_modal_{lapju_id}.pdf"
         output_path = settings.OUTPUT_DIR / filename
+        docx_filename = f"lapju_belanja_modal_{lapju_id}.docx"
+        docx_path = settings.OUTPUT_DIR / docx_filename
 
-        # Render PDF (blocking wkhtmltopdf) — worker thread agar event loop beku tidak terjadi.
-        await asyncio.to_thread(
-            create_pdf_lapju,
-            template_data=template_data,
-            output_path=output_path
+        # Render PDF & DOCX secara paralel
+        await asyncio.gather(
+            asyncio.to_thread(
+                create_pdf_lapju,
+                template_data=template_data,
+                output_path=output_path
+            ),
+            asyncio.to_thread(
+                create_docx_lapju,
+                template_data=template_data,
+                output_path=docx_path
+            )
         )
         
         return LapjuGenerateResponse(
@@ -97,6 +107,7 @@ async def generate_lapju(req: LapjuGenerateRequest):
             nomor_surat=template_data["nomor_surat"],
             file_path=str(output_path),
             download_url=f"/download/{lapju_id}",
+            download_docx_url=f"/download/{lapju_id}.docx",
             preview_pdf_url=f"/preview-pdf/{lapju_id}",
             totals=totals
         )

@@ -54,6 +54,7 @@ class TelaahanStafOutput(BaseModel):
     konten_gabungan: str
     file_path: str
     download_url: str
+    download_docx_url: Optional[str] = None
     llm_degraded: bool = False
     llm_warnings: List[str] = Field(default_factory=list)
 

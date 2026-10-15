@@ -20,6 +20,7 @@ from ..schemas.kajian import (
 from ..services.kajian_engine import process_kajian_generation
 from ..services.llm_health import start_llm_request_scope, collect_llm_warnings
 from ..services.pdf_service import create_pdf_kajian
+from ..services.docx_service import create_docx_kajian
 from ..services.guardrail_kajian import clean_military_text, escape_custom_html
 from ..utils import format_tanggal_indonesia
 
@@ -171,14 +172,25 @@ async def generate_kajian(req: KajianGenerateRequest):
         prefix = "telaahan_staf" if req.kategori == KajianCategory.TELAAHAN_STAF else f"kka_{str(req.kka_model or 'studi_kasus').lower()}"
         filename = f"{prefix}_{kajian_id}.pdf"
         output_path = settings.OUTPUT_DIR / filename
+        docx_filename = f"{prefix}_{kajian_id}.docx"
+        docx_path = settings.OUTPUT_DIR / docx_filename
         
-        # Render PDF (blocking wkhtmltopdf) — worker thread.
-        await asyncio.to_thread(
-            create_pdf_kajian,
-            kategori=req.kategori.value,
-            kka_model=req.kka_model.value if req.kka_model else "STUDI_KASUS",
-            template_data=template_data,
-            output_path=output_path
+        # Render PDF & DOCX secara paralel
+        await asyncio.gather(
+            asyncio.to_thread(
+                create_pdf_kajian,
+                kategori=req.kategori.value,
+                kka_model=req.kka_model.value if req.kka_model else "STUDI_KASUS",
+                template_data=template_data,
+                output_path=output_path
+            ),
+            asyncio.to_thread(
+                create_docx_kajian,
+                kategori=req.kategori.value,
+                kka_model=req.kka_model.value if req.kka_model else "STUDI_KASUS",
+                template_data=template_data,
+                output_path=docx_path
+            )
         )
 
         combined = _format_combined_text(req.kategori, req.kka_model, req.judul_atau_topik, sections)
@@ -194,6 +206,7 @@ async def generate_kajian(req: KajianGenerateRequest):
             konten_kajian=combined,
             file_path=str(output_path),
             download_url=f"/download/{kajian_id}",
+            download_docx_url=f"/download/{kajian_id}.docx",
             preview_pdf_url=f"/preview-pdf/{kajian_id}",
             sections=sections,
             llm_degraded=bool(warnings),
@@ -262,20 +275,31 @@ async def render_kajian_pdf(req: KajianRenderPDFRequest):
         prefix = "telaahan_staf" if req.kategori == KajianCategory.TELAAHAN_STAF else f"kka_{str(req.kka_model or 'studi_kasus').lower()}"
         filename = f"{prefix}_{kajian_id}.pdf"
         output_path = settings.OUTPUT_DIR / filename
+        docx_filename = f"{prefix}_{kajian_id}.docx"
+        docx_path = settings.OUTPUT_DIR / docx_filename
 
-        await asyncio.to_thread(
-            create_pdf_kajian,
-            kategori=req.kategori.value,
-            kka_model=req.kka_model.value if req.kka_model else "STUDI_KASUS",
-            template_data=template_data,
-            output_path=output_path
+        await asyncio.gather(
+            asyncio.to_thread(
+                create_pdf_kajian,
+                kategori=req.kategori.value,
+                kka_model=req.kka_model.value if req.kka_model else "STUDI_KASUS",
+                template_data=template_data,
+                output_path=output_path
+            ),
+            asyncio.to_thread(
+                create_docx_kajian,
+                kategori=req.kategori.value,
+                kka_model=req.kka_model.value if req.kka_model else "STUDI_KASUS",
+                template_data=template_data,
+                output_path=docx_path
+            )
         )
 
         combined = _format_combined_text(req.kategori, req.kka_model, req.judul_atau_topik, req.sections)
         
         return KajianGenerateResponse(
             status="success",
-            message="PDF Kajian berhasil dirender ulang dari editan",
+            message="Dokumen Kajian berhasil dirender ulang dari editan",
             id=kajian_id,
             surat_id=kajian_id,
             kategori=req.kategori,
@@ -284,6 +308,7 @@ async def render_kajian_pdf(req: KajianRenderPDFRequest):
             konten_kajian=combined,
             file_path=str(output_path),
             download_url=f"/download/{kajian_id}",
+            download_docx_url=f"/download/{kajian_id}.docx",
             preview_pdf_url=f"/preview-pdf/{kajian_id}",
             sections=req.sections
         )

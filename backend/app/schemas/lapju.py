@@ -98,5 +98,6 @@ class LapjuGenerateResponse(BaseModel):
     nomor_surat: str
     file_path: str
     download_url: str
+    download_docx_url: Optional[str] = None
     preview_pdf_url: str
     totals: LapjuTotalsModel

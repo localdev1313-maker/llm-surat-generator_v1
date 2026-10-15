@@ -18,6 +18,7 @@ from ..utils import format_tanggal_indonesia
 from ..services.llm_service import generate_surat_content, generate_isi_nota_dinas
 from ..services.llm_health import start_llm_request_scope, collect_llm_warnings
 from ..services.pdf_service import create_pdf_surat, create_pdf_nota_dinas
+from ..services.docx_service import create_docx_surat, create_docx_nota_dinas
 from ..services.guardrail_kajian import escape_custom_html
 
 router = APIRouter()
@@ -137,13 +138,20 @@ async def generate_surat(request: SuratRequest):
 
         pdf_filename = f"surat_{surat_id}.pdf"
         pdf_path = settings.OUTPUT_DIR / pdf_filename
-        await asyncio.to_thread(create_pdf_surat, template_data, pdf_path)
+        docx_filename = f"surat_{surat_id}.docx"
+        docx_path = settings.OUTPUT_DIR / docx_filename
+
+        await asyncio.gather(
+            asyncio.to_thread(create_pdf_surat, template_data, pdf_path),
+            asyncio.to_thread(create_docx_surat, template_data, docx_path)
+        )
 
         return SuratResponse(
             id=surat_id,
             konten_surat=konten,
             file_path=str(pdf_path),
             download_url=f"/download/{surat_id}",
+            download_docx_url=f"/download/{surat_id}.docx",
             llm_degraded=bool(warnings),
             llm_warnings=warnings
         )
@@ -246,7 +254,13 @@ async def generate_nota_dinas(request: NotaDinasRequest):
 
         pdf_filename = f"nota_dinas_{surat_id}.pdf"
         pdf_path = settings.OUTPUT_DIR / pdf_filename
-        await asyncio.to_thread(create_pdf_nota_dinas, template_data, pdf_path)
+        docx_filename = f"nota_dinas_{surat_id}.docx"
+        docx_path = settings.OUTPUT_DIR / docx_filename
+
+        await asyncio.gather(
+            asyncio.to_thread(create_pdf_nota_dinas, template_data, pdf_path),
+            asyncio.to_thread(create_docx_nota_dinas, template_data, docx_path)
+        )
 
         # Format teks naskah untuk respons
         bagian_isi_list = []
@@ -280,6 +294,7 @@ async def generate_nota_dinas(request: NotaDinasRequest):
             konten_surat=konten_gabungan,
             file_path=str(pdf_path),
             download_url=f"/download/{surat_id}",
+            download_docx_url=f"/download/{surat_id}.docx",
             llm_degraded=bool(warnings),
             llm_warnings=warnings
         )
@@ -290,37 +305,45 @@ async def generate_nota_dinas(request: NotaDinasRequest):
         raise HTTPException(status_code=500, detail=f"Gagal membuat nota dinas: {str(e)}")
 
 @router.get("/download/{surat_id}")
-async def download_surat(surat_id: str, inline: bool = False):
+async def download_surat(surat_id: str, inline: bool = False, format: str = "pdf"):
     """
-    Download atau preview file PDF surat berdasarkan ID atau nama file.
-    Mendukung format: UUID, nama file dengan/tanpa prefix surat_/nota_dinas_, dan dengan/tanpa ekstensi .pdf.
+    Download atau preview file PDF atau DOCX surat berdasarkan ID atau nama file.
+    Mendukung format: UUID, nama file dengan ekstensi .pdf/.docx, atau query param ?format=docx.
     """
     clean_id = Path(surat_id).name.strip()
     if not clean_id:
         raise HTTPException(status_code=400, detail="ID surat tidak valid")
 
-    # Kumpulkan kandidat file yang dicari
-    candidates = []
-    
-    if clean_id.endswith(".pdf"):
-        candidates.append(clean_id)
+    # Deteksi apakah format yang diminta adalah DOCX
+    is_docx = clean_id.lower().endswith(".docx") or (format and format.lower() == "docx")
+
+    if clean_id.lower().endswith(".pdf"):
         raw_name = clean_id[:-4]
+    elif clean_id.lower().endswith(".docx"):
+        raw_name = clean_id[:-5]
     else:
         raw_name = clean_id
-        candidates.append(f"{clean_id}.pdf")
 
-    candidates.extend([
-        f"surat_{raw_name}.pdf",
-        f"nota_dinas_{raw_name}.pdf",
-        f"telaahan_staf_{raw_name}.pdf",
-        f"kka_studi_kasus_{raw_name}.pdf",
-        f"kka_analisis_moe_{raw_name}.pdf",
-        f"kka_pemecahan_masalah_{raw_name}.pdf",
-        f"kka_{raw_name}.pdf",
-        f"lapju_belanja_modal_{raw_name}.pdf",
-        f"lapju_{raw_name}.pdf",
-        f"{raw_name}.pdf"
-    ])
+    ext = ".docx" if is_docx else ".pdf"
+    media_type = (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        if is_docx
+        else "application/pdf"
+    )
+
+    candidates = [
+        clean_id,
+        f"{raw_name}{ext}",
+        f"surat_{raw_name}{ext}",
+        f"nota_dinas_{raw_name}{ext}",
+        f"telaahan_staf_{raw_name}{ext}",
+        f"kka_studi_kasus_{raw_name}{ext}",
+        f"kka_analisis_moe_{raw_name}{ext}",
+        f"kka_pemecahan_masalah_{raw_name}{ext}",
+        f"kka_{raw_name}{ext}",
+        f"lapju_belanja_modal_{raw_name}{ext}",
+        f"lapju_{raw_name}{ext}",
+    ]
 
     matched_path = None
     for filename in candidates:
@@ -329,23 +352,26 @@ async def download_surat(surat_id: str, inline: bool = False):
             matched_path = candidate_path
             break
 
-    # Catatan keamanan: TIDAK ADA fallback glob substring di sini. Semua nama
-    # file sah sudah tercakup oleh daftar `candidates` eksplisit di atas
-    # (prefix diketahui + uuid). Fallback substring match sebelumnya bisa
-    # mengembalikan PDF milik dokumen lain yang kebetulan mengandung raw_name
-    # sebagai substring nama filenya - risiko kebocoran dokumen antar pengguna.
     if not matched_path or not matched_path.exists():
-        raise HTTPException(status_code=404, detail=f"File PDF '{clean_id}' tidak ditemukan di server")
+        format_label = "DOCX" if is_docx else "PDF"
+        raise HTTPException(status_code=404, detail=f"File {format_label} '{clean_id}' tidak ditemukan di server")
 
-    disposition = "inline" if inline else "attachment"
+    disposition = "inline" if (inline and not is_docx) else "attachment"
     return FileResponse(
         path=str(matched_path),
         filename=matched_path.name,
-        media_type="application/pdf",
+        media_type=media_type,
         headers={
             "Content-Disposition": f'{disposition}; filename="{matched_path.name}"'
         }
     )
+
+@router.get("/download-docx/{surat_id}")
+async def download_docx(surat_id: str):
+    """
+    Download file DOCX surat berdasarkan ID.
+    """
+    return await download_surat(surat_id=surat_id, inline=False, format="docx")
 
 @router.get("/preview-pdf/{surat_id}")
 async def preview_pdf(surat_id: str):
