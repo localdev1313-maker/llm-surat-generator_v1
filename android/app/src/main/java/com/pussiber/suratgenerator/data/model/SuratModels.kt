@@ -125,7 +125,7 @@ data class RenderTelaahanStafPdfRequest(
 )
 
 // ═══════════════════════════════════════════════════════════════════════════
-// KAJIAN DUAL-MODE (TELAAHAN STAF & KKA SESKOAL)
+// KAJIAN DUAL-MODE (TELAAHAN STAF & KKA SESKO)
 // ═══════════════════════════════════════════════════════════════════════════
 
 enum class KajianCategory {

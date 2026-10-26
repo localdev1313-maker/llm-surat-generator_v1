@@ -25,7 +25,7 @@
 
 - [x] Perbandingan kredensial anti timing-attack (`hmac.compare_digest`)
 - [x] Guardrail anti-halusinasi melapor ke API (`llm_degraded`/`llm_warnings`) dengan whitelist konteks RAG + dedup
-- [x] Kamus singkatan baku TNI/AL — ekspansi karangan AI dikoreksi otomatis + tercatat
+- [x] Kamus singkatan baku TNI — ekspansi karangan AI dikoreksi otomatis + tercatat
 - [x] SQLCipher aktif (AES-256) + passphrase acak 32 byte
 - [x] Passphrase DB dibungkus kunci **Android Keystore** (AES-256/GCM, non-ekspor) + migrasi otomatis dari pola lama
 - [x] `app_settings.xml` (kredensial + passphrase) di-exclude dari cloud-backup & device-transfer

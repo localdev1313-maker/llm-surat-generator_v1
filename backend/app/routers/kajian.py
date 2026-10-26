@@ -59,7 +59,7 @@ def _format_combined_text(kategori: KajianCategory, kka_model: Optional[KKAModel
         ]
         return "\n".join(lines)
     
-    # KKA Seskoal
+    # KKA Sesko
     if kka_model == KKAModelType.STUDI_KASUS:
         lines = [
             f"KERTAS KARYA ACUAN - STUDI KASUS: {judul.upper()}\n",
@@ -70,7 +70,7 @@ def _format_combined_text(kategori: KajianCategory, kka_model: Optional[KKAModel
             f"      3) Pasca Kejadian: {sections.get('kronologis_pasca', '')}\n",
             f"3. Analisis Kejadian:\n{sections.get('analisis_kejadian', '')}\n",
             f"4. Hal Positif dan Negatif:\n   a. Positif: {sections.get('hal_positif', '')}\n   b. Negatif: {sections.get('hal_negatif', '')}\n",
-            f"5. Manfaat bagi TNI/TNI AL:\n   a. Edukatif: {sections.get('manfaat_edukatif', '')}\n   b. Inspiratif: {sections.get('manfaat_inspiratif', '')}\n   c. Instruktif: {sections.get('manfaat_instruktif', '')}\n",
+            f"5. Manfaat bagi TNI:\n   a. Edukatif: {sections.get('manfaat_edukatif', '')}\n   b. Inspiratif: {sections.get('manfaat_inspiratif', '')}\n   c. Instruktif: {sections.get('manfaat_instruktif', '')}\n",
             f"6. Penutup:\n   a. Kesimpulan: {sections.get('kesimpulan', '')}\n   b. Saran: {sections.get('saran', '')}"
         ]
         return "\n".join(lines)

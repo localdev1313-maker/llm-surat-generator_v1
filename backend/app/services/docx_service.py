@@ -353,7 +353,7 @@ def create_docx_kajian(kategori: str, kka_model: str, template_data: dict, outpu
     """
     Generate DOCX untuk Modul Kajian Dual-Mode:
     - TELAAHAN_STAF: KEP/868/IX/2022 Contoh 26
-    - KKA_SESKOAL: STUDI_KASUS, ANALISIS_MOE, PEMECAHAN_MASALAH
+    - KKA_SESKO: STUDI_KASUS, ANALISIS_MOE, PEMECAHAN_MASALAH
     """
     data = dict(template_data)
     if "sections" in data and "pasal" not in data:

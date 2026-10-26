@@ -84,15 +84,15 @@ async def run_all_tests():
         payload_3 = {
             "kategori": "KKA_SESKOAL",
             "kka_model": "STUDI_KASUS",
-            "kop_utama": "SEKOLAH STAF DAN KOMANDO TNI AL",
+            "kop_utama": "SEKOLAH STAF DAN KOMANDO TNI",
             "kop_satuan_bawah": "DEPARTEMEN ILMU PENGETAHUAN DAN TEKNOLOGI",
-            "judul_atau_topik": "STUDI KASUS OPERASI SAR BENCANA TSUNAMI SELAT SUNDA OLEH TNI AL",
+            "judul_atau_topik": "STUDI KASUS OPERASI SAR BENCANA TSUNAMI SELAT SUNDA OLEH TNI",
             "tempat": "Jakarta",
             "nama_pejabat_atau_pasis": "Arya Pratama",
             "pangkat_korps_nrp": "Mayor Laut (P) NRP 18900/P",
             "nomor_pasis": "No. Pasis 59-045",
             "kelompok_pasis": "Kelompok 2",
-            "jenis_dan_tahun_pendidikan": "PASIS DIKREG SESKOAL ANGKATAN KE-59 TP 2021",
+            "jenis_dan_tahun_pendidikan": "PASIS DIKREG SESKO ANGKATAN KE-59 TP 2021",
             "input_kronologis_pra": "Aktivitas vulkanik Gunung Anak Krakatau meningkat dan peringatan dini gelombang tinggi dikeluarkan.",
             "input_kronologis_kejadian": "Tsunami menghantam pesisir Banten dan Lampung Selatan; Lanal Banten segera mengerahkan KAL dan tim SAR Marinir.",
             "input_kronologis_pasca": "Evakuasi korban selamat, penyaluran logistik kesehatan, dan pemulihan jalur laut selesai.",
@@ -116,7 +116,7 @@ async def run_all_tests():
         payload_4 = {
             "kategori": "KKA_SESKOAL",
             "kka_model": "ANALISIS_MOE",
-            "kop_utama": "SEKOLAH STAF DAN KOMANDO TNI AL",
+            "kop_utama": "SEKOLAH STAF DAN KOMANDO TNI",
             "kop_satuan_bawah": "DEPARTEMEN ILMU PENGETAHUAN DAN TEKNOLOGI",
             "judul_atau_topik": "ANALISIS PENGAMBILAN KEPUTUSAN PENGADAAN ALUTSISTA PATROLI MARITIM WILAYAH ALKI",
             "tempat": "Jakarta",
@@ -124,7 +124,7 @@ async def run_all_tests():
             "pangkat_korps_nrp": "Mayor Laut (T) NRP 19230/P",
             "nomor_pasis": "No. Pasis 59-078",
             "kelompok_pasis": "Kelompok 3",
-            "jenis_dan_tahun_pendidikan": "PASIS DIKREG SESKOAL ANGKATAN KE-59 TP 2021",
+            "jenis_dan_tahun_pendidikan": "PASIS DIKREG SESKO ANGKATAN KE-59 TP 2021",
             "input_alutsista_opsi_1": "Kapal Patroli Cepat (KPC 40M)",
             "input_alutsista_opsi_2": "Pesawat Patroli Maritim (MPA CN-235)",
             "input_fakta": "Kebutuhan peningkatan cakupan pengawasan di Selat Sunda dan Selat Lombok menghadapi peningkatan lalu lintas pelayaran internasional.",
@@ -148,7 +148,7 @@ async def run_all_tests():
         payload_5 = {
             "kategori": "KKA_SESKOAL",
             "kka_model": "PEMECAHAN_MASALAH",
-            "kop_utama": "SEKOLAH STAF DAN KOMANDO TNI AL",
+            "kop_utama": "SEKOLAH STAF DAN KOMANDO TNI",
             "kop_satuan_bawah": "DEPARTEMEN ILMU PENGETAHUAN DAN TEKNOLOGI",
             "judul_atau_topik": "OPTIMALISASI KEMAMPUAN PERANG ELEKTRONIKA KRI DALAM MENDUKUNG OPERASI LAUT",
             "tempat": "Jakarta",
@@ -156,14 +156,14 @@ async def run_all_tests():
             "pangkat_korps_nrp": "Mayor Laut (E) NRP 19560/P",
             "nomor_pasis": "No. Pasis 59-112",
             "kelompok_pasis": "Kelompok 4",
-            "jenis_dan_tahun_pendidikan": "PASIS DIKREG SESKOAL ANGKATAN KE-59 TP 2021",
+            "jenis_dan_tahun_pendidikan": "PASIS DIKREG SESKO ANGKATAN KE-59 TP 2021",
             "input_pokok_masalah": "Kesenjangan kapabilitas deteksi dan jamming elektronika KRI terhadap ancaman radar rudal generasi baru.",
             "input_permasalahan_list": [
                 "Kualitas SDM teknis peperangan elektronika masih memerlukan sertifikasi lanjutan.",
                 "Dukungan peralatan sensor ESM dan ECM pada armada KRI belum terstandardisasi merata.",
                 "Doktrin dan interoperabilitas data perang elektronika antar matra belum terintegrasi penuh."
             ],
-            "input_saran": "Percepatan modernisasi modul ESM terintegrasi dan pembentukan pusat latihan simulasi peperangan elektronika TNI AL."
+            "input_saran": "Percepatan modernisasi modul ESM terintegrasi dan pembentukan pusat latihan simulasi peperangan elektronika TNI."
         }
         res_5 = await client.post("/api/v1/kajian/generate", json=payload_5)
         assert res_5.status_code == 200, f"Generate KKA Model C failed: {res_5.text}"

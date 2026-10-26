@@ -33,7 +33,7 @@ SECTIONS = [
     ("B", "Keamanan", [
         ("done", "Basic auth anti timing-attack (compare_digest)"),
         ("done", "Guardrail halusinasi → llm_degraded/warnings (whitelist RAG + dedup)"),
-        ("done", "Kamus singkatan TNI/AL — koreksi otomatis ekspansi karangan"),
+        ("done", "Kamus singkatan TNI — koreksi otomatis ekspansi karangan"),
         ("done", "SQLCipher aktif (AES-256) + passphrase acak 32 byte"),
         ("done", "Passphrase dibungkus kunci Android Keystore (GCM, non-ekspor)"),
         ("done", "app_settings.xml di-exclude dari backup perangkat"),

@@ -142,7 +142,7 @@ Tiga observasi diperbaiki di akar + satu kontaminasi baru ditemukan saat verifik
 
 | Masalah | Perbaikan |
 |---|---|
-| Halusinasi ekspansi singkatan (KRI → "Kapal Rudal Induk") | Kamus `SINGKATAN_BAKU` (14 singkatan TNI/AL) di `guardrail_kajian.py`: ekspansi salah dikoreksi OTOMATIS ke bentuk baku + tercatat sebagai `llm_warning`; prompt melarang menguraikan singkatan; `llm_service._validate_output` ikut menerapkan koreksi (jalur nota dinas/surat) |
+| Halusinasi ekspansi singkatan (KRI → "Kapal Rudal Induk") | Kamus `SINGKATAN_BAKU` (14 singkatan TNI) di `guardrail_kajian.py`: ekspansi salah dikoreksi OTOMATIS ke bentuk baku + tercatat sebagai `llm_warning`; prompt melarang menguraikan singkatan; `llm_service._validate_output` ikut menerapkan koreksi (jalur nota dinas/surat) |
 | Naskah campuran topik (SIEM bocor ke pasal meski judul diganti) | Prefill 6 input pasal Android dikosongkan + placeholder panduan (label opsional tanpa `*`); prompt wajib konsisten judul/persoalan/fakta; judul kini ditanam di prompt Pasal 4/5/6 |
 | Judul dobel di PDF | `render-pdf` menghapus baris header teks gabungan ("TELAAHAN STAF TENTANG…" / "KERTAS KARYA ACUAN…") sebelum render — template sudah mencetaknya |
 | **Kontaminasi RAG (baru ditemukan saat verifikasi)**: AI mengutip "rekomendasi DAFTAR 50 NOTA DINAS DUMMY" | File latihan `*dummy*` + `DAFTAR_DOKUMEN.txt` disaring dari indexing RAG; prompt melarang menyebut nama dokumen referensi; reindex dilakukan (103 dokumen bersih) |

@@ -1,17 +1,17 @@
 # PERATURAN KOMANDAN SEKOLAH STAF DAN KOMANDO ANGKATAN LAUT
-## TENTANG PETUNJUK TEKNIS PENULISAN KERTAS KARYA ACUAN (KKA) PENDIDIKAN REGULER SESKOAL
+## TENTANG PETUNJUK TEKNIS PENULISAN KERTAS KARYA ACUAN (KKA) PENDIDIKAN REGULER SESKO
 
 ---
 
 ### KELOMPOK KEPALA & LANDASAN HUKUM
-- **Instansi**: Markas Besar Angkatan Laut - Sekolah Staf dan Komando (Seskoal)
-- **Status Dokumen**: Peraturan Komandan Seskoal Tahun 2020 tentang Petunjuk Teknis Penulisan Kertas Karya Acuan (KKA)
-- **Pejabat Pengesah**: Komandan Seskoal, Dr. Iwan Isnurwanto, S.H., M.AP., M.Tr (Han)., Laksamana Muda TNI.
+- **Instansi**: Markas Besar Angkatan Laut - Sekolah Staf dan Komando (SESKO)
+- **Status Dokumen**: Peraturan Komandan SESKO Tahun 2020 tentang Petunjuk Teknis Penulisan Kertas Karya Acuan (KKA)
+- **Pejabat Pengesah**: Komandan SESKO, Dr. Iwan Isnurwanto, S.H., M.AP., M.Tr (Han)., Laksamana Muda TNI.
 - **Mengingat / Dasar**:
   1. Surat Keputusan Panglima TNI Nomor Skep/364/V/2001 tentang Perangkat Kendali Pendidikan TNI.
-  2. Peraturan Kasal Nomor Perkasal/61/VII/2008 tentang Petunjuk Pembinaan Administrasi Umum di Lingkungan TNI Angkatan Laut.
-  3. Keputusan Kasal Nomor Kep/1794/XII/2014 tentang Kedudukan dan Kewenangan Akademi Angkatan Laut sebagai Perguruan Tinggi Politeknik Penyelenggara Pendidikan Vokasi di Lingkungan TNI Angkatan Laut.
-  4. Keputusan Kasal Nomor Kep/1998/VI/2020 tentang Program Pendidikan, Rangka Pelajaran Pokok (Buku I) Pendidikan Reguler Sekolah Staf dan Komando TNI Angkatan Laut Program Studi Strategi Operasi Laut Program Magister Terapan.
+  2. Peraturan Kasal Nomor Perkasal/61/VII/2008 tentang Petunjuk Pembinaan Administrasi Umum di Lingkungan TNI.
+  3. Keputusan Kasal Nomor Kep/1794/XII/2014 tentang Kedudukan dan Kewenangan Akademi Angkatan Laut sebagai Perguruan Tinggi Politeknik Penyelenggara Pendidikan Vokasi di Lingkungan TNI.
+  4. Keputusan Kasal Nomor Kep/1998/VI/2020 tentang Program Pendidikan, Rangka Pelajaran Pokok (Buku I) Pendidikan Reguler Sekolah Staf dan Komando TNI Program Studi Strategi Operasi Laut Program Magister Terapan.
   5. Peraturan Panglima TNI Nomor 5 Tahun 2012 tentang Pedoman Administrasi Umum Tentara Nasional Indonesia.
 
 ---
@@ -26,7 +26,7 @@ Kertas Karya Acuan (KKA) adalah suatu produk naskah perorangan yang dibuat oleh 
 
 #### 2. Maksud dan Tujuan
 - **Maksud**: Menjelaskan metode dan teknik penulisan KKA serta penyajian KKA agar tulisan yang dihasilkan sesuai dengan standar Lembaga.
-- **Tujuan**: Sebagai pedoman bagi Pasis selama pendidikan di Seskoal dalam mengemukakan pendapat melalui tulisan yang singkat, logis, ilmiah, dan mudah dimengerti.
+- **Tujuan**: Sebagai pedoman bagi Pasis selama pendidikan di SESKO dalam mengemukakan pendapat melalui tulisan yang singkat, logis, ilmiah, dan mudah dimengerti.
 
 #### 3. Istilah dan Pengertian
 - **Lembar Merah**: Lembar penugasan yang diberikan kepada Pasis untuk diulas melalui hasil analisis dan pendapat Pasis.
@@ -53,14 +53,14 @@ Kertas Karya Acuan (KKA) adalah suatu produk naskah perorangan yang dibuat oleh 
 
 #### 2. Sampul Luar (Soft Cover)
 - Memuat:
-  - Kop Dinas Seskoal (Arial 11) di kiri atas.
+  - Kop Dinas SESKO (Arial 11) di kiri atas.
   - Nomor Pasis & Kelompok Pasis (Arial 11) di kanan atas.
-  - Lambang TNI AL tidak berwarna (tinggi/lebar 4.5 cm).
+  - Lambang TNI tidak berwarna (tinggi/lebar 4.5 cm).
   - Judul/Topik Kertas Karya Acuan (Arial 18, Bold, Huruf Kapital).
   - Kata "OLEH".
   - Nama Terang, Pangkat, Korps, NRP Pasis (Arial 12, Bold).
   - Tulisan "KERTAS KARYA ACUAN" (Arial 16, Bold).
-  - Jenis Pendidikan dan Tahun Pendidikan (Arial 14, Bold), contoh: `PASIS DIKREG SESKOAL ANGKATAN KE-59 TP 2021`.
+  - Jenis Pendidikan dan Tahun Pendidikan (Arial 14, Bold), contoh: `PASIS DIKREG SESKO ANGKATAN KE-59 TP 2021`.
 
 #### 3. Ketentuan Rujukan, Sitasi, dan Plagiarisme
 - Wajib mencantumkan **Catatan Kaki (Footnote)** dan **Daftar Referensi/Pustaka** untuk setiap kutipan/sumber rujukan (buku, jurnal, majalah, website resmi).
@@ -90,8 +90,8 @@ Digunakan untuk pembelajaran dari suatu peristiwa/kejadian historis atau faktual
 4. **Hal-hal Positif dan Negatif**:
    - **a. Hal-hal Positif**: Kelebihan, keberhasilan koordinasi, respon cepat, kerjasama internasional/antarlembaga.
    - **b. Hal-hal Negatif**: Kekurangan sistem deteksi dini, kendala komunikasi/transportasi, keterbatasan logistik.
-5. **Manfaat yang Dapat Diambil bagi TNI Angkatan Laut**:
-   - **a. Aspek Edukatif**: Pelajaran bagi pengembangan pengetahuan dan pengalaman personel serta kemajuan organisasi TNI AL.
+5. **Manfaat yang Dapat Diambil bagi TNI**:
+   - **a. Aspek Edukatif**: Pelajaran bagi pengembangan pengetahuan dan pengalaman personel serta kemajuan organisasi TNI.
    - **b. Aspek Inspiratif**: Gagasan baru untuk pengembangan sarana prasarana dan profesionalisme masa depan.
    - **c. Aspek Instruktif**: Bahan instruksi/perintah agar pelaksanaan tugas lapangan lebih berdaya guna dan berhasil guna.
 6. **Penutup**:
@@ -144,7 +144,7 @@ Digunakan untuk memecahkan persoalan komparasi pemilihan alternatif terbaik (con
 Digunakan untuk mengatasi permasalahan sistemik kelembagaan, pembinaan kekuatan, kesiapan alutsista, atau doktrin militer dengan metode pemecahan masalah kesisteman.
 
 #### Sistematika dan Struktur:
-1. **Judul**: Rumusan pokok tulisan terdiri dari **3 variabel / kalimat kunci** yang saling terkait (Variabel 1 sebagai pokok bahasan, contoh: *Optimalisasi Industri Strategis Nasional guna Meningkatkan Pembangunan Kekuatan Alutsista dalam rangka Mendukung Tugas TNI Angkatan Laut*).
+1. **Judul**: Rumusan pokok tulisan terdiri dari **3 variabel / kalimat kunci** yang saling terkait (Variabel 1 sebagai pokok bahasan, contoh: *Optimalisasi Industri Strategis Nasional guna Meningkatkan Pembangunan Kekuatan Alutsista dalam rangka Mendukung Tugas TNI*).
 2. **Pokok Masalah**: Kesenjangan (*gap*) antara kondisi yang seharusnya dengan kondisi faktual saat ini (diambil dari variabel pertama).
 3. **Permasalahan**: Penguraian (*breakdown*) Pokok Masalah menjadi **minimal 3 (tiga) persoalan** spesifik (contoh: kemampuan teknologi rendah, dukungan anggaran terbatas, pemanfaatan produk belum tepat sasaran).
 4. **Pemecahan Permasalahan**:
@@ -176,7 +176,7 @@ Digunakan untuk mengatasi permasalahan sistemik kelembagaan, pembinaan kekuatan,
 2. **Pola Pikir (Khusus Model Pemecahan Masalah)**:
    - Pola baku kesisteman untuk menuntun cara berpikir memecahkan persoalan.
    - Menggunakan matriks **Metode SOM**:
-     - **Subyek**: Pemerintah, Mabes TNI, Mabes TNI AL, Instansi Terkait.
+     - **Subyek**: Pemerintah, Mabes TNI, Instansi Terkait.
      - **Obyek**: Instranas, Alutsista, SDM, Regulasi.
      - **Metoda**: Regulasi, Sosialisasi, Edukasi, Koordinasi.
    - Mempertimbangkan Perkembangan Lingkungan Strategis (**Banglingstra**) dan **Umpan Balik** (*Feedback Loop*).

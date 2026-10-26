@@ -165,7 +165,7 @@ class SuratViewModel(application: Application) : AndroidViewModel(application) {
                 id = response.suratId,
                 jenisSurat = if (isKka) "kka_seskoal" else "telaahan_staf",
                 perihal = request.judulAtauTopik,
-                kepada = if (isKka) "Komandan Seskoal" else "Pimpinan",
+                kepada = if (isKka) "Komandan Sesko" else "Pimpinan",
                 dari = request.namaPejabatAtauPasis,
                 downloadUrl = response.downloadUrl,
                 jsonContent = response.kontenKajian
@@ -183,7 +183,7 @@ class SuratViewModel(application: Application) : AndroidViewModel(application) {
                 id = response.suratId,
                 jenisSurat = if (isKka) "kka_seskoal" else "telaahan_staf",
                 perihal = request.judulAtauTopik,
-                kepada = if (isKka) "Komandan Seskoal" else "Pimpinan",
+                kepada = if (isKka) "Komandan Sesko" else "Pimpinan",
                 dari = request.namaPejabatAtauPasis,
                 downloadUrl = response.downloadUrl,
                 jsonContent = response.kontenKajian

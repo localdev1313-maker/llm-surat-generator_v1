@@ -64,7 +64,7 @@ def create_pdf_kajian(kategori: str, kka_model: str, template_data: dict, output
     """
     Generate PDF untuk Modul Kajian Dual-Mode:
     - TELAAHAN_STAF: KEP/868/IX/2022 Contoh 26
-    - KKA_SESKOAL: STUDI_KASUS, ANALISIS_MOE, PEMECAHAN_MASALAH
+    - KKA_SESKO: STUDI_KASUS, ANALISIS_MOE, PEMECAHAN_MASALAH
     """
     data = dict(template_data)
     # Ensure interoperability between pasal and sections keys
@@ -89,7 +89,7 @@ def create_pdf_kajian(kategori: str, kka_model: str, template_data: dict, output
     if kat_upper == "TELAAHAN_STAF" or "TELAAHAN" in kat_upper:
         template_file = settings.TEMPLATE_DIR / "telaahan_staf_template.html"
     else:
-        # KKA Seskoal 2020
+        # KKA Sesko 2020
         model_upper = str(kka_model).upper()
         if "STUDI_KASUS" in model_upper or "KASUS" in model_upper:
             template_file = settings.TEMPLATE_DIR / "kka_studi_kasus_template.html"

@@ -113,7 +113,7 @@ def generate_telaahan_staf(req: KajianGenerateRequest) -> Dict[str, Any]:
 # ── 2. KKA MODEL STUDI KASUS (OMSP) ──
 
 def generate_kka_studi_kasus(req: KajianGenerateRequest) -> Dict[str, Any]:
-    """Menyusun KKA Model Studi Kasus berpedoman Perdan Seskoal 2020."""
+    """Menyusun KKA Model Studi Kasus berpedoman Perdan Sesko 2020."""
     topik = req.judul_atau_topik
     pra_in = req.input_kronologis_pra or "Kondisi awal sebelum peristiwa terjadi menunjukkan dinamika situasi normal dan kesiapsiagaan awal satuan."
     kej_in = req.input_kronologis_kejadian or "Saat peristiwa terjadi, terjadi eskalasi cepat yang menuntut respon taktis dan pengerahan unsur segera."
@@ -123,16 +123,16 @@ def generate_kka_studi_kasus(req: KajianGenerateRequest) -> Dict[str, Any]:
     if settings.RAG_ENABLED:
         matches = rag_engine.search(f"kertas karya acuan studi kasus OMSP {topik}", top_k=2)
         if matches:
-            rag_ctx = "REFERENSI KKA SESKOAL:\n" + "\n".join([f"- {m['title']}: {m['content_snippet'][:200]}" for m in matches])
+            rag_ctx = "REFERENSI KKA SESKO:\n" + "\n".join([f"- {m['title']}: {m['content_snippet'][:200]}" for m in matches])
 
     sys_p = (
-        "Anda adalah Perwira Pembimbing Karya Tulis Seskoal yang menyusun Kertas Karya Acuan (KKA) "
-        "Model Studi Kasus berlandaskan Perdan Seskoal 2020 dan Doktrin OMSP. Gunakan bahasa ilmiah militer formal."
+        "Anda adalah Perwira Pembimbing Karya Tulis Sesko yang menyusun Kertas Karya Acuan (KKA) "
+        "Model Studi Kasus berlandaskan Perdan Sesko 2020 dan Doktrin OMSP. Gunakan bahasa ilmiah militer formal."
     )
 
     # 1. Latar Belakang & Kronologis
     lb_prompt = f"{rag_ctx}\nSusun Latar Belakang Umum (1-2 paragraf) untuk Studi Kasus: {topik}."
-    lb_umum = _call_ollama(sys_p, lb_prompt) or f"Kajian studi kasus mengenai {topik} merupakan telaah mendalam terhadap pembelajaran peristiwa guna meningkatkan pemahaman operasional dan kapabilitas personel TNI Angkatan Laut."
+    lb_umum = _call_ollama(sys_p, lb_prompt) or f"Kajian studi kasus mengenai {topik} merupakan telaah mendalam terhadap pembelajaran peristiwa guna meningkatkan pemahaman operasional dan kapabilitas personel TNI."
 
     k_pra = _call_ollama(sys_p, f"Susun Kronologis Pra-Kejadian untuk {topik}. Input: {pra_in}") or pra_in
     k_kej = _call_ollama(sys_p, f"Susun Kronologis Saat Kejadian untuk {topik}. Input: {kej_in}") or kej_in
@@ -148,9 +148,9 @@ def generate_kka_studi_kasus(req: KajianGenerateRequest) -> Dict[str, Any]:
     h_neg = _call_ollama(sys_p, f"Sebutkan 3 hal negatif/kendala penanganan {topik}.") or "Keterbatasan peralatan deteksi dini, kendala jaring komunikasi pada fase awal, dan tantangan distribusi logistik medan berat."
 
     # 3. Manfaat 3 Aspek (Edukatif, Inspiratif, Instruktif) & Penutup
-    m_edu = _call_ollama(sys_p, f"Uraikan Manfaat Aspek Edukatif bagi TNI AL dari studi kasus {topik}.") or "Memberikan pelajaran berharga bagi kurikulum pendidikan dan latihan kesiapsiagaan operasi kemanusiaan prajurit."
-    m_insp = _call_ollama(sys_p, f"Uraikan Manfaat Aspek Inspiratif bagi TNI AL dari studi kasus {topik}.") or "Menginspirasi modernisasi teknologi surveillance maritim dan rancang bangun posko kendali darurat terpadu."
-    m_inst = _call_ollama(sys_p, f"Uraikan Manfaat Aspek Instruktif bagi TNI AL dari studi kasus {topik}.") or "Menjadi landasan penerbitan petunjuk taktis dan prosedur standar operasi (SOP) pengerahan unsur dalam OMSP."
+    m_edu = _call_ollama(sys_p, f"Uraikan Manfaat Aspek Edukatif bagi TNI dari studi kasus {topik}.") or "Memberikan pelajaran berharga bagi kurikulum pendidikan dan latihan kesiapsiagaan operasi kemanusiaan prajurit."
+    m_insp = _call_ollama(sys_p, f"Uraikan Manfaat Aspek Inspiratif bagi TNI dari studi kasus {topik}.") or "Menginspirasi modernisasi teknologi surveillance maritim dan rancang bangun posko kendali darurat terpadu."
+    m_inst = _call_ollama(sys_p, f"Uraikan Manfaat Aspek Instruktif bagi TNI dari studi kasus {topik}.") or "Menjadi landasan penerbitan petunjuk taktis dan prosedur standar operasi (SOP) pengerahan unsur dalam OMSP."
 
     kesimpulan = _call_ollama(sys_p, f"Susun Kesimpulan Studi Kasus {topik}.") or f"Studi kasus penanganan {topik} membuktikan bahwa kesiapan doktrin, interoperabilitas, dan soliditas prajurit merupakan kunci keberhasilan penugasan OMSP."
     saran = _call_ollama(sys_p, f"Susun Saran tindak lanjut bagi pimpinan terkait {topik}.") or "Disarankan peningkatan frekuensi latihan bersama OMSP antar satuan dan pemutakhiran peralatan komunikasi taktis maritim."
@@ -190,8 +190,8 @@ def generate_kka_analisis_moe(req: KajianGenerateRequest) -> Dict[str, Any]:
     is_opsi_baku = (opsi1 == DEFAULT_OPSI1 and opsi2 == DEFAULT_OPSI2)
 
     sys_p = (
-        "Anda adalah Dosen Iptek Seskoal yang menyusun KKA Model Analisis kuantitatif "
-        "Metode Measurement of Effectiveness (MoE) berpedoman pada Perdan Seskoal 2020."
+        "Anda adalah Dosen Iptek Sesko yang menyusun KKA Model Analisis kuantitatif "
+        "Metode Measurement of Effectiveness (MoE) berpedoman pada Perdan Sesko 2020."
     )
 
     lb = _call_ollama(
@@ -281,8 +281,8 @@ def generate_kka_pemecahan_masalah(req: KajianGenerateRequest) -> Dict[str, Any]
     ]
 
     sys_p = (
-        "Anda adalah Perwira Staf Seskoal yang menyusun KKA Model Pemecahan Masalah "
-        "berdasarkan Metode SOM (Subyek, Obyek, Metoda) Perdan Seskoal 2020."
+        "Anda adalah Perwira Staf Sesko yang menyusun KKA Model Pemecahan Masalah "
+        "berdasarkan Metode SOM (Subyek, Obyek, Metoda) Perdan Sesko 2020."
     )
 
     p_umum = _call_ollama(
@@ -299,7 +299,7 @@ def generate_kka_pemecahan_masalah(req: KajianGenerateRequest) -> Dict[str, Any]
         sol_items.append({
             "persoalan": p_item,
             "pembahasan": f"Mengoptimalkan peran pemangku kepentingan melalui langkah terencana guna menuntaskan persoalan {p_item.lower()}",
-            "subyek": "Mabes TNI AL dan Komando Utama Terkait",
+            "subyek": "Mabes TNI dan Komando Utama Terkait",
             "obyek": f"Komponen {kata_pertama} dan Kesiapan Satuan",
             "metoda": "Regulasi, Edukasi, Kerjasama, dan Pengawasan Melekat"
         })
@@ -326,7 +326,7 @@ def process_kajian_generation(req: KajianGenerateRequest) -> Dict[str, Any]:
     if req.kategori == KajianCategory.TELAAHAN_STAF:
         return generate_telaahan_staf(req)
     
-    # KKA SESKOAL
+    # KKA SESKO
     kka_type = req.kka_model or KKAModelType.STUDI_KASUS
     if kka_type == KKAModelType.STUDI_KASUS:
         return generate_kka_studi_kasus(req)

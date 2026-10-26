@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 
 class KajianCategory(str, Enum):
     TELAAHAN_STAF = "TELAAHAN_STAF"
+    KKA_SESKO = "KKA_SESKO"
     KKA_SESKOAL = "KKA_SESKOAL"
 
 
@@ -71,7 +72,7 @@ class KKAPemecahanMasalahSections(BaseModel):
 # ── Request & Response Models ──
 
 class KajianGenerateRequest(BaseModel):
-    kategori: KajianCategory = Field(default=KajianCategory.TELAAHAN_STAF, description="Kategori kajian: TELAAHAN_STAF atau KKA_SESKOAL")
+    kategori: KajianCategory = Field(default=KajianCategory.TELAAHAN_STAF, description="Kategori kajian: TELAAHAN_STAF atau KKA_SESKO")
     kka_model: Optional[KKAModelType] = Field(default=None, description="Sub-model KKA: STUDI_KASUS, ANALISIS_MOE, atau PEMECAHAN_MASALAH")
     
     # Metadata Dokumen
@@ -86,9 +87,9 @@ class KajianGenerateRequest(BaseModel):
     nama_pejabat_atau_pasis: str = Field(default="Budi Santoso, S.E., M.M.", description="Nama Lengkap Penandatangan / Pasis")
     pangkat_korps_nrp: Optional[str] = Field(default="Kolonel Laut (E) NRP 12345/P", description="Pangkat, Korps, dan NRP")
     jabatan: str = Field(default="Komandan Satuan Penindak", description="Tajuk Jabatan Penandatangan")
-    nomor_pasis: Optional[str] = Field(default=None, description="Nomor Pasis Seskoal")
-    kelompok_pasis: Optional[str] = Field(default=None, description="Kelompok Pasis Seskoal (contoh: Kelompok 1)")
-    jenis_dan_tahun_pendidikan: Optional[str] = Field(default="PASIS DIKREG SESKOAL ANGKATAN KE-64 TP 2026", description="Jenis & TP Pendidikan")
+    nomor_pasis: Optional[str] = Field(default=None, description="Nomor Pasis Sesko")
+    kelompok_pasis: Optional[str] = Field(default=None, description="Kelompok Pasis Sesko (contoh: Kelompok 1)")
+    jenis_dan_tahun_pendidikan: Optional[str] = Field(default="PASIS DIKREG SESKO ANGKATAN KE-64 TP 2026", description="Jenis & TP Pendidikan")
     
     # Input Poin untuk Pembentukan Konten AI
     input_persoalan: Optional[str] = Field(default=None, description="Poin persoalan inti yang dihadapi")
@@ -144,7 +145,7 @@ class KajianRenderPDFRequest(BaseModel):
     jabatan: str = "Komandan Satuan Penindak"
     nomor_pasis: Optional[str] = None
     kelompok_pasis: Optional[str] = None
-    jenis_dan_tahun_pendidikan: Optional[str] = "PASIS DIKREG SESKOAL ANGKATAN KE-64 TP 2026"
+    jenis_dan_tahun_pendidikan: Optional[str] = "PASIS DIKREG SESKO ANGKATAN KE-64 TP 2026"
     sections: Dict[str, Any]
     lampiran_list: Optional[List[str]] = None
     konten_custom: Optional[str] = None

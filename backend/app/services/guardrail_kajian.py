@@ -8,7 +8,7 @@ from .llm_health import record_llm_warning
 logger = logging.getLogger(__name__)
 
 
-# ── Kamus singkatan baku TNI/AL ──
+# ── Kamus singkatan baku TNI ──
 # LLM kerap MENGARANG ekspansi singkatan institusi (kasus nyata: KRI ->
 # "Kapal Rudal Induk" / "Kapal Rendra Indonesia"). Ekspansi salah di output
 # dikoreksi OTOMATIS ke ekspansi baku + dicatat sebagai warning degradasi.
@@ -16,12 +16,13 @@ logger = logging.getLogger(__name__)
 SINGKATAN_BAKU: Dict[str, Tuple[str, set]] = {
     "KRI": ("Kapal Perang Republik Indonesia", {"Kapal"}),
     "TNI": ("Tentara Nasional Indonesia", {"Tentara"}),
-    "TNIAL": ("Tentara Nasional Indonesia Angkatan Laut", {"Tentara"}),
+    "TNIAL": ("Tentara Nasional Indonesia", {"Tentara"}),
     "AL": ("Angkatan Laut", {"Angkatan"}),
     "MABESAL": ("Markas Besar Angkatan Laut", {"Markas"}),
     "LANTAMAL": ("Pangkalan Utama Angkatan Laut", {"Pangkalan"}),
     "KOLATL": ("Komando Latihan Angkatan Laut", {"Komando"}),
-    "SESKOAL": ("Sekolah Staf dan Komando Angkatan Laut", {"Sekolah"}),
+    "SESKO": ("Sekolah Staf dan Komando", {"Sekolah"}),
+    "SESKOAL": ("Sekolah Staf dan Komando", {"Sekolah"}),
     "AAL": ("Akademi Angkatan Laut", {"Akademi"}),
     "ARMATIM": ("Komando Armada Timur", {"Komando", "Armada"}),
     "ARMABAR": ("Komando Armada Barat", {"Komando", "Armada"}),
@@ -205,7 +206,7 @@ def validate_kka_studi_kasus(sections: Dict[str, Any]) -> Dict[str, Any]:
     if not dp:
         dp = [
             "Mabes TNI. 2022. Petunjuk Referensi Tata Tulis Militer di Lingkungan TNI (KEP/868/IX/2022). Jakarta: Mabes TNI.",
-            "Seskoal. 2020. Petunjuk Teknis Penulisan Kertas Karya Acuan Pendidikan Reguler Seskoal. Jakarta: Seskoal.",
+            "Sesko. 2020. Petunjuk Teknis Penulisan Kertas Karya Acuan Pendidikan Reguler Sesko. Jakarta: Sesko.",
             "Undang-Undang RI Nomor 34 Tahun 2004 tentang Tentara Nasional Indonesia. Jakarta."
         ]
     validated["daftar_pustaka"] = [clean_military_text(p) for p in dp]
@@ -267,8 +268,8 @@ def validate_kka_analisis_moe(sections: Dict[str, Any]) -> Dict[str, Any]:
         dp = [p.strip() for p in dp.split("\n") if p.strip()]
     if not dp:
         dp = [
-            "Seskoal. 2020. Petunjuk Teknis Penulisan Kertas Karya Acuan Pendidikan Reguler Seskoal. Jakarta: Dep Iptek Seskoal.",
-            "Mabesal. 2018. Doktrin TNI Angkatan Laut Jalesveva Jayamahe. Jakarta: Mabesal.",
+            "Sesko. 2020. Petunjuk Teknis Penulisan Kertas Karya Acuan Pendidikan Reguler Sesko. Jakarta: Dep Iptek Sesko.",
+            "Mabes TNI. 2020. Doktrin TNI Tri Dharma Eka Karma. Jakarta: Mabes TNI.",
             "Department of Defense. 2016. Measurement of Effectiveness (MoE) in Defense Acquisition. Washington D.C."
         ]
     validated["daftar_pustaka"] = [clean_military_text(p) for p in dp]
@@ -304,14 +305,14 @@ def validate_kka_pemecahan_masalah(sections: Dict[str, Any]) -> Dict[str, Any]:
             {
                 "persoalan": validated["permasalahan_list"][0],
                 "pembahasan": "Meningkatkan kemampuan SDM melalui program pendidikan spesialisasi dan sertifikasi kompetensi berstandar militer.",
-                "subyek": "Mabes TNI AL dan Komando Pembinaan Doktrin",
+                "subyek": "Mabes TNI dan Komando Pembinaan Doktrin",
                 "obyek": "Personel Teknisi dan Pengawak Alutsista",
                 "metoda": "Edukasi, Latihan Terpadu, dan Kerjasama Industri"
             },
             {
                 "persoalan": validated["permasalahan_list"][1],
                 "pembahasan": "Melakukan penyesuaian skala prioritas anggaran pemeliharaan preventif dan optimalisasi skema pembiayaan bertahap.",
-                "subyek": "Pemerintah dan Mabes TNI AL",
+                "subyek": "Pemerintah dan Mabes TNI",
                 "obyek": "Anggaran Pemeliharaan Alutsista",
                 "metoda": "Regulasi, Efisiensi Anggaran, dan Koordinasi"
             },
@@ -330,7 +331,7 @@ def validate_kka_pemecahan_masalah(sections: Dict[str, Any]) -> Dict[str, Any]:
         dp = [p.strip() for p in dp.split("\n") if p.strip()]
     if not dp:
         dp = [
-            "Seskoal. 2020. Petunjuk Teknis Penulisan Kertas Karya Acuan Pendidikan Reguler Seskoal. Jakarta: Seskoal.",
+            "Sesko. 2020. Petunjuk Teknis Penulisan Kertas Karya Acuan Pendidikan Reguler Sesko. Jakarta: Sesko.",
             "Mabes TNI. 2020. Doktrin TNI Tri Dharma Eka Karma. Jakarta: Mabes TNI.",
             "Kementerian Pertahanan RI. 2015. Buku Putih Pertahanan Indonesia. Jakarta: Kemhan RI."
         ]

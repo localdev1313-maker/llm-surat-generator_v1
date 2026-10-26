@@ -91,7 +91,7 @@ fun HomeScreen(
                                 }
                             }
                             Text(
-                                text = "Standar KEP/868/IX/2022 & Seskoal 2020",
+                                text = "Standar KEP/868/IX/2022 & Sesko 2020",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )

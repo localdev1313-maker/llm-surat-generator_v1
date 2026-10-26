@@ -63,7 +63,7 @@ fun KajianScreen(
     // KKA Specific State
     var nomorPasis by remember { mutableStateOf("No. Pasis 59-012") }
     var kelompokPasis by remember { mutableStateOf("Kelompok III / Sindikat Bravo") }
-    var jenisDanTahunPendidikan by remember { mutableStateOf("PASIS DIKREG SESKOAL ANGKATAN KE-64 TA 2026") }
+    var jenisDanTahunPendidikan by remember { mutableStateOf("PASIS DIKREG SESKO ANGKATAN KE-64 TA 2026") }
 
     // Telaahan Staf Specific State (6 Pasal)
     // KOSONG by default — prefill contoh bertopik tertentu (mis. SIEM) pernah
@@ -212,7 +212,7 @@ fun KajianScreen(
                         onClick = { selectedCategory = KajianCategory.KKA_SESKOAL },
                         label = {
                             Text(
-                                "🎓 KKA Seskoal",
+                                "🎓 KKA Sesko",
                                 modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center,
                                 style = MaterialTheme.typography.bodySmall
@@ -498,7 +498,7 @@ fun KajianScreen(
             }
         }
 
-        // ── Form Model KKA Seskoal ──
+        // ── Form Model KKA Sesko ──
         if (selectedCategory == KajianCategory.KKA_SESKOAL) {
             Card(
                 modifier = Modifier.fillMaxWidth(),

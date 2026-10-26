@@ -1184,7 +1184,7 @@
                             SSEB AI
                             <span class="brand-tag">v4.0</span>
                         </div>
-                        <div class="brand-desc">Tata Naskah Dinas TNI AL</div>
+                        <div class="brand-desc">Tata Naskah Dinas TNI</div>
                     </div>
                 </div>
 
@@ -1216,7 +1216,7 @@
                         <div class="nav-item" data-type="kka_seskoal" onclick="switchDocTab('kka_seskoal')">
                             <span class="nav-item-icon">🎓</span>
                             <div class="nav-item-body">
-                                <div class="nav-item-title">KKA Seskoal</div>
+                                <div class="nav-item-title">KKA Sesko</div>
                                 <div class="nav-item-subtitle">Kertas Karya Acuan Pasis</div>
                             </div>
                             <span class="nav-badge">Perdan '20</span>
@@ -1554,7 +1554,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                         </div>
                     </form>
 
-                    <!-- ════ FORM: KKA SESKOAL ════ -->
+                    <!-- ════ FORM: KKA SESKO ════ -->
                     <form id="formKkaSeskoal" class="doc-form form-stack hidden" style="gap:16px">
                         <div class="form-card open">
                             <div class="form-card-header" onclick="toggleFormCard(this)">
@@ -1584,7 +1584,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                                         </div>
                                         <div class="input-group">
                                             <label class="input-label">Dikreg / Angkatan</label>
-                                            <input type="text" id="kka_dikreg" oninput="updatePaperPreview()" class="input-text" value="Dikreg Seskoal Ke-64 TA 2026">
+                                            <input type="text" id="kka_dikreg" oninput="updatePaperPreview()" class="input-text" value="Dikreg Sesko Ke-64 TA 2026">
                                         </div>
                                     </div>
                                     <div class="input-group">
@@ -1941,7 +1941,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             const nameMap = {
                 'nota_dinas': 'Nota Dinas',
                 'telaahan_staf': 'Telaahan Staf',
-                'kka_seskoal': 'KKA Seskoal',
+                'kka_seskoal': 'KKA Sesko',
                 'lapju': 'LAPJU Belanja Modal'
             };
             const docName = nameMap[type] || 'Dokumen';
@@ -2741,7 +2741,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             const res = await fetch(`${API_BASE}/api/v1/kajian/draft`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
             });
-            if (!res.ok) throw new Error((await res.json()).detail || 'Gagal menyusun draf KKA Seskoal via AI');
+            if (!res.ok) throw new Error((await res.json()).detail || 'Gagal menyusun draf KKA Sesko via AI');
             const data = await res.json();
             customEditedText = null;
             lastDownloadUrl = null;
@@ -2876,7 +2876,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             });
             if (!res.ok) {
                 const err = await res.json().catch(() => ({}));
-                throw new Error(err.detail || 'Gagal kompilasi PDF KKA Seskoal');
+                throw new Error(err.detail || 'Gagal kompilasi PDF KKA Sesko');
             }
             const data = await res.json();
             lastDownloadUrl = data.download_url;
@@ -3045,7 +3045,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                     textarea.value = `1. Persoalan.\n${p1}\n\n2. Praanggapan.\n${p2}\n\n3. Fakta/Data yang Memengaruhi.\n${p3}\n\n4. Analisis.\n${p4}\n\n5. Kesimpulan.\n${p5}\n\n6. Saran.\n${p6}`;
                 }
             } else if (currentDocType === 'kka_seskoal') {
-                if (titleEl) titleEl.textContent = "✏️ Editor Redaksi Naskah KKA Seskoal";
+                if (titleEl) titleEl.textContent = "✏️ Editor Redaksi Naskah KKA Sesko";
                 if (subtitleEl) subtitleEl.textContent = "Edit naskah KKA di bawah ini sebelum dicetak ke PDF.";
                 textarea.value = customEditedText || document.getElementById('paperPreview').innerText;
             } else {
