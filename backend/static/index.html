@@ -3,70 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSEB AI — Tata Naskah Dinas &amp; Administrasi Militer</title>
-    <meta name="description" content="Sistem Surat Elektronik Berbasis AI — Platform Tata Naskah Dinas Mandiri, Berdaulat, dan Terstandarisasi KEP/868/2022 TNI">
-    
-    <!-- Google Fonts: Plus Jakarta Sans, Inter & JetBrains Mono -->
+    <title>SSEB AI — Tata Naskah Dinas &amp; Administrasi Militer TNI</title>
+    <meta name="description" content="Sistem Surat Elektronik Berbasis AI — Platform Tata Naskah Dinas Mandiri, Berdaulat, dan Terstandarisasi KEP/868/IX/2022 TNI">
+
+    <!-- Google Fonts: Plus Jakarta Sans (Headings), Inter (Body) & JetBrains Mono (Code/Metadata) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         /* ══════════════════════════════════════════════════════════════
-           DESIGN SYSTEM — SAAS COMMAND PLATFORM (DARK NAVY / PALANTIR)
+           DESIGN SYSTEM — EXECUTIVE DEFENSE COMMAND PLATFORM
+           Standard: ui-ux-pro-max v2.15.0 (Swiss / Executive Dashboard)
            ══════════════════════════════════════════════════════════════ */
         :root {
-            --bg-app:        #060a12;
-            --bg-sidebar:    #0a0f1d;
-            --bg-header:     #0c1324;
-            --bg-surface:    #10192e;
-            --bg-card:       #131e36;
-            --bg-card-hover: #182644;
-            --bg-input:      #0b1222;
-            --bg-input-focus:#0f182d;
-            
-            --accent:        #3b82f6;
-            --accent-hover:  #60a5fa;
-            --accent-glow:   rgba(59, 130, 246, 0.18);
-            --accent-subtle: rgba(59, 130, 246, 0.08);
-            --accent-border: rgba(59, 130, 246, 0.35);
+            /* Background Surfaces */
+            --bg-app:          #080c16;
+            --bg-sidebar:      #0b1120;
+            --bg-header:       rgba(11, 17, 32, 0.82);
+            --bg-surface:      #0f172a;
+            --bg-surface-elev: #131d35;
+            --bg-card:         #131e36;
+            --bg-card-hover:   #182645;
+            --bg-card-active:  #1d2d52;
+            --bg-input:        #0a0f1d;
+            --bg-input-focus:  #0e162c;
+            --bg-canvas:       #060a12;
 
-            --success:       #10b981;
-            --success-glow:  rgba(16, 185, 129, 0.2);
-            --warning:       #f59e0b;
-            --warning-subtle:rgba(245, 158, 11, 0.1);
-            --danger:        #ef4444;
-            --info:          #0ea5e9;
-            --info-subtle:   rgba(14, 165, 233, 0.1);
+            /* Accent & Brand Colors */
+            --accent:          #3b82f6;
+            --accent-hover:    #60a5fa;
+            --accent-active:   #2563eb;
+            --accent-subtle:   rgba(59, 130, 246, 0.08);
+            --accent-glow:     rgba(59, 130, 246, 0.22);
+            --accent-border:   rgba(59, 130, 246, 0.35);
+            --accent-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #4338ca 100%);
+            --accent-shine:    linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 100%);
 
-            --text-primary:  #f1f5f9;
-            --text-secondary:#94a3b8;
-            --text-muted:    #64748b;
-            --text-accent:   #93c5fd;
+            /* Semantic & Feedback Colors */
+            --success:         #10b981;
+            --success-subtle:  rgba(16, 185, 129, 0.1);
+            --success-glow:    rgba(16, 185, 129, 0.22);
+            --warning:         #f59e0b;
+            --warning-subtle:  rgba(245, 158, 11, 0.1);
+            --danger:          #ef4444;
+            --danger-subtle:   rgba(239, 68, 68, 0.1);
+            --info:            #0ea5e9;
+            --info-subtle:     rgba(14, 165, 233, 0.1);
 
-            --border-app:    #1e293b;
-            --border-subtle: #162238;
-            --border-focus:  #3b82f6;
+            /* Typography Colors */
+            --text-primary:    #f8fafc;
+            --text-secondary:  #94a3b8;
+            --text-muted:      #64748b;
+            --text-accent:     #93c5fd;
+            --text-on-accent:  #ffffff;
 
-            --font-display:  'Plus Jakarta Sans', -apple-system, sans-serif;
-            --font-body:     'Inter', -apple-system, sans-serif;
-            --font-mono:     'JetBrains Mono', monospace;
+            /* Borders & Dividers */
+            --border-app:      #1e293b;
+            --border-subtle:   rgba(255, 255, 255, 0.06);
+            --border-elev:     rgba(255, 255, 255, 0.12);
+            --border-focus:    #3b82f6;
 
-            --radius-xs:     6px;
-            --radius-sm:     8px;
-            --radius-md:     12px;
-            --radius-lg:     16px;
-            
-            --sidebar-w:     280px;
-            --header-h:      60px;
-            --ease:          cubic-bezier(0.16, 1, 0.3, 1);
+            /* Typography Families */
+            --font-display:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body:       'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono:       'JetBrains Mono', monospace;
+
+            /* Geometry & Layout */
+            --radius-xs:       4px;
+            --radius-sm:       8px;
+            --radius-md:       12px;
+            --radius-lg:       16px;
+            --radius-xl:       20px;
+            --radius-full:     9999px;
+
+            --sidebar-w:       290px;
+            --header-h:        62px;
+            --ease:            cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-subtle:   0 2px 8px rgba(0, 0, 0, 0.25);
+            --shadow-card:     0 4px 20px rgba(0, 0, 0, 0.32), 0 1px 3px rgba(0, 0, 0, 0.2);
+            --shadow-elev:     0 12px 36px rgba(0, 0, 0, 0.45), 0 1px 4px rgba(0, 0, 0, 0.25);
+            --shadow-modal:    0 24px 70px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
         }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        
+        /* Reset & Base Setup */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         html, body {
             height: 100%;
             width: 100%;
@@ -75,23 +104,37 @@
             background: var(--bg-app);
             color: var(--text-primary);
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
-        /* Scrollbars */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border-app); border-radius: 6px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+        /* Refined Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.2);
+            border-radius: var(--radius-full);
+            transition: background 150ms;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.35);
+        }
 
-        /* ══════ SAAS APP LAYOUT ══════ */
+        /* ══════ APP CONTAINER ══════ */
         .app-container {
             display: flex;
             height: 100vh;
             width: 100vw;
             overflow: hidden;
+            background: var(--bg-app);
         }
 
-        /* ══════ LEFT SAAS SIDEBAR ══════ */
+        /* ══════ LEFT SIDEBAR ══════ */
         .sidebar {
             width: var(--sidebar-w);
             min-width: var(--sidebar-w);
@@ -104,60 +147,74 @@
             z-index: 30;
             user-select: none;
             transition: transform 300ms var(--ease), width 300ms var(--ease);
+            position: relative;
         }
 
+        /* Brand Header */
         .sidebar-brand {
-            padding: 18px 20px;
+            padding: 16px 18px;
             border-bottom: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
             gap: 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
         }
 
-        .brand-logo {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--accent), #4f46e5);
-            border-radius: var(--radius-sm);
+        .brand-badge-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-gradient);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: var(--font-display);
-            font-weight: 800;
-            font-size: 11px;
-            color: #fff;
-            letter-spacing: 1.2px;
-            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+            color: #ffffff;
+            box-shadow: 0 4px 16px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.25);
             flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-badge-icon::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, transparent 100%);
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
         }
 
         .brand-info {
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            gap: 2px;
+        }
+
+        .brand-title-row {
+            display: flex;
+            align-items: center;
+            gap: 7px;
         }
 
         .brand-name {
             font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 15px;
+            font-weight: 800;
+            font-size: 16px;
             color: var(--text-primary);
-            letter-spacing: -0.2px;
-            line-height: 1.2;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            letter-spacing: -0.3px;
+            line-height: 1.1;
         }
 
         .brand-tag {
-            font-size: 9px;
+            font-size: 9.5px;
+            font-family: var(--font-mono);
+            font-weight: 700;
             padding: 2px 6px;
             background: var(--accent-subtle);
             border: 1px solid var(--accent-border);
             color: var(--text-accent);
-            border-radius: 4px;
-            font-weight: 700;
-            font-family: var(--font-mono);
+            border-radius: var(--radius-xs);
+            letter-spacing: 0.3px;
         }
 
         .brand-desc {
@@ -166,17 +223,17 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-top: 2px;
+            font-weight: 500;
         }
 
         /* Sidebar Scrollable Body */
         .sidebar-content {
             flex: 1;
             overflow-y: auto;
-            padding: 16px 12px;
+            padding: 16px 14px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 22px;
         }
 
         .nav-group {
@@ -190,8 +247,11 @@
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             padding: 0 10px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .nav-item {
@@ -207,6 +267,7 @@
             font-size: 13px;
             font-weight: 500;
             position: relative;
+            user-select: none;
         }
 
         .nav-item:hover {
@@ -216,29 +277,49 @@
         }
 
         .nav-item.active {
-            background: var(--bg-surface);
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.04) 100%);
             color: var(--text-primary);
             font-weight: 600;
             border-color: var(--accent-border);
-            box-shadow: 0 0 16px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            box-shadow: 0 2px 12px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         .nav-item.active::before {
             content: '';
             position: absolute;
             left: 0;
-            top: 20%;
-            bottom: 20%;
-            width: 3px;
+            top: 15%;
+            bottom: 15%;
+            width: 3.5px;
             background: var(--accent);
             border-radius: 0 4px 4px 0;
+            box-shadow: 0 0 10px var(--accent-glow);
         }
 
-        .nav-item-icon {
-            font-size: 18px;
-            width: 22px;
-            text-align: center;
+        .nav-icon-container {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-surface-elev);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
             flex-shrink: 0;
+            transition: all 180ms var(--ease);
+        }
+
+        .nav-item:hover .nav-icon-container {
+            color: var(--accent-hover);
+            border-color: rgba(59, 130, 246, 0.25);
+        }
+
+        .nav-item.active .nav-icon-container {
+            background: var(--accent-subtle);
+            border-color: var(--accent-border);
+            color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
         }
 
         .nav-item-body {
@@ -247,14 +328,17 @@
         }
 
         .nav-item-title {
-            line-height: 1.2;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.25;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            color: var(--text-primary);
         }
 
         .nav-item-subtitle {
-            font-size: 10px;
+            font-size: 10.5px;
             color: var(--text-muted);
             margin-top: 2px;
             white-space: nowrap;
@@ -267,14 +351,16 @@
         }
 
         .nav-badge {
-            font-size: 9px;
+            font-size: 9.5px;
             font-family: var(--font-mono);
             font-weight: 600;
-            padding: 2px 6px;
-            border-radius: 100px;
+            padding: 2.5px 7px;
+            border-radius: var(--radius-full);
             background: var(--bg-card);
             color: var(--text-muted);
             border: 1px solid var(--border-app);
+            flex-shrink: 0;
+            transition: all 180ms;
         }
 
         .nav-item.active .nav-badge {
@@ -283,83 +369,70 @@
             border-color: var(--accent-border);
         }
 
-        /* Tool Items inside Sidebar */
-        .sidebar-tool-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 12px;
-            border-radius: var(--radius-sm);
-            color: var(--text-secondary);
-            font-size: 12px;
-            font-weight: 500;
-            background: none;
-            border: 1px solid transparent;
-            cursor: pointer;
-            width: 100%;
-            text-align: left;
-            transition: all 160ms var(--ease);
-        }
-
-        .sidebar-tool-btn:hover {
-            background: var(--bg-surface);
-            color: var(--text-primary);
-            border-color: var(--border-subtle);
-        }
-
-        .sidebar-tool-btn i {
-            color: var(--text-muted);
-            transition: color 160ms;
-        }
-        .sidebar-tool-btn:hover i {
-            color: var(--accent);
-        }
-
-        /* System Telemetry Box in Sidebar */
+        /* System & AI Telemetry Card */
         .telemetry-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 12px;
+            background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-sidebar) 100%);
+            border: 1px solid var(--border-app);
+            border-radius: var(--radius-md);
+            padding: 14px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 11px;
+            box-shadow: var(--shadow-subtle);
         }
 
         .telemetry-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 11px;
+            font-size: 11.5px;
         }
 
         .telemetry-label {
             color: var(--text-muted);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            font-weight: 500;
         }
 
         .telemetry-val {
             font-family: var(--font-mono);
             font-weight: 600;
+            font-size: 11.5px;
             color: var(--text-primary);
         }
 
         .status-dot {
-            width: 7px;
-            height: 7px;
+            width: 7.5px;
+            height: 7.5px;
             border-radius: 50%;
             background: var(--success);
-            box-shadow: 0 0 8px var(--success-glow);
+            box-shadow: 0 0 10px var(--success-glow);
             display: inline-block;
+            position: relative;
         }
 
-        /* Sidebar Footer */
+        .status-dot.pulse::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            border: 1.5px solid var(--success);
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            70% { transform: scale(2.2); opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* Sidebar Footer / Satker Profile */
         .sidebar-footer {
             padding: 14px 16px;
             border-top: 1px solid var(--border-subtle);
-            background: var(--bg-app);
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.2) 100%);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -368,45 +441,52 @@
         .satker-badge {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 11px;
             overflow: hidden;
+            width: 100%;
         }
 
         .satker-avatar {
-            width: 28px;
-            height: 28px;
-            background: var(--bg-card);
+            width: 32px;
+            height: 32px;
+            background: var(--bg-surface-elev);
             border: 1px solid var(--border-app);
-            border-radius: 50%;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            color: var(--text-accent);
             flex-shrink: 0;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
         .satker-details {
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            min-width: 0;
         }
 
         .satker-name {
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: 700;
             color: var(--text-primary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-family: var(--font-display);
+            letter-spacing: -0.1px;
         }
 
         .satker-role {
             font-size: 10px;
             color: var(--text-muted);
-            font-family: var(--font-mono);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        /* ══════ MAIN WORKSPACE ══════ */
+        /* ══════ MAIN WORKSPACE AREA ══════ */
         .main-workspace {
             flex: 1;
             height: 100vh;
@@ -417,13 +497,15 @@
             position: relative;
         }
 
-        /* Top Header */
+        /* Top Header Bar */
         .top-header {
             height: var(--header-h);
             min-height: var(--header-h);
             background: var(--bg-header);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-app);
-            padding: 0 20px;
+            padding: 0 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -433,7 +515,7 @@
         .header-left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
         }
 
         .breadcrumb {
@@ -446,54 +528,69 @@
         .breadcrumb-item {
             color: var(--text-muted);
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .breadcrumb-sep {
-            color: var(--text-muted);
-            font-size: 11px;
+            color: var(--border-app);
+            font-size: 12px;
         }
 
         .breadcrumb-current {
             color: var(--text-primary);
             font-weight: 700;
             font-family: var(--font-display);
+            background: var(--bg-surface);
+            padding: 3px 10px;
+            border-radius: var(--radius-xs);
+            border: 1px solid var(--border-subtle);
+            letter-spacing: -0.1px;
         }
 
         .header-center {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        /* View Mode Segmented Switch */
+        /* Segmented View Mode Switcher */
         .view-switcher {
             display: flex;
             align-items: center;
-            background: var(--bg-app);
+            background: var(--bg-input);
             border: 1px solid var(--border-app);
             padding: 3px;
             border-radius: var(--radius-sm);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .view-btn {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 5px 12px;
-            border-radius: 5px;
+            gap: 7px;
+            padding: 6px 14px;
+            border-radius: 6px;
             font-size: 12px;
             font-weight: 600;
             color: var(--text-muted);
             background: none;
             border: none;
             cursor: pointer;
-            transition: all 160ms var(--ease);
+            transition: all 180ms var(--ease);
+            user-select: none;
+        }
+
+        .view-btn:hover {
+            color: var(--text-primary);
         }
 
         .view-btn.active {
-            background: var(--bg-card);
+            background: var(--bg-surface-elev);
             color: var(--text-primary);
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-elev);
         }
 
         .header-actions {
@@ -518,34 +615,45 @@
             transition: all 180ms var(--ease);
             white-space: nowrap;
             user-select: none;
+            outline: none;
         }
 
-        .btn:active { transform: scale(0.97); }
+        .btn:active {
+            transform: scale(0.98);
+        }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent), #4f46e5);
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+            background: var(--accent-gradient);
+            color: var(--text-on-accent);
+            box-shadow: 0 4px 16px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+            overflow: hidden;
         }
+
         .btn-primary:hover {
-            filter: brightness(1.12);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+            filter: brightness(1.1);
+            box-shadow: 0 6px 22px rgba(59, 130, 246, 0.45);
         }
 
         .btn-secondary {
-            background: var(--bg-card);
+            background: var(--bg-surface);
             border-color: var(--border-app);
             color: var(--text-primary);
+            box-shadow: var(--shadow-subtle);
         }
+
         .btn-secondary:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--text-muted);
+            background: var(--bg-surface-elev);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
         }
 
         .btn-ghost {
             background: transparent;
             color: var(--text-secondary);
         }
+
         .btn-ghost:hover {
             background: var(--bg-surface);
             color: var(--text-primary);
@@ -556,18 +664,20 @@
             height: 34px;
             padding: 0;
             border-radius: var(--radius-sm);
-            background: var(--bg-card);
+            background: var(--bg-surface);
             border: 1px solid var(--border-app);
             color: var(--text-secondary);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 160ms var(--ease);
+            transition: all 180ms var(--ease);
         }
+
         .btn-icon:hover {
-            background: var(--bg-card-hover);
+            background: var(--bg-surface-elev);
             color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         /* ══════ SPLIT WORKSPACE BODY ══════ */
@@ -583,22 +693,22 @@
         .editor-pane {
             flex: 1;
             overflow-y: auto;
-            padding: 24px 28px 100px;
+            padding: 22px 28px 120px;
             display: flex;
             flex-direction: column;
             gap: 16px;
             transition: all 250ms var(--ease);
         }
 
-        /* Focus mode centers the form nicely */
+        /* Focus mode centers the form */
         .workspace-body.mode-focus .editor-pane {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-left: 24px;
+            padding-right: 24px;
         }
 
-        /* Split mode divides 55% / 45% */
+        /* Split mode divides 54% / 46% */
         .workspace-body.mode-split .editor-pane {
             flex: 0 0 54%;
             max-width: 54%;
@@ -609,7 +719,7 @@
         .canvas-pane {
             flex: 0 0 46%;
             max-width: 46%;
-            background: #090e1a;
+            background: var(--bg-canvas);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -621,15 +731,16 @@
             display: none;
         }
 
+        /* Canvas Toolbar */
         .canvas-toolbar {
-            height: 44px;
+            height: 46px;
             background: var(--bg-surface);
             border-bottom: 1px solid var(--border-app);
-            padding: 0 16px;
+            padding: 0 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: 600;
             color: var(--text-muted);
             user-select: none;
@@ -651,17 +762,35 @@
             flex: 1;
             overflow-y: auto;
             overflow-x: auto;
-            padding: 30px 20px;
+            padding: 36px 20px 80px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            background: radial-gradient(#162238 1px, transparent 1px);
-            background-size: 16px 16px;
+            background: radial-gradient(rgba(255, 255, 255, 0.07) 1.2px, transparent 1.2px);
+            background-size: 18px 18px;
         }
 
         .paper-scaler {
             transform-origin: top center;
             transition: transform 180ms var(--ease);
+        }
+
+        /* Quick Utility Actions Toolbar in Editor */
+        .utility-strip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 6px 12px;
+            margin-bottom: 4px;
+        }
+
+        .utility-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         /* ══════ SAAS FORM SECTIONS (CARDS) ══════ */
@@ -670,24 +799,28 @@
             border: 1px solid var(--border-app);
             border-radius: var(--radius-md);
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-            transition: border-color 200ms;
+            box-shadow: var(--shadow-card);
+            transition: border-color 200ms, box-shadow 200ms;
         }
 
         .form-card:hover {
-            border-color: rgba(148, 163, 184, 0.2);
+            border-color: rgba(148, 163, 184, 0.22);
         }
 
         .form-card-header {
-            padding: 14px 18px;
+            padding: 13px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
             user-select: none;
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border-subtle);
+            background: linear-gradient(180deg, var(--bg-surface-elev) 0%, var(--bg-surface) 100%);
+            border-bottom: 1px solid transparent;
             transition: background 150ms;
+        }
+
+        .form-card.open .form-card-header {
+            border-bottom-color: var(--border-subtle);
         }
 
         .form-card-header:hover {
@@ -697,30 +830,31 @@
         .form-card-title-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .step-circle {
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             border-radius: var(--radius-xs);
             background: var(--accent-subtle);
             border: 1px solid var(--accent-border);
             color: var(--accent);
             font-family: var(--font-display);
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 10px var(--accent-glow);
         }
 
         .form-card-title {
             font-family: var(--font-display);
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 700;
             color: var(--text-primary);
-            letter-spacing: -0.1px;
+            letter-spacing: -0.15px;
         }
 
         .form-card-actions {
@@ -742,30 +876,30 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 350ms var(--ease), padding 350ms var(--ease);
-            padding: 0 18px;
+            padding: 0 20px;
         }
 
         .form-card.open .form-card-body {
-            max-height: 3000px;
-            padding: 18px;
+            max-height: 4000px;
+            padding: 20px;
         }
 
         .form-stack {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 15px;
         }
 
-        /* Form Fields */
+        /* Form Inputs & Fields */
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
         }
 
         .input-label {
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.6px;
@@ -786,12 +920,13 @@
             background: var(--bg-input);
             border: 1px solid var(--border-app);
             border-radius: var(--radius-sm);
-            padding: 10px 14px;
+            padding: 9.5px 14px;
             font-family: var(--font-body);
             font-size: 13.5px;
             color: var(--text-primary);
             outline: none;
             transition: all 180ms var(--ease);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
         }
 
         .input-text:focus, .input-select:focus, .input-textarea:focus {
@@ -805,34 +940,36 @@
             font-size: 12.5px;
         }
 
-        .input-text.uppercase { text-transform: uppercase; }
+        .input-text.uppercase {
+            text-transform: uppercase;
+        }
 
         .input-select {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 12px center;
+            background-position: right 14px center;
             padding-right: 36px;
             cursor: pointer;
         }
 
         .input-textarea {
             resize: vertical;
-            min-height: 70px;
+            min-height: 72px;
             line-height: 1.55;
         }
 
         .input-readonly {
-            background: #090e1a;
+            background: rgba(15, 23, 42, 0.7);
             color: var(--warning);
             font-weight: 600;
             cursor: not-allowed;
         }
 
-        /* Layout Grid Helpers */
-        .row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        /* Grid Layout System */
+        .row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        .row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        .row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
         .span-2 { grid-column: span 2; }
 
         @media (max-width: 900px) {
@@ -840,33 +977,37 @@
             .span-2 { grid-column: span 1; }
         }
 
-        /* LAPJU Strip & Cards */
+        /* LAPJU Executive KPI Board */
         .kpi-board {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 8px;
+            gap: 10px;
             background: var(--bg-card);
             border: 1px solid var(--border-app);
-            border-radius: var(--radius-sm);
-            padding: 12px;
+            border-radius: var(--radius-md);
+            padding: 14px;
             margin-bottom: 8px;
+            box-shadow: var(--shadow-subtle);
         }
 
         .kpi-cell {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .kpi-title {
-            font-size: 9.5px;
+            font-size: 10px;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 3px;
+            letter-spacing: 0.6px;
+            font-weight: 700;
         }
 
         .kpi-figure {
             font-family: var(--font-mono);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
             color: var(--text-primary);
         }
@@ -877,26 +1018,30 @@
         .lapju-entry {
             background: var(--bg-card);
             border: 1px solid var(--border-app);
-            border-radius: var(--radius-sm);
-            padding: 14px;
+            border-radius: var(--radius-md);
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
+            box-shadow: var(--shadow-subtle);
         }
 
         .lapju-entry-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 8px;
+            padding-bottom: 10px;
             border-bottom: 1px solid var(--border-subtle);
         }
 
         .lapju-entry-num {
             font-family: var(--font-mono);
-            font-size: 11.5px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .btn-trash {
@@ -904,41 +1049,49 @@
             border: none;
             color: var(--danger);
             cursor: pointer;
-            font-size: 11.5px;
-            opacity: 0.8;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0.85;
             transition: opacity 150ms;
         }
         .btn-trash:hover { opacity: 1; }
 
-        /* Zero-AI Banner */
+        /* Verbatim Zero-AI Banner */
         .verbatim-banner {
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            padding: 12px 16px;
+            padding: 14px 18px;
             background: var(--info-subtle);
             border: 1px solid rgba(14, 165, 233, 0.25);
             border-radius: var(--radius-sm);
             font-size: 12.5px;
             color: #7dd3fc;
-            line-height: 1.45;
+            line-height: 1.5;
         }
 
         .verbatim-banner p {
             color: var(--text-secondary);
-            font-size: 11.5px;
-            margin-top: 3px;
+            font-size: 12px;
+            margin-top: 4px;
         }
 
-        /* Poin Item (Nota Dinas) */
+        /* Poin Box (Nota Dinas) */
         .poin-box {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-sm);
-            padding: 10px 12px;
+            padding: 12px 14px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
+            transition: border-color 150ms;
+        }
+
+        .poin-box:hover {
+            border-color: rgba(255, 255, 255, 0.12);
         }
 
         .poin-box-header {
@@ -949,56 +1102,58 @@
 
         .poin-box-title {
             font-family: var(--font-mono);
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: 600;
-            color: var(--text-muted);
+            color: var(--text-accent);
         }
 
         /* ══════ FLOATING EDITOR ACTION BAR ══════ */
         .floating-actions {
             position: sticky;
-            bottom: 16px;
+            bottom: 18px;
             z-index: 25;
-            background: rgba(16, 25, 46, 0.85);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border-app);
-            border-radius: var(--radius-md);
-            padding: 10px 16px;
+            border-radius: var(--radius-lg);
+            padding: 10px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            margin-top: 20px;
+            box-shadow: var(--shadow-elev);
+            margin-top: 24px;
         }
 
         .floating-left {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 11.5px;
-            color: var(--text-muted);
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
         }
 
         .floating-right {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        /* ══════ MILITARY PAPER CANVAS A4/F4 ══════ */
+        /* ══════ AUTHENTIC MILITARY PAPER CANVAS A4/F4 ══════ */
         .paper-sheet {
             width: 210mm;
             min-height: 297mm;
             background: #ffffff;
             color: #000000;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.55), 0 0 1px rgba(0, 0, 0, 0.3);
             font-family: Arial, sans-serif;
             font-size: 11pt;
-            line-height: 1.4;
-            padding: 40px 45px;
+            line-height: 1.45;
+            padding: 42px 48px;
             border-radius: 2px;
             user-select: text;
+            position: relative;
         }
 
         .paper-sheet-landscape {
@@ -1006,25 +1161,34 @@
             min-height: 210mm;
             background: #ffffff;
             color: #000000;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.55), 0 0 1px rgba(0, 0, 0, 0.3);
             font-family: Arial, sans-serif;
             font-size: 8.5pt;
-            line-height: 1.3;
-            padding: 25px 30px;
+            line-height: 1.35;
+            padding: 26px 32px;
             border-radius: 2px;
             user-select: text;
+            position: relative;
         }
 
+        /* Double Separator Line Baku KEP/868 (Tebal-Tipis Komando) */
         .military-line {
-            border-bottom: 1.5px solid #000;
-            margin-top: 4px;
-            margin-bottom: 12px;
+            border-bottom: 2px solid #000;
+            position: relative;
+            margin-top: 5px;
+            margin-bottom: 14px;
+        }
+        .military-line::after {
+            content: '';
+            display: block;
+            border-bottom: 0.8px solid #000;
+            margin-top: 2px;
         }
 
         .military-table th {
             background: #f1f5f9;
             border: 1px solid #000;
-            padding: 4px 6px;
+            padding: 5px 6px;
             font-size: 7.5pt;
             font-weight: bold;
             text-align: center;
@@ -1042,90 +1206,108 @@
             position: fixed;
             inset: 0;
             z-index: 60;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 24px;
         }
 
-        .modal-backdrop.active { display: flex; }
+        .modal-backdrop.active {
+            display: flex;
+        }
 
         .modal-window {
             background: var(--bg-surface);
             border: 1px solid var(--border-app);
             border-radius: var(--radius-lg);
             width: 100%;
-            max-width: 800px;
-            max-height: 85vh;
+            max-width: 820px;
+            max-height: 88vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+            box-shadow: var(--shadow-modal);
+            overflow: hidden;
+            animation: modalPop 200ms var(--ease);
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.96); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .modal-head {
-            padding: 16px 20px;
+            padding: 16px 22px;
             border-bottom: 1px solid var(--border-app);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: linear-gradient(180deg, var(--bg-surface-elev) 0%, var(--bg-surface) 100%);
         }
 
         .modal-title {
             font-family: var(--font-display);
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .modal-content {
             flex: 1;
             overflow-y: auto;
-            padding: 18px 20px;
+            padding: 20px 22px;
         }
 
         .modal-foot {
-            padding: 14px 20px;
+            padding: 14px 22px;
             border-top: 1px solid var(--border-app);
             background: var(--bg-card);
-            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: flex-end;
             gap: 10px;
         }
 
-        /* Preview Full Modal (Popup version) */
+        /* Fullscreen Popup Preview */
         .preview-modal-backdrop {
             position: fixed;
             inset: 0;
             z-index: 65;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(3, 7, 18, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             display: none;
             flex-direction: column;
             overflow-y: auto;
-            padding: 20px;
+            padding: 24px;
             align-items: center;
         }
 
-        .preview-modal-backdrop.active { display: flex; }
+        .preview-modal-backdrop.active {
+            display: flex;
+        }
 
         .preview-modal-bar {
             position: sticky;
             top: 0;
             z-index: 66;
-            background: rgba(12, 19, 36, 0.95);
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border-app);
             border-radius: var(--radius-md);
-            padding: 10px 20px;
-            margin-bottom: 24px;
+            padding: 12px 22px;
+            margin-bottom: 28px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            max-width: 900px;
+            max-width: 940px;
+            box-shadow: var(--shadow-elev);
         }
 
         /* ══════ SNACKBAR TOAST ══════ */
@@ -1134,18 +1316,19 @@
             bottom: 24px;
             right: 24px;
             z-index: 70;
-            background: var(--bg-card);
-            border: 1px solid var(--border-app);
-            backdrop-filter: blur(16px);
+            background: var(--bg-surface-elev);
+            border: 1px solid var(--border-elev);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 12px 18px;
-            border-radius: var(--radius-sm);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 13px;
             font-weight: 500;
             color: var(--text-primary);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: var(--shadow-modal);
             opacity: 0;
             transform: translateY(20px);
             pointer-events: none;
@@ -1158,8 +1341,13 @@
             pointer-events: auto;
         }
 
-        .snackbar-icon { color: var(--success); flex-shrink: 0; }
-        .snackbar-icon.error { color: var(--danger); }
+        .snackbar-icon {
+            color: var(--success);
+            flex-shrink: 0;
+        }
+        .snackbar-icon.error {
+            color: var(--danger);
+        }
 
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .spinning { animation: spin 1s linear infinite; }
@@ -1172,17 +1360,19 @@
     <div class="app-container">
 
         <!-- ══════════════════════════════════════════════
-             LEFT SAAS SIDEBAR (PRO-DEFENSE SUITE)
+             LEFT SAAS SIDEBAR (EXECUTIVE DEFENSE SUITE)
              ══════════════════════════════════════════════ -->
         <aside class="sidebar" id="appSidebar">
             <div>
                 <!-- Brand Header -->
                 <div class="sidebar-brand">
-                    <div class="brand-logo">SSEB</div>
+                    <div class="brand-badge-icon">
+                        <i data-lucide="shield" style="width:20px;height:20px"></i>
+                    </div>
                     <div class="brand-info">
-                        <div class="brand-name">
-                            SSEB AI
-                            <span class="brand-tag">v4.0</span>
+                        <div class="brand-title-row">
+                            <span class="brand-name">SSEB AI</span>
+                            <span class="brand-tag">KEP/868</span>
                         </div>
                         <div class="brand-desc">Tata Naskah Dinas TNI</div>
                     </div>
@@ -1193,10 +1383,15 @@
 
                     <!-- Group 1: Modul Dokumen -->
                     <div class="nav-group">
-                        <div class="nav-group-title">Modul Naskah Dinas</div>
-                        
+                        <div class="nav-group-title">
+                            <span>Modul Naskah Dinas</span>
+                            <span style="font-size:9px;color:var(--text-muted)">4 Format</span>
+                        </div>
+
                         <div class="nav-item active" data-type="nota_dinas" onclick="switchDocTab('nota_dinas')">
-                            <span class="nav-item-icon">📋</span>
+                            <div class="nav-icon-container">
+                                <i data-lucide="file-text" style="width:17px;height:17px"></i>
+                            </div>
                             <div class="nav-item-body">
                                 <div class="nav-item-title">Nota Dinas</div>
                                 <div class="nav-item-subtitle">Disposisi &amp; Korespondensi</div>
@@ -1205,7 +1400,9 @@
                         </div>
 
                         <div class="nav-item" data-type="telaahan_staf" onclick="switchDocTab('telaahan_staf')">
-                            <span class="nav-item-icon">📊</span>
+                            <div class="nav-icon-container">
+                                <i data-lucide="file-check-2" style="width:17px;height:17px"></i>
+                            </div>
                             <div class="nav-item-body">
                                 <div class="nav-item-title">Telaahan Staf</div>
                                 <div class="nav-item-subtitle">6 Pasal Baku Kajian</div>
@@ -1214,7 +1411,9 @@
                         </div>
 
                         <div class="nav-item" data-type="kka_seskoal" onclick="switchDocTab('kka_seskoal')">
-                            <span class="nav-item-icon">🎓</span>
+                            <div class="nav-icon-container">
+                                <i data-lucide="graduation-cap" style="width:17px;height:17px"></i>
+                            </div>
                             <div class="nav-item-body">
                                 <div class="nav-item-title">KKA Sesko</div>
                                 <div class="nav-item-subtitle">Kertas Karya Acuan Pasis</div>
@@ -1223,19 +1422,23 @@
                         </div>
 
                         <div class="nav-item" data-type="lapju" onclick="switchDocTab('lapju')">
-                            <span class="nav-item-icon">💰</span>
+                            <div class="nav-icon-container">
+                                <i data-lucide="calculator" style="width:17px;height:17px"></i>
+                            </div>
                             <div class="nav-item-body">
                                 <div class="nav-item-title">LAPJU Belanja Modal</div>
-                                <div class="nav-item-subtitle">Data Riil Tanpa AI</div>
+                                <div class="nav-item-subtitle">Data Riil Verbatim</div>
                             </div>
                             <span class="nav-badge" style="color:var(--success);border-color:rgba(16,185,129,0.3)">100% Riil</span>
                         </div>
                     </div>
 
-
-                    <!-- Group 3: System & AI Engine Telemetry -->
+                    <!-- Group 2: System & AI Engine Telemetry -->
                     <div class="nav-group">
-                        <div class="nav-group-title">Status Sistem &amp; AI</div>
+                        <div class="nav-group-title">
+                            <span>Status Sistem &amp; AI</span>
+                            <span class="status-dot pulse"></span>
+                        </div>
                         <div class="telemetry-card">
                             <div class="telemetry-row">
                                 <span class="telemetry-label">
@@ -1246,14 +1449,14 @@
                             </div>
                             <div class="telemetry-row">
                                 <span class="telemetry-label">
-                                    <i data-lucide="database" style="width:12px;height:12px"></i>
+                                    <i data-lucide="database" style="width:13px;height:13px"></i>
                                     <span>Basis Data RAG</span>
                                 </span>
                                 <span class="telemetry-val" id="ragText">RAG Siap (154 Dok)</span>
                             </div>
                             <div class="telemetry-row">
                                 <span class="telemetry-label">
-                                    <i data-lucide="shield-check" style="width:12px;height:12px"></i>
+                                    <i data-lucide="shield-check" style="width:13px;height:13px"></i>
                                     <span>Audit Kepatuhan</span>
                                 </span>
                                 <span class="telemetry-val" style="color:var(--success)">100% Valid</span>
@@ -1271,7 +1474,9 @@
             <!-- Sidebar Footer -->
             <div class="sidebar-footer">
                 <div class="satker-badge">
-                    <div class="satker-avatar">⚓</div>
+                    <div class="satker-avatar">
+                        <i data-lucide="anchor" style="width:16px;height:16px"></i>
+                    </div>
                     <div class="satker-details">
                         <span class="satker-name" id="sidebarSatkerName">PUSAT KOMANDO OPERASI</span>
                         <span class="satker-role">Satuan Operasional &bull; Standar Baku</span>
@@ -1289,16 +1494,19 @@
             <header class="top-header">
                 <div class="header-left">
                     <div class="breadcrumb">
-                        <span class="breadcrumb-item">SSEB AI</span>
+                        <span class="breadcrumb-item">
+                            <i data-lucide="command" style="width:14px;height:14px;color:var(--accent)"></i>
+                            <span>SSEB AI</span>
+                        </span>
                         <span class="breadcrumb-sep">/</span>
-                        <span class="breadcrumb-item">Dokumen Militer</span>
+                        <span class="breadcrumb-item">Doktrin TNI</span>
                         <span class="breadcrumb-sep">/</span>
                         <span class="breadcrumb-current" id="breadcrumbDocName">Nota Dinas</span>
                     </div>
                 </div>
 
                 <div class="header-center">
-                    <!-- Mode Switcher: Split vs Focus -->
+                    <!-- Segmented View Switcher: Split vs Focus -->
                     <div class="view-switcher">
                         <button type="button" class="view-btn active" id="btnModeSplit" onclick="setViewMode('split')">
                             <i data-lucide="columns-2" style="width:14px;height:14px"></i>
@@ -1312,23 +1520,23 @@
                 </div>
 
                 <div class="header-actions">
-                    <button type="button" onclick="openEditModal()" class="btn btn-secondary">
+                    <button type="button" onclick="openEditModal()" class="btn btn-secondary" title="Buka editor teks redaksi">
                         <i data-lucide="edit-3" style="width:14px;height:14px"></i>
                         <span>Edit Draf</span>
                     </button>
-                    <button type="button" onclick="openPopupPreview()" class="btn btn-secondary">
+                    <button type="button" onclick="openPopupPreview()" class="btn btn-secondary" title="Pratinjau naskah layar penuh">
                         <i data-lucide="maximize-2" style="width:14px;height:14px"></i>
                         <span>Layar Penuh</span>
                     </button>
                     <button type="button" onclick="handleDownloadDirect('pdf')" class="btn btn-secondary" title="Unduh format PDF resmi KEP/868">
-                        <i data-lucide="file-text" style="width:14px;height:14px;color:#ef4444"></i>
+                        <i data-lucide="file-text" style="width:14px;height:14px;color:var(--danger)"></i>
                         <span>Unduh PDF</span>
                     </button>
-                    <button type="button" onclick="handleDownloadDirect('docx')" class="btn btn-secondary" title="Unduh format DOCX (Word) siap diedit">
-                        <i data-lucide="file-edit" style="width:14px;height:14px;color:#3b82f6"></i>
+                    <button type="button" onclick="handleDownloadDirect('docx')" class="btn btn-secondary" title="Unduh format DOCX (Word)">
+                        <i data-lucide="file-edit" style="width:14px;height:14px;color:var(--accent)"></i>
                         <span>Unduh DOCX</span>
                     </button>
-                    <button type="button" id="btnGenerateTop" onclick="handleGenerateAction()" class="btn btn-primary">
+                    <button type="button" id="btnGenerateTop" onclick="handleGenerateAction()" class="btn btn-primary" title="Susun naskah dengan AI (Ctrl+Enter)">
                         <i data-lucide="sparkles" style="width:14px;height:14px"></i>
                         <span id="btnGenerateTopText">Susun Naskah AI</span>
                     </button>
@@ -1340,6 +1548,31 @@
 
                 <!-- ── LEFT PANE: FORM EDITOR ── -->
                 <div class="editor-pane">
+
+                    <!-- Quick Utility Action Bar -->
+                    <div class="utility-strip">
+                        <div class="utility-group">
+                            <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">Alat Form:</span>
+                            <button type="button" onclick="loadSampleScenario()" class="btn btn-ghost" style="font-size:11.5px;padding:4px 8px" title="Isikan data skenario percontohan">
+                                <i data-lucide="bookmark-plus" style="width:13px;height:13px"></i>
+                                <span>Contoh Skenario</span>
+                            </button>
+                            <button type="button" onclick="saveDraftLocal()" class="btn btn-ghost" style="font-size:11.5px;padding:4px 8px" title="Simpan isian form ke penyimpanan lokal">
+                                <i data-lucide="save" style="width:13px;height:13px"></i>
+                                <span>Simpan Draf</span>
+                            </button>
+                            <button type="button" onclick="loadDraftLocal()" class="btn btn-ghost" style="font-size:11.5px;padding:4px 8px" title="Muat draf yang tersimpan sebelumnya">
+                                <i data-lucide="folder-open" style="width:13px;height:13px"></i>
+                                <span>Muat Draf</span>
+                            </button>
+                        </div>
+                        <div class="utility-group">
+                            <button type="button" onclick="clearFormCurrent()" class="btn btn-ghost" style="font-size:11.5px;padding:4px 8px;color:var(--text-muted)" title="Kosongkan form">
+                                <i data-lucide="trash-2" style="width:13px;height:13px"></i>
+                                <span>Reset</span>
+                            </button>
+                        </div>
+                    </div>
 
                     <!-- ▸ SECTION 1: Identitas Satker & Pejabat (SHARED) -->
                     <div class="form-card open">
@@ -1389,7 +1622,7 @@
                         </div>
                     </div>
 
-                    <!-- ════ FORM: NOTA DINAS ════ -->
+                    <!-- ════ FORM 1: NOTA DINAS ════ -->
                     <form id="formNotaDinas" class="doc-form form-stack" style="gap:16px">
                         <!-- Section 2: Metadata Nota Dinas -->
                         <div class="form-card open">
@@ -1473,8 +1706,9 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                                             <textarea class="nd-poin-input input-textarea" rows="2" oninput="updatePaperPreview()">Sehubungan dasar tersebut di atas, dilaporkan bahwa kesiapsiagaan operasional pemantauan sistem wilayah pertahanan berada dalam status siaga penuh selama 24/7.</textarea>
                                         </div>
                                     </div>
-                                    <button type="button" onclick="addNdPoin()" class="btn btn-ghost" style="align-self:flex-start;font-size:12px;padding:4px 8px">
-                                        <i data-lucide="plus" style="width:14px;height:14px"></i> Tambah Poin Isi
+                                    <button type="button" onclick="addNdPoin()" class="btn btn-ghost" style="align-self:flex-start;font-size:12px;padding:5px 10px">
+                                        <i data-lucide="plus" style="width:14px;height:14px"></i>
+                                        <span>Tambah Poin Isi</span>
                                     </button>
                                     <div class="input-group">
                                         <label class="input-label">Tembusan <span class="input-hint">Opsional &bull; 1 per baris</span></label>
@@ -1485,7 +1719,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                         </div>
                     </form>
 
-                    <!-- ════ FORM: TELAAHAN STAF ════ -->
+                    <!-- ════ FORM 2: TELAAHAN STAF ════ -->
                     <form id="formTelaahanStaf" class="doc-form form-stack hidden" style="gap:16px">
                         <div class="form-card open">
                             <div class="form-card-header" onclick="toggleFormCard(this)">
@@ -1554,7 +1788,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                         </div>
                     </form>
 
-                    <!-- ════ FORM: KKA SESKO ════ -->
+                    <!-- ════ FORM 3: KKA SESKO ════ -->
                     <form id="formKkaSeskoal" class="doc-form form-stack hidden" style="gap:16px">
                         <div class="form-card open">
                             <div class="form-card-header" onclick="toggleFormCard(this)">
@@ -1611,11 +1845,11 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                         </div>
                     </form>
 
-                    <!-- ════ FORM: LAPJU BELANJA MODAL ════ -->
+                    <!-- ════ FORM 4: LAPJU BELANJA MODAL ════ -->
                     <form id="formLapju" class="doc-form form-stack hidden" style="gap:16px">
                         <!-- Zero-AI Banner -->
                         <div class="verbatim-banner">
-                            <i data-lucide="shield-check" style="width:18px;height:18px;color:var(--info)"></i>
+                            <i data-lucide="shield-check" style="width:20px;height:20px;color:var(--info);flex-shrink:0"></i>
                             <div>
                                 <strong style="font-weight:700">Mode Data Riil Terverifikasi (Zero-AI):</strong>
                                 <p>Seluruh angka DIPA, nilai kontrak, serapan, dan progres fisik dicetak verbatim tanpa penambahan atau rekayasa AI guna menjamin kepatuhan audit BPK/Itjenal.</p>
@@ -1751,7 +1985,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                             <button type="button" onclick="zoomCanvas(-0.1)" class="btn-icon" style="width:28px;height:28px" title="Perkecil">
                                 <i data-lucide="minus" style="width:12px;height:12px"></i>
                             </button>
-                            <span id="zoomLevelText" style="font-family:var(--font-mono);font-size:11px;width:38px;text-align:center">100%</span>
+                            <span id="zoomLevelText" style="font-family:var(--font-mono);font-size:11px;width:38px;text-align:center">95%</span>
                             <button type="button" onclick="zoomCanvas(0.1)" class="btn-icon" style="width:28px;height:28px" title="Perbesar">
                                 <i data-lucide="plus" style="width:12px;height:12px"></i>
                             </button>
@@ -1775,10 +2009,12 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
     <!-- ══════ FULLSCREEN PREVIEW MODAL ══════ -->
     <div id="previewModal" class="preview-modal-backdrop" onclick="if(event.target===this)closePopupPreview()">
         <div class="preview-modal-bar">
-            <div style="display:flex;align-items:center;gap:10px">
-                <span class="brand-logo" style="width:28px;height:28px;font-size:10px">A4</span>
+            <div style="display:flex;align-items:center;gap:12px">
+                <span class="brand-badge-icon" style="width:32px;height:32px">
+                    <i data-lucide="file-text" style="width:16px;height:16px"></i>
+                </span>
                 <div>
-                    <div style="font-size:13px;font-weight:700;color:var(--text-primary)" id="modalPreviewTitle">Pratinjau Dokumen Militer Penuh</div>
+                    <div style="font-size:13.5px;font-weight:700;color:var(--text-primary)" id="modalPreviewTitle">Pratinjau Dokumen Militer Penuh</div>
                     <div style="font-size:11px;color:var(--text-muted)">Standar Format Baku KEP/868/IX/2022 Mabes TNI</div>
                 </div>
             </div>
@@ -1787,7 +2023,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                     <i data-lucide="file-text" style="width:14px;height:14px"></i>
                     <span>Unduh PDF</span>
                 </button>
-                <button type="button" onclick="handleDownloadDirect('docx')" class="btn btn-secondary" style="font-size:12px;padding:6px 12px;background:rgba(255,255,255,0.08)" title="Unduh format DOCX (Word)">
+                <button type="button" onclick="handleDownloadDirect('docx')" class="btn btn-secondary" style="font-size:12px;padding:6px 12px" title="Unduh format DOCX (Word)">
                     <i data-lucide="file-edit" style="width:14px;height:14px"></i>
                     <span>Unduh DOCX</span>
                 </button>
@@ -1806,8 +2042,11 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
         <div class="modal-window">
             <div class="modal-head">
                 <div>
-                    <div class="modal-title">✏️ Editor Redaksi Teks Naskah</div>
-                    <div id="modalEditSubtitle" style="font-size:12px;color:var(--text-muted);margin-top:2px">Edit naskah isi hasil AI di bawah ini sebelum dicetak ke PDF.</div>
+                    <div class="modal-title">
+                        <i data-lucide="edit-3" style="width:17px;height:17px;color:var(--accent)"></i>
+                        <span>Editor Redaksi Teks Naskah</span>
+                    </div>
+                    <div id="modalEditSubtitle" style="font-size:12px;color:var(--text-muted);margin-top:2px">Edit redaksi naskah di bawah ini sebelum dicetak ke PDF atau DOCX.</div>
                 </div>
                 <button type="button" onclick="closeEditModal()" class="btn-icon" style="border:none;width:30px;height:30px">
                     <i data-lucide="x" style="width:16px;height:16px"></i>
@@ -1820,7 +2059,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                 <button type="button" onclick="closeEditModal()" class="btn btn-ghost">Batal</button>
                 <button type="button" onclick="applyModalEdit()" class="btn btn-primary">
                     <i data-lucide="check" style="width:14px;height:14px"></i>
-                    <span>Simpan &amp; Terapkan ke Pertinjau</span>
+                    <span>Simpan &amp; Terapkan ke Pratinjau</span>
                 </button>
             </div>
         </div>
@@ -1828,7 +2067,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
 
     <!-- ══════ TOAST NOTIFICATION ══════ -->
     <div id="toast" class="snackbar-box">
-        <i id="toastIcon" data-lucide="check-circle" class="snackbar-icon" style="width:16px;height:16px"></i>
+        <i id="toastIcon" data-lucide="check-circle" class="snackbar-icon" style="width:18px;height:18px"></i>
         <span id="toastMsg">Operasi berhasil dijalankan</span>
     </div>
 
@@ -1844,6 +2083,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
         let customEditedText = null;
         let currentAiIsiList = null;
         let currentAiNotaDinasText = null;
+        let currentKkaAiSections = null;
         let currentZoom = 0.95;
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -1859,6 +2099,9 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                 if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
                     e.preventDefault();
                     handleGenerateAction();
+                } else if (e.key === 'Escape') {
+                    closePopupPreview();
+                    closeEditModal();
                 }
             });
         });
@@ -1927,7 +2170,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
         // ── Tab Switcher ──
         function switchDocTab(type) {
             currentDocType = type;
-            
+
             // Update sidebar active states
             document.querySelectorAll('.nav-item').forEach(item => {
                 if (item.dataset.type === type) {
@@ -2006,11 +2249,14 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             i.innerHTML = `
                 <div class="poin-box-header">
                     <span class="poin-box-title">Poin ${ndPoinIndex}</span>
-                    <button type="button" onclick="this.closest('.poin-box').remove();updatePaperPreview()" class="btn-trash">Hapus</button>
+                    <button type="button" onclick="this.closest('.poin-box').remove();updatePaperPreview()" class="btn-trash">
+                        <i data-lucide="trash" style="width:12px;height:12px"></i> Hapus
+                    </button>
                 </div>
                 <textarea class="nd-poin-input input-textarea" rows="2" oninput="updatePaperPreview()" placeholder="Uraian butir lanjutan..."></textarea>
             `;
             c.appendChild(i);
+            lucide.createIcons();
             updatePaperPreview();
         }
 
@@ -2032,7 +2278,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                         </div>
                         <div class="input-group">
                             <label class="input-label">Saat Kejadian</label>
-                            <textarea id="kka_a_kejadian" rows="2" oninput="updatePaperPreview()" class="input-textarea">Pengerahan KRI patroli dan manuver intercept penghentian kapal target.</textarea>
+                            <textarea id="kka_a_kejadian" rows="2" oninput="updatePaperPreview()" class="input-textarea">Pengerahan unsur patroli dan manuver intercept penghentian kapal target.</textarea>
                         </div>
                         <div class="input-group">
                             <label class="input-label">Pasca Kejadian</label>
@@ -2041,7 +2287,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                     </div>
                     <div class="input-group">
                         <label class="input-label">Saran Pasis</label>
-                        <textarea id="kka_a_saran" rows="2" oninput="updatePaperPreview()" class="input-textarea">Penguatan integrasi sensor radar pantai terpadu dan interoperabilitas satgas laut.</textarea>
+                        <textarea id="kka_a_saran" rows="2" oninput="updatePaperPreview()" class="input-textarea">Penguatan integrasi sensor radar pantai terpadu dan interoperabilitas satgas terpadu.</textarea>
                     </div>
                 `;
             } else if (s === 'ANALISIS_MOE') {
@@ -2058,7 +2304,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                     </div>
                     <div class="input-group">
                         <label class="input-label">Fakta &amp; Latar Belakang</label>
-                        <textarea id="kka_b_latar" rows="2" oninput="updatePaperPreview()" class="input-textarea">Kebutuhan surveilans laut dan penindakan cepat di choke points alur laut kepulauan Indonesia (ALKI).</textarea>
+                        <textarea id="kka_b_latar" rows="2" oninput="updatePaperPreview()" class="input-textarea">Kebutuhan surveilans dan penindakan cepat di choke points alur laut kepulauan Indonesia (ALKI).</textarea>
                     </div>
                     <div class="input-group">
                         <label class="input-label">Saran Rekomendasi MoE</label>
@@ -2101,9 +2347,9 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                 fisik: 40, admin: 30, penyedia: 'PT Alkomindo Jaya'
             });
             addLapjuItem({
-                nama: 'Modernisasi Modul Sensor Radar Maritim Terpadu',
+                nama: 'Modernisasi Modul Sensor Radar Terpadu',
                 pagu: 3800000000, kontrak: 3750000000, serap: 1125000000,
-                fisik: 35, admin: 30, penyedia: 'PT Maritim Elektro Nusantara'
+                fisik: 35, admin: 30, penyedia: 'PT Elektro Nusantara'
             });
             autoNomorLapju();
         }
@@ -2113,7 +2359,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             const c = document.getElementById('lapjuItemsList');
             const e = document.createElement('div');
             e.className = "lapju-entry";
-            
+
             const data = d || {
                 nama: `Pengadaan Paket Sarpras #${lapjuCount}`,
                 pagu: 1000000000, kontrak: 950000000, serap: 285000000,
@@ -2122,8 +2368,13 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
 
             e.innerHTML = `
                 <div class="lapju-entry-header">
-                    <span class="lapju-entry-num">Paket Kegiatan #${lapjuCount}</span>
-                    <button type="button" onclick="this.closest('.lapju-entry').remove();recalcLapju();updatePaperPreview()" class="btn-trash">Hapus</button>
+                    <span class="lapju-entry-num">
+                        <i data-lucide="package" style="width:14px;height:14px"></i>
+                        <span>Paket Kegiatan #${lapjuCount}</span>
+                    </span>
+                    <button type="button" onclick="this.closest('.lapju-entry').remove();recalcLapju();updatePaperPreview()" class="btn-trash">
+                        <i data-lucide="trash-2" style="width:13px;height:13px"></i> Hapus Paket
+                    </button>
                 </div>
                 <div class="input-group">
                     <label class="input-label">Uraian Kegiatan</label>
@@ -2163,6 +2414,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                 </div>
             `;
             c.appendChild(e);
+            lucide.createIcons();
             recalcLapju();
             updatePaperPreview();
         }
@@ -2175,7 +2427,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
         function recalcLapju() {
             const cards = document.querySelectorAll('.lapju-entry');
             let tP = 0, tK = 0, tS = 0, tSi = 0, sF = 0, sA = 0;
-            
+
             cards.forEach(c => {
                 const p = parseFloat(c.querySelector('.lapju-pagu').value) || 0;
                 const k = parseFloat(c.querySelector('.lapju-kontrak').value) || 0;
@@ -2358,10 +2610,10 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                     const pra = document.getElementById('kka_a_pra')?.value || 'Deteksi awal anomali pergerakan.';
                     const kej = document.getElementById('kka_a_kejadian')?.value || 'Pengerahan unsur dan tindakan taktis segera.';
                     const pasca = document.getElementById('kka_a_pasca')?.value || 'Konsolidasi dan evaluasi pasca kejadian.';
-                    const saran = document.getElementById('kka_a_saran')?.value || 'Penguatan integrasi sensor radar dan interoperabilitas satgas laut.';
-                    
+                    const saran = document.getElementById('kka_a_saran')?.value || 'Penguatan integrasi sensor radar dan interoperabilitas satgas.';
+
                     const analisis = currentKkaAiSections?.analisis_kejadian || 'Penerapan prinsip kesatuan komando dan keterpaduan antar instansi yang efektif dalam memitigasi dampak di lapangan.';
-                    const hPos = currentKkaAiSections?.hal_positif || 'Kecepatan mobilisasi unsur SAR dan koordinasi taktis terpadu.';
+                    const hPos = currentKkaAiSections?.hal_positif || 'Kecepatan mobilisasi unsur dan koordinasi taktis terpadu.';
                     const hNeg = currentKkaAiSections?.hal_negatif || 'Tantangan distribusi jaring komunikasi taktis pada fase awal.';
                     const mEdu = currentKkaAiSections?.manfaat_edukatif || 'Pelajaran berharga bagi latihan kesiapsiagaan operasi prajurit.';
                     const mInsp = currentKkaAiSections?.manfaat_inspiratif || 'Menginspirasi modernisasi rancang bangun posko kendali darurat terpadu.';
@@ -2460,7 +2712,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
 
                 paper.innerHTML = `
                     <div style="text-align:center;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:16px">
-                        <div style="font-weight:bold;font-size:11pt">SEKOLAH STAF DAN KOMANDO ANGKATAN LAUT</div>
+                        <div style="font-weight:bold;font-size:11pt">SEKOLAH STAF DAN KOMANDO</div>
                         <div style="font-weight:bold;font-size:12pt;margin-top:2px">KERTAS KARYA ACUAN (${sub.replace('_', ' ')})</div>
                         <div style="font-size:9pt;font-family:monospace;color:#4b5563">${dikreg} &bull; ${noPasis} &bull; ${kelompok}</div>
                     </div>
@@ -2561,7 +2813,6 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
         }
 
         // ── Unified Generate API Action ──
-
         async function handleGenerateAction() {
             const btn = document.getElementById('btnGenerate');
             const btnTop = document.getElementById('btnGenerateTop');
@@ -2583,7 +2834,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
 
                 const successMsg = currentDocType === 'lapju'
                     ? "Dokumen LAPJU Belanja Modal (Data Riil) berhasil dikompilasi ke PDF!"
-                    : "✨ Naskah militer berhasil disusun AI! Tinjau di panel Pertinjau atau klik 'Edit Draf'.";
+                    : "✨ Naskah militer berhasil disusun AI! Tinjau di panel Pratinjau atau klik 'Edit Draf'.";
                 showToast(successMsg, "check-circle");
             } catch (e) {
                 console.error(e);
@@ -2649,13 +2900,14 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                         box.innerHTML = `
                             <div class="poin-box-header">
                                 <span class="poin-box-title">Poin ${num} ${idx === 0 ? '(Paragraf Inti/Pembuka)' : ''}</span>
-                                ${idx > 0 ? `<button type="button" onclick="this.closest('.poin-box').remove();updatePaperPreview()" class="btn-trash">Hapus</button>` : ''}
+                                ${idx > 0 ? `<button type="button" onclick="this.closest('.poin-box').remove();updatePaperPreview()" class="btn-trash"><i data-lucide="trash" style="width:12px;height:12px"></i> Hapus</button>` : ''}
                             </div>
                             <textarea class="nd-poin-input input-textarea" rows="3" oninput="updatePaperPreview()">${fullVal}</textarea>
                         `;
                         container.appendChild(box);
                     });
                     ndPoinIndex = data.isi_list.length + 1;
+                    lucide.createIcons();
                 }
             }
 
@@ -2998,20 +3250,19 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             return await handleDownloadDirect('pdf');
         }
 
-        // ── Modal Editor (Hanya Bagian Naskah / Substansi yang Diedit) ──
+        // ── Modal Editor ──
         function openEditModal() {
             const textarea = document.getElementById('modalTextarea');
             const titleEl = document.querySelector('#editModal .modal-title');
             const subtitleEl = document.getElementById('modalEditSubtitle');
 
             if (currentDocType === 'nota_dinas') {
-                if (titleEl) titleEl.textContent = "✏️ Editor Redaksi Naskah (Poin Isi Nota Dinas)";
-                if (subtitleEl) subtitleEl.textContent = "Edit redaksi poin naskah di bawah ini. Hasil editan akan langsung tampil di panel Pertinjau.";
+                if (titleEl) titleEl.innerHTML = `<i data-lucide="edit-3" style="width:17px;height:17px;color:var(--accent)"></i> <span>Editor Redaksi Naskah (Poin Isi Nota Dinas)</span>`;
+                if (subtitleEl) subtitleEl.textContent = "Edit redaksi poin naskah di bawah ini. Hasil editan akan langsung tampil di panel Pratinjau.";
 
                 if (customEditedText && customEditedText.trim()) {
                     textarea.value = customEditedText;
                 } else if (currentAiIsiList && currentAiIsiList.length > 0) {
-                    // Draf dari AI yang tersimpan
                     textarea.value = currentAiIsiList.map((item, idx) => {
                         const teks = typeof item === 'object' ? item.teks : item;
                         const cleanTeks = (teks || '').replace(/^\d+[\.\)]\s*/, '').trim();
@@ -3030,7 +3281,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                     textarea.value = paras.join('\n\n');
                 }
             } else if (currentDocType === 'telaahan_staf') {
-                if (titleEl) titleEl.textContent = "✏️ Editor Redaksi 6 Pasal Telaahan Staf";
+                if (titleEl) titleEl.innerHTML = `<i data-lucide="edit-3" style="width:17px;height:17px;color:var(--accent)"></i> <span>Editor Redaksi 6 Pasal Telaahan Staf</span>`;
                 if (subtitleEl) subtitleEl.textContent = "Edit redaksi 6 pasal baku KEP/868 di bawah ini.";
 
                 if (customEditedText && customEditedText.trim()) {
@@ -3045,13 +3296,14 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                     textarea.value = `1. Persoalan.\n${p1}\n\n2. Praanggapan.\n${p2}\n\n3. Fakta/Data yang Memengaruhi.\n${p3}\n\n4. Analisis.\n${p4}\n\n5. Kesimpulan.\n${p5}\n\n6. Saran.\n${p6}`;
                 }
             } else if (currentDocType === 'kka_seskoal') {
-                if (titleEl) titleEl.textContent = "✏️ Editor Redaksi Naskah KKA Sesko";
+                if (titleEl) titleEl.innerHTML = `<i data-lucide="edit-3" style="width:17px;height:17px;color:var(--accent)"></i> <span>Editor Redaksi Naskah KKA Sesko</span>`;
                 if (subtitleEl) subtitleEl.textContent = "Edit naskah KKA di bawah ini sebelum dicetak ke PDF.";
                 textarea.value = customEditedText || document.getElementById('paperPreview').innerText;
             } else {
                 textarea.value = customEditedText || document.getElementById('paperPreview').innerText;
             }
 
+            lucide.createIcons();
             document.getElementById('editModal').classList.add('active');
             textarea.focus();
         }
@@ -3071,13 +3323,13 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             lastDownloadDocxUrl = null;
             closeEditModal();
             updatePaperPreview();
-            showToast("Perubahan naskah diterapkan ke panel Pertinjau!", "check-circle");
+            showToast("Perubahan naskah diterapkan ke panel Pratinjau!", "check-circle");
         }
 
         function copyDraftText() {
             const text = document.getElementById('paperPreview').innerText;
             navigator.clipboard.writeText(text).then(() => {
-                showToast("Teks naskah berhasil disalin ke clipboard");
+                showToast("Teks naskah berhasil disalin ke clipboard", "check-circle");
             });
         }
 
@@ -3093,7 +3345,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                 timestamp: new Date().toISOString()
             };
             localStorage.setItem('sseb_draft_' + currentDocType, JSON.stringify(draft));
-            showToast(`Draf ${currentDocType.toUpperCase()} berhasil disimpan di browser`);
+            showToast(`Draf ${currentDocType.toUpperCase()} berhasil disimpan di browser`, "check-circle");
         }
 
         function loadDraftLocal() {
@@ -3109,7 +3361,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
             if (d.ttdNama) document.getElementById('ttdNama').value = d.ttdNama;
             if (d.ttdPangkat) document.getElementById('ttdPangkat').value = d.ttdPangkat;
             updatePaperPreview();
-            showToast("Draf lokal berhasil dimuat kembali");
+            showToast("Draf lokal berhasil dimuat kembali", "check-circle");
         }
 
         function clearFormCurrent() {
@@ -3122,7 +3374,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                 document.getElementById('ts_analisis').value = '';
             }
             updatePaperPreview();
-            showToast("Form berhasil dibersihkan");
+            showToast("Form berhasil dibersihkan", "check-circle");
         }
 
         function loadSampleScenario() {
@@ -3130,10 +3382,10 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                 document.getElementById('nd_perihal').value = 'Permohonan Dukungan Satgas Operasi Patroli Terpadu TA 2026';
                 document.getElementById('nd_dasar').value = 'Keputusan Panglima TNI Nomor KEP/868/IX/2022 tentang Petunjuk Tata Tulis Militer\nSurat Perintah Kasal Nomor Sprin/245/II/2026 tanggal 15 Februari 2026';
             } else if (currentDocType === 'telaahan_staf') {
-                document.getElementById('ts_judul').value = 'STRATEGI PENGUATAN CSIRT MARITIM GUNA MENGANTISIPASI ANCAMAN RANSOMWARE PADA JALUR LOGISTIK ALUT';
+                document.getElementById('ts_judul').value = 'STRATEGI PENGUATAN CSIRT GUNA MENGANTISIPASI ANCAMAN RANSOMWARE PADA JALUR LOGISTIK ALUT';
             }
             updatePaperPreview();
-            showToast("Skenario contoh berhasil diisikan ke form");
+            showToast("Skenario contoh berhasil diisikan ke form", "check-circle");
         }
 
         // ── Toast Notification ──
@@ -3166,7 +3418,7 @@ Surat Perintah Kasal Nomor Sprin/100/I/2025 tanggal 10 Januari 2025</textarea>
                 if (!r.ok) throw new Error('Gagal reindex');
                 const d = await r.json();
                 b.textContent = `RAG Siap (${d.total_documents} Dok)`;
-                showToast(`RAG Berhasil Disinkronisasi (${d.total_documents} Dokumen Doktrin)`);
+                showToast(`RAG Berhasil Disinkronisasi (${d.total_documents} Dokumen Doktrin)`, "check-circle");
             } catch (e) {
                 b.textContent = 'RAG Error';
                 showToast("Gagal sinkronisasi RAG", "alert-triangle");
