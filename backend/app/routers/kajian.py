@@ -22,6 +22,7 @@ from ..services.llm_health import start_llm_request_scope, collect_llm_warnings
 from ..services.pdf_service import create_pdf_kajian
 from ..services.docx_service import create_docx_kajian
 from ..services.guardrail_kajian import clean_military_text, escape_custom_html
+from ..services.archive_service import archive_file
 from ..utils import format_tanggal_indonesia
 
 logger = logging.getLogger(__name__)
@@ -193,6 +194,11 @@ async def generate_kajian(req: KajianGenerateRequest):
             )
         )
 
+        # Simpan otomatis ke direktori internal (direktori-telaah_staff atau direktori-kka_sesko)
+        doc_type = "telaah_staff" if req.kategori == KajianCategory.TELAAHAN_STAF else "kka_sesko"
+        archive_file(output_path, doc_type=doc_type)
+        archive_file(docx_path, doc_type=doc_type)
+
         combined = _format_combined_text(req.kategori, req.kka_model, req.judul_atau_topik, sections)
 
         return KajianGenerateResponse(
@@ -294,6 +300,11 @@ async def render_kajian_pdf(req: KajianRenderPDFRequest):
                 output_path=docx_path
             )
         )
+
+        # Simpan otomatis ke direktori internal (direktori-telaah_staff atau direktori-kka_sesko)
+        doc_type = "telaah_staff" if req.kategori == KajianCategory.TELAAHAN_STAF else "kka_sesko"
+        archive_file(output_path, doc_type=doc_type)
+        archive_file(docx_path, doc_type=doc_type)
 
         combined = _format_combined_text(req.kategori, req.kka_model, req.judul_atau_topik, req.sections)
         

@@ -22,3 +22,5 @@ Thumbs.db
 backend_lama/
 android/.gradle/
 backend/output/
+*.mp4
+*.webp

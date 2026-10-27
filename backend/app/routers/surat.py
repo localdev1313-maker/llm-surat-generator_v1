@@ -20,6 +20,13 @@ from ..services.llm_health import start_llm_request_scope, collect_llm_warnings
 from ..services.pdf_service import create_pdf_surat, create_pdf_nota_dinas
 from ..services.docx_service import create_docx_surat, create_docx_nota_dinas
 from ..services.guardrail_kajian import escape_custom_html
+from ..services.archive_service import (
+    archive_file,
+    ensure_archived_on_download,
+    find_file_in_output_or_archive,
+    get_archive_summary,
+    sync_existing_output_files
+)
 
 router = APIRouter()
 
@@ -146,6 +153,10 @@ async def generate_surat(request: SuratRequest):
             asyncio.to_thread(create_docx_surat, template_data, docx_path)
         )
 
+        # Simpan otomatis ke direktori internal surat biasa
+        archive_file(pdf_path, doc_type="surat_biasa")
+        archive_file(docx_path, doc_type="surat_biasa")
+
         return SuratResponse(
             id=surat_id,
             konten_surat=konten,
@@ -262,6 +273,10 @@ async def generate_nota_dinas(request: NotaDinasRequest):
             asyncio.to_thread(create_docx_nota_dinas, template_data, docx_path)
         )
 
+        # Simpan otomatis ke direktori internal nota dinas
+        archive_file(pdf_path, doc_type="nota_dinas")
+        archive_file(docx_path, doc_type="nota_dinas")
+
         # Format teks naskah untuk respons
         bagian_isi_list = []
         for i, itm in enumerate(isi_list):
@@ -345,16 +360,14 @@ async def download_surat(surat_id: str, inline: bool = False, format: str = "pdf
         f"lapju_{raw_name}{ext}",
     ]
 
-    matched_path = None
-    for filename in candidates:
-        candidate_path = settings.OUTPUT_DIR / filename
-        if candidate_path.exists() and candidate_path.is_file():
-            matched_path = candidate_path
-            break
+    matched_path = find_file_in_output_or_archive(candidates)
 
     if not matched_path or not matched_path.exists():
         format_label = "DOCX" if is_docx else "PDF"
         raise HTTPException(status_code=404, detail=f"File {format_label} '{clean_id}' tidak ditemukan di server")
+
+    # Pastikan file yang didownload otomatis tersimpan/tersinkronisasi di direktori internal
+    ensure_archived_on_download(matched_path)
 
     disposition = "inline" if (inline and not is_docx) else "attachment"
     return FileResponse(
@@ -416,4 +429,25 @@ async def search_rag(q: str, limit: int = 5):
         "query": q,
         "total_results": len(results),
         "results": results
+    }
+
+# ── Archive Internal Management Endpoints ──
+
+@router.get("/api/v1/archive/status")
+async def get_internal_archive_status():
+    """
+    Mengambil status dan rekapitulasi file di seluruh subdirektori internal (direktori-nota_dinas, direktori-telaah_staff, dll).
+    """
+    return get_archive_summary()
+
+@router.post("/api/v1/archive/sync")
+async def sync_internal_archive():
+    """
+    Melakukan sinkronisasi dan pengelompokan file output ke subdirektori internal masing-masing.
+    """
+    stats = await asyncio.to_thread(sync_existing_output_files)
+    return {
+        "status": "success",
+        "message": "Sinkronisasi direktori internal selesai",
+        "synced_counts": stats
     }

@@ -21,6 +21,7 @@ from ..services.pdf_service import create_pdf_telaahan_staf
 from ..services.docx_service import create_docx_telaahan_staf
 from ..services.guardrail import validate_and_sanitize_telaahan_staf
 from ..services.guardrail_kajian import escape_custom_html
+from ..services.archive_service import archive_file
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["Telaahan Staf"])
@@ -152,6 +153,10 @@ async def generate_telaahan_staf(request: TelaahanStafInput):
             asyncio.to_thread(create_docx_telaahan_staf, template_data, docx_path)
         )
 
+        # Simpan otomatis ke direktori internal telaah staff
+        archive_file(pdf_path, doc_type="telaah_staff")
+        archive_file(docx_path, doc_type="telaah_staff")
+
         konten_gabungan = _format_telaahan_staf_gabungan(
             kop_utama=request.kop_utama or "PUSAT KOMANDO OPERASI",
             kop_sub=request.kop_satuan_bawah or "",
@@ -241,6 +246,10 @@ async def render_telaahan_staf_pdf(request: TelaahanStafRenderRequest):
             asyncio.to_thread(create_pdf_telaahan_staf, template_data, pdf_path),
             asyncio.to_thread(create_docx_telaahan_staf, template_data, docx_path)
         )
+
+        # Simpan otomatis ke direktori internal telaah staff
+        archive_file(pdf_path, doc_type="telaah_staff")
+        archive_file(docx_path, doc_type="telaah_staff")
 
         konten_gabungan = (
             konten_custom_clean if konten_custom_clean else _format_telaahan_staf_gabungan(

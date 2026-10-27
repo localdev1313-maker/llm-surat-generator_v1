@@ -17,6 +17,16 @@ telegram_app = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global telegram_app
+
+    # Inisialisasi subdirektori internal arsip dokumen
+    try:
+        from .services.archive_service import init_archive_directories, sync_existing_output_files
+        init_archive_directories()
+        sync_existing_output_files()
+        logger.info("Subdirektori internal arsip dokumen (direktori-nota_dinas, direktori-telaah_staff, dll) siap.")
+    except Exception as e:
+        logger.warning(f"Gagal inisialisasi arsip internal saat startup: {e}")
+
     try:
         if settings.TELEGRAM_BOT_TOKEN:
             logger.info("Memulai Bot Telegram di background...")

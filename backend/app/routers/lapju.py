@@ -22,6 +22,7 @@ from ..services.lapju_service import (
 )
 from ..services.pdf_service import create_pdf_lapju
 from ..services.docx_service import create_docx_lapju
+from ..services.archive_service import archive_file
 
 logger = logging.getLogger(__name__)
 
@@ -98,6 +99,10 @@ async def generate_lapju(req: LapjuGenerateRequest):
                 output_path=docx_path
             )
         )
+
+        # Simpan otomatis ke direktori internal lapju
+        archive_file(output_path, doc_type="lapju")
+        archive_file(docx_path, doc_type="lapju")
         
         return LapjuGenerateResponse(
             status="success",
